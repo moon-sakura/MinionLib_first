@@ -9,7 +9,6 @@
         <!--
         <GodotPath>D:/Tools/MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
         <SteamLibraryPath>E:/SteamLibrary/steamapps</SteamLibraryPath>
-        <PythonRunner>python</PythonRunner>
         -->
 
     </PropertyGroup>
