@@ -1,125 +1,420 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/@KeyIndexDefined">True</s:Boolean>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=499717A0618B7A48A826DDB10F9F0E03/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=499717A0618B7A48A826DDB10F9F0E03/EntryName/@EntryValue">Custom Card</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=499717A0618B7A48A826DDB10F9F0E03/Position/@EntryValue">11</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=B4D0CA86CBDACD42AD544A77CAE9FDEC/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=B4D0CA86CBDACD42AD544A77CAE9FDEC/EntryName/@EntryValue">Custom Relic</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Position/@EntryValue">12</s:Int64>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=COST/Expression/@EntryValue">guessExpectedType("")</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=RARITY/Expression/@EntryValue">list("Basic,Common,Uncommon,Rare,Ancient,Event,Token,Status,Curse,Quest")</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TARGET/Expression/@EntryValue">list("Self,AnyEnemy,AllEnemies,RandomEnemy,AnyPlayer,AnyAlly,AllAllies,Osty")</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TYPE/Expression/@EntryValue">list("Attack,Skill,Power,Status,Curse,Quest")</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/@KeyIndexDefined">True</s:Boolean>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/CustomProperties/=FileName/@EntryIndexedValue">Card</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Description/@EntryValue">Custom Card</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/Order/@EntryValue">1</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=COST/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=COST/Order/@EntryValue">2</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=HEADER/@KeyIndexDefined">False</s:Boolean>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/Order/@EntryValue">0</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=RARITY/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=RARITY/Order/@EntryValue">4</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TARGET/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TARGET/Order/@EntryValue">5</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TYPE/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TYPE/Order/@EntryValue">3</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Reformat/@EntryValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Text/@EntryValue">namespace $NAMESPACE$;
+	<s:String x:Key="/Default/CodeStyle/CodeCleanup/Profiles/=_4EE3_7801_683C_5F0F_5316_4E0Eimport_6E05_7406/@EntryIndexedValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;Profile name="代码格式化与import清理"&gt;&lt;XAMLCollapseEmptyTags&gt;False&lt;/XAMLCollapseEmptyTags&gt;&lt;CSReformatCode&gt;True&lt;/CSReformatCode&gt;&lt;CSharpReformatComments&gt;True&lt;/CSharpReformatComments&gt;&lt;CSOptimizeUsings&gt;&lt;OptimizeUsings&gt;True&lt;/OptimizeUsings&gt;&lt;/CSOptimizeUsings&gt;&lt;CSShortenReferences&gt;True&lt;/CSShortenReferences&gt;&lt;IDEA_SETTINGS&gt;&amp;lt;profile version="1.0"&amp;gt;&#xD;
+  &amp;lt;option name="myName" value="代码格式化与import清理" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="ES6ShorthandObjectProperty" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="JSArrowFunctionBracesCanBeRemoved" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="JSRemoveUnnecessaryParentheses" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="JSUnnecessarySemicolon" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryContinueJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryLabelJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryLabelOnBreakStatementJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryLabelOnContinueStatementJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryReturnJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="WrongPropertyKeyValueDelimiter" enabled="true" level="WARNING" enabled_by_default="true" /&amp;gt;&#xD;
+&amp;lt;/profile&amp;gt;&lt;/IDEA_SETTINGS&gt;&lt;RIDER_SETTINGS&gt;&amp;lt;profile&amp;gt;&#xD;
+  &amp;lt;Language id=""&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;false&amp;lt;/OptimizeImports&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="CMake"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="CSS"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;Rearrange&amp;gt;false&amp;lt;/Rearrange&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="EditorConfig"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="HTML"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;false&amp;lt;/OptimizeImports&amp;gt;&#xD;
+    &amp;lt;Rearrange&amp;gt;false&amp;lt;/Rearrange&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="HTTP Request"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Handlebars"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Ini"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="JSON"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Jade"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="JavaScript"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;false&amp;lt;/OptimizeImports&amp;gt;&#xD;
+    &amp;lt;Rearrange&amp;gt;false&amp;lt;/Rearrange&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Markdown"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Properties"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Python"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;true&amp;lt;/OptimizeImports&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="RELAX-NG"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Razor"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="SQL"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="TOML"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="VueExpr"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="XML"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;true&amp;lt;/OptimizeImports&amp;gt;&#xD;
+    &amp;lt;Rearrange&amp;gt;false&amp;lt;/Rearrange&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="yaml"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+&amp;lt;/profile&amp;gt;&lt;/RIDER_SETTINGS&gt;&lt;/Profile&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeCleanup/Profiles/=_5B8C_5168_6E05_7406_5E76_4FDD_7559API/@EntryIndexedValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;Profile name="完全清理并保留API"&gt;&lt;CppCodeStyleCleanupDescriptor /&gt;&lt;CSReorderTypeMembers&gt;True&lt;/CSReorderTypeMembers&gt;&lt;CSCodeStyleAttributes ArrangeVarStyle="True" ArrangeTypeAccessModifier="True" ArrangeTypeMemberAccessModifier="True" SortModifiers="True" ArrangeAccessors="True" ArrangeArgumentsStyle="True" RemoveRedundantParentheses="True" AddMissingParentheses="True" ArrangeBraces="True" ArrangeAttributes="True" ArrangeCodeBodyStyle="True" ArrangeTrailingCommas="True" ArrangeObjectCreation="True" ArrangeDefaultValue="True" ArrangeEmptyString="True" ArrangeNamespaces="True" ArrangeNullCheckingPattern="True" /&gt;&lt;CSArrangeQualifiers&gt;True&lt;/CSArrangeQualifiers&gt;&lt;CSFixBuiltinTypeReferences&gt;True&lt;/CSFixBuiltinTypeReferences&gt;&lt;RemoveCodeRedundancies&gt;True&lt;/RemoveCodeRedundancies&gt;&lt;CSUseAutoProperty&gt;True&lt;/CSUseAutoProperty&gt;&lt;CSMakeFieldReadonly&gt;True&lt;/CSMakeFieldReadonly&gt;&lt;CSMakeAutoPropertyGetOnly&gt;True&lt;/CSMakeAutoPropertyGetOnly&gt;&lt;CSOptimizeUsings&gt;&lt;OptimizeUsings&gt;True&lt;/OptimizeUsings&gt;&lt;/CSOptimizeUsings&gt;&lt;CSShortenReferences&gt;True&lt;/CSShortenReferences&gt;&lt;CSReformatCode&gt;True&lt;/CSReformatCode&gt;&lt;CSharpFormatDocComments&gt;True&lt;/CSharpFormatDocComments&gt;&lt;CSharpReformatComments&gt;True&lt;/CSharpReformatComments&gt;&lt;IDEA_SETTINGS&gt;&amp;lt;profile version="1.0"&amp;gt;&#xD;
+  &amp;lt;option name="myName" value="完全清理并保留API" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="ES6ShorthandObjectProperty" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="JSArrowFunctionBracesCanBeRemoved" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="JSRemoveUnnecessaryParentheses" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="JSUnnecessarySemicolon" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryContinueJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryLabelJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryLabelOnBreakStatementJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryLabelOnContinueStatementJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+  &amp;lt;inspection_tool class="UnnecessaryReturnJS" enabled="false" level="WARNING" enabled_by_default="false" /&amp;gt;&#xD;
+&amp;lt;/profile&amp;gt;&lt;/IDEA_SETTINGS&gt;&lt;RIDER_SETTINGS&gt;&amp;lt;profile&amp;gt;&#xD;
+  &amp;lt;Language id=""&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;false&amp;lt;/OptimizeImports&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="CMake"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="CSS"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;Rearrange&amp;gt;false&amp;lt;/Rearrange&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="EditorConfig"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="HTML"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;false&amp;lt;/OptimizeImports&amp;gt;&#xD;
+    &amp;lt;Rearrange&amp;gt;false&amp;lt;/Rearrange&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="HTTP Request"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Handlebars"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Ini"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="JSON"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Jade"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="JavaScript"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;false&amp;lt;/OptimizeImports&amp;gt;&#xD;
+    &amp;lt;Rearrange&amp;gt;false&amp;lt;/Rearrange&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Markdown"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Properties"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Python"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;true&amp;lt;/OptimizeImports&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="RELAX-NG"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="Razor"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="SQL"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="TOML"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="VueExpr"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;false&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="XML"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+    &amp;lt;OptimizeImports&amp;gt;true&amp;lt;/OptimizeImports&amp;gt;&#xD;
+    &amp;lt;Rearrange&amp;gt;true&amp;lt;/Rearrange&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+  &amp;lt;Language id="yaml"&amp;gt;&#xD;
+    &amp;lt;Reformat&amp;gt;true&amp;lt;/Reformat&amp;gt;&#xD;
+  &amp;lt;/Language&amp;gt;&#xD;
+&amp;lt;/profile&amp;gt;&lt;/RIDER_SETTINGS&gt;&lt;XAMLCollapseEmptyTags&gt;False&lt;/XAMLCollapseEmptyTags&gt;&lt;/Profile&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/EMPTY_BLOCK_STYLE/@EntryValue">TOGETHER_SAME_LINE</s:String>
+	<s:String x:Key="/Default/CodeStyle/CSharpFileLayoutPatterns/Pattern/@EntryValue">&lt;Patterns xmlns="urn:schemas-jetbrains-com:member-reordering-patterns"&gt;
+  &lt;TypePattern DisplayName="Non-reorderable types" Priority="99999999"&gt;
+    &lt;TypePattern.Match&gt;
+      &lt;Or&gt;
+        &lt;And&gt;
+          &lt;Kind Is="Interface" /&gt;
+          &lt;Or&gt;
+            &lt;HasAttribute Name="System.Runtime.InteropServices.InterfaceTypeAttribute" /&gt;
+            &lt;HasAttribute Name="System.Runtime.InteropServices.ComImport" /&gt;
+          &lt;/Or&gt;
+        &lt;/And&gt;
+        &lt;Kind Is="Struct" /&gt;
+        &lt;HasAttribute Name="System.Runtime.InteropServices.StructLayoutAttribute" /&gt;
+        &lt;HasAttribute Name="System.Runtime.InteropServices.ExtendedLayoutAttribute" /&gt;
+        &lt;HasAttribute Name="JetBrains.Annotations.NoReorderAttribute" /&gt;
+      &lt;/Or&gt;
+    &lt;/TypePattern.Match&gt;
+  &lt;/TypePattern&gt;
 
-public class $CLASS$() : BaseLib.Abstracts.CustomCardModel($COST$, MegaCrit.Sts2.Core.Entities.Cards.CardType.$TYPE$, MegaCrit.Sts2.Core.Entities.Cards.CardRarity.$RARITY$, MegaCrit.Sts2.Core.Entities.Cards.TargetType.$TARGET$) {
-    protected override async System.Threading.Tasks.Task OnPlay(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Cards.CardPlay play)
-    {
-        $END$
-    }
+  &lt;TypePattern DisplayName="xUnit.net Test Classes" RemoveRegions="All"&gt;
+    &lt;TypePattern.Match&gt;
+      &lt;And&gt;
+        &lt;Kind Is="Class" /&gt;
+        &lt;HasMember&gt;
+          &lt;And&gt;
+            &lt;Kind Is="Method" /&gt;
+            &lt;HasAttribute Name="Xunit.FactAttribute" Inherited="True" /&gt;
+            &lt;HasAttribute Name="Xunit.TheoryAttribute" Inherited="True" /&gt;
+          &lt;/And&gt;
+        &lt;/HasMember&gt;
+      &lt;/And&gt;
+    &lt;/TypePattern.Match&gt;
 
-    protected override void OnUpgrade() {
-        
-    }
-}</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/@KeyIndexDefined">True</s:Boolean>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/CustomProperties/=FileName/@EntryIndexedValue">Card</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Description/@EntryValue">Custom Card (Publicized)</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=CLASS/Order/@EntryValue">1</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=COST/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=COST/Expression/@EntryValue">guessExpectedType("")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=COST/Order/@EntryValue">2</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=NAMESPACE/Order/@EntryValue">0</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=RARITY/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=RARITY/Expression/@EntryValue">list("Basic,Common,Uncommon,Rare,Ancient,Event,Token,Status,Curse,Quest")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=RARITY/Order/@EntryValue">4</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=TARGET/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=TARGET/Expression/@EntryValue">list("Self,AnyEnemy,AllEnemies,RandomEnemy,AnyPlayer,AnyAlly,AllAllies,Osty")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=TARGET/Order/@EntryValue">5</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=TYPE/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=TYPE/Expression/@EntryValue">list("Attack,Skill,Power,Status,Curse,Quest")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Field/=TYPE/Order/@EntryValue">3</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Reformat/@EntryValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=499717A0618B7A48A826DDB10F9F0E03/Text/@EntryValue">namespace $NAMESPACE$;
+    &lt;Entry DisplayName="Fields"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Kind Is="Field" /&gt;
+          &lt;Not&gt;
+            &lt;Static /&gt;
+          &lt;/Not&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
 
-public class $CLASS$() : BaseLib.Abstracts.CustomCardModel($COST$, MegaCrit.Sts2.Core.Entities.Cards.CardType.$TYPE$, MegaCrit.Sts2.Core.Entities.Cards.CardRarity.$RARITY$, MegaCrit.Sts2.Core.Entities.Cards.TargetType.$TARGET$) {
-    public override async System.Threading.Tasks.Task OnPlay(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Cards.CardPlay play)
-    {
-        $END$
-    }
+      &lt;Entry.SortBy&gt;
+        &lt;Readonly /&gt;
+        &lt;Name /&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
 
-    public override void OnUpgrade() {
-        
-    }
-}</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/@KeyIndexDefined">True</s:Boolean>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/CustomProperties/=FileName/@EntryIndexedValue">Relic</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Description/@EntryValue">Custom Relic</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/Order/@EntryValue">1</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=NAMESPACE/Order/@EntryValue">0</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=POOL/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=POOL/Expression/@EntryValue">constant("RelicPool")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=POOL/Order/@EntryValue">2</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=RARITY/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=RARITY/Expression/@EntryValue">list("Starter,Common,Uncommon,Rare,Shop,Event,Ancient")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=RARITY/Order/@EntryValue">3</s:Int64>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Reformat/@EntryValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
-	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Text/@EntryValue">namespace $NAMESPACE$;
+    &lt;Entry DisplayName="Constructors"&gt;
+      &lt;Entry.Match&gt;
+        &lt;Kind Is="Constructor" /&gt;
+      &lt;/Entry.Match&gt;
 
-[BaseLib.Utils.Pool(typeof($POOL$))]
-public class $CLASS$() : BaseLib.Abstracts.CustomRelicModel {
-    public override MegaCrit.Sts2.Core.Entities.Relics.RelicRarity Rarity =&gt; MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.$RARITY$;
-    
-    $END$
-}</s:String></wpf:ResourceDictionary>
+      &lt;Entry.SortBy&gt;
+        &lt;Static/&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="Teardown Methods"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Kind Is="Method" /&gt;
+          &lt;ImplementsInterface Name="System.IDisposable" /&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="All other members" /&gt;
+
+    &lt;Entry DisplayName="Test Methods" Priority="100"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Kind Is="Method" /&gt;
+          &lt;HasAttribute Name="Xunit.FactAttribute" Inherited="false" /&gt;
+          &lt;HasAttribute Name="Xunit.TheoryAttribute" Inherited="false" /&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
+
+      &lt;Entry.SortBy&gt;
+        &lt;Name /&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+  &lt;/TypePattern&gt;
+
+  &lt;TypePattern DisplayName="NUnit Test Fixtures" RemoveRegions="All"&gt;
+    &lt;TypePattern.Match&gt;
+      &lt;And&gt;
+        &lt;Kind Is="Class" /&gt;
+        &lt;Or&gt;
+          &lt;HasAttribute Name="NUnit.Framework.TestFixtureAttribute" Inherited="true" /&gt;
+          &lt;HasAttribute Name="NUnit.Framework.TestFixtureSourceAttribute" Inherited="true" /&gt;
+          &lt;HasMember&gt;
+            &lt;And&gt;
+              &lt;Kind Is="Method" /&gt;
+              &lt;HasAttribute Name="NUnit.Framework.TestAttribute" Inherited="false" /&gt;
+              &lt;HasAttribute Name="NUnit.Framework.TestCaseAttribute" Inherited="false" /&gt;
+              &lt;HasAttribute Name="NUnit.Framework.TestCaseSourceAttribute" Inherited="false" /&gt;
+            &lt;/And&gt;
+          &lt;/HasMember&gt;
+        &lt;/Or&gt;
+      &lt;/And&gt;
+    &lt;/TypePattern.Match&gt;
+
+    &lt;Entry DisplayName="Setup/Teardown Methods"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Kind Is="Method" /&gt;
+          &lt;Or&gt;
+            &lt;HasAttribute Name="NUnit.Framework.SetUpAttribute" Inherited="true" /&gt;
+            &lt;HasAttribute Name="NUnit.Framework.TearDownAttribute" Inherited="true" /&gt;
+            &lt;HasAttribute Name="NUnit.Framework.TestFixtureSetUpAttribute" Inherited="true" /&gt;
+            &lt;HasAttribute Name="NUnit.Framework.TestFixtureTearDownAttribute" Inherited="true" /&gt;
+            &lt;HasAttribute Name="NUnit.Framework.OneTimeSetUpAttribute" Inherited="true" /&gt;
+            &lt;HasAttribute Name="NUnit.Framework.OneTimeTearDownAttribute" Inherited="true" /&gt;
+          &lt;/Or&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="All other members" /&gt;
+
+    &lt;Entry DisplayName="Test Methods" Priority="100"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Kind Is="Method" /&gt;
+          &lt;HasAttribute Name="NUnit.Framework.TestAttribute" Inherited="false" /&gt;
+          &lt;HasAttribute Name="NUnit.Framework.TestCaseAttribute" Inherited="false" /&gt;
+          &lt;HasAttribute Name="NUnit.Framework.TestCaseSourceAttribute" Inherited="false" /&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
+
+      &lt;Entry.SortBy&gt;
+        &lt;Name /&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+  &lt;/TypePattern&gt;
+
+  &lt;TypePattern DisplayName="Default Pattern"&gt;
+    &lt;Entry DisplayName="Public Delegates" Priority="100"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Access Is="Public" /&gt;
+          &lt;Kind Is="Delegate" /&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
+
+      &lt;Entry.SortBy&gt;
+        &lt;Name /&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="Public Enums" Priority="100"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Access Is="Public" /&gt;
+          &lt;Kind Is="Enum" /&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
+
+      &lt;Entry.SortBy&gt;
+        &lt;Name /&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="Static Fields and Constants"&gt;
+      &lt;Entry.Match&gt;
+        &lt;Or&gt;
+          &lt;Kind Is="Constant" /&gt;
+          &lt;And&gt;
+            &lt;Kind Is="Field" /&gt;
+            &lt;Static /&gt;
+          &lt;/And&gt;
+        &lt;/Or&gt;
+      &lt;/Entry.Match&gt;
+
+      &lt;Entry.SortBy&gt;
+        &lt;Kind&gt;
+          &lt;Kind.Order&gt;
+            &lt;DeclarationKind&gt;Constant&lt;/DeclarationKind&gt;
+            &lt;DeclarationKind&gt;Field&lt;/DeclarationKind&gt;
+          &lt;/Kind.Order&gt;
+        &lt;/Kind&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="Fields"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Kind Is="Field" /&gt;
+          &lt;Not&gt;
+            &lt;Static /&gt;
+          &lt;/Not&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
+
+      &lt;Entry.SortBy&gt;
+        &lt;Readonly /&gt;
+        &lt;Name /&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="Properties, Indexers"&gt;
+        &lt;Entry.Match&gt;
+            &lt;Or&gt;
+                &lt;Kind Is="Property" /&gt;
+                &lt;Kind Is="Indexer" /&gt;
+            &lt;/Or&gt;
+        &lt;/Entry.Match&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="Constructors"&gt;
+      &lt;Entry.Match&gt;
+        &lt;Kind Is="Constructor" /&gt;
+      &lt;/Entry.Match&gt;
+
+      &lt;Entry.SortBy&gt;
+        &lt;Static/&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="Interface Implementations" Priority="100"&gt;
+      &lt;Entry.Match&gt;
+        &lt;And&gt;
+          &lt;Kind Is="Member" /&gt;
+          &lt;ImplementsInterface /&gt;
+        &lt;/And&gt;
+      &lt;/Entry.Match&gt;
+
+      &lt;Entry.SortBy&gt;
+        &lt;ImplementsInterface Immediate="true" /&gt;
+      &lt;/Entry.SortBy&gt;
+    &lt;/Entry&gt;
+
+    &lt;Entry DisplayName="All other members" /&gt;
+
+    &lt;Entry DisplayName="Nested Types"&gt;
+      &lt;Entry.Match&gt;
+        &lt;Kind Is="Type" /&gt;
+      &lt;/Entry.Match&gt;
+    &lt;/Entry&gt;
+  &lt;/TypePattern&gt;
+&lt;/Patterns&gt;</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/Naming/CSharpNaming/ApplyAutoDetectedRules/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ECSharpKeepExistingMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ECSharpPlaceEmbeddedOnSameLineMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ECSharpUseContinuousIndentInsideBracesMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002EMemberReordering_002EMigrations_002ECSharpFileLayoutPatternRemoveIsAttributeUpgrade/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateBlankLinesAroundFieldToBlankLinesAroundProperty/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
