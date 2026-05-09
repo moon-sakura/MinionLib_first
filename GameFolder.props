@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <!-- 导入本地配置 -->
-    <Import Project="LocalSettings.props" Condition="Exists('LocalSettings.props')"/>
+    <Import Project="$(MSBuildThisFileDirectory)LocalSettings.props" Condition="Exists('$(MSBuildThisFileDirectory)LocalSettings.props')"/>
 
     <!-- Windows -->
     <PropertyGroup Condition="'$(IsWindows)' == 'true'">

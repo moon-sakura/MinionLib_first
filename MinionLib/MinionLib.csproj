@@ -12,7 +12,7 @@
         <Version>100.0.0.0-dev</Version> <!-- 版本号由命令行参数传入 -->
     </PropertyGroup>
 
-    <Import Project="GameFolder.props" Condition="Exists('GameFolder.props')"/>
+    <Import Project="..\GameFolder.props" Condition="Exists('..\GameFolder.props')"/>
 
     <PropertyGroup>
         <NoWarn>$(NoWarn);MSB3270</NoWarn>
@@ -34,18 +34,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include=".gitignore"/>
         <None Include="MinionLib.template.json"/>
         <None Include="project.godot"/>
         <None Include="MinionLib/**"/>
         <None Include="images/**"/>
-        <None Include=".agent/*"/>
-        <None Include="LICENSE"/>
-        <None Include="README.md"/>
-        <None Include="docs/**/*"/>
         <None Include="Example/MinionTest/**"/>
         <None Include="Tools/**"/>
-        <None Include="LocalSettings.example.props"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -74,7 +68,7 @@
 
 
     <ItemGroup>
-        <ProjectReference Include="MinionLib.Generators/MinionLib.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" Pack="false"/>
+        <ProjectReference Include="..\MinionLib.Generators\MinionLib.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" Pack="false"/>
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths" BeforeTargets="BeforeBuild">
