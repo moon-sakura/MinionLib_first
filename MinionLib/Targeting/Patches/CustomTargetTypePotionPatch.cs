@@ -17,8 +17,6 @@ using MegaCrit.Sts2.Core.Runs;
 
 namespace MinionLib.Targeting.Patches;
 
-[SuppressMessage("ReSharper", "InconsistentNaming")]
-[SuppressMessage("ReSharper", "UnusedMember.Local")]
 [HarmonyPatch]
 public static class CustomTargetTypePotionPatch
 {

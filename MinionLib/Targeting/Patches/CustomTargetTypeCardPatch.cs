@@ -13,8 +13,6 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 
 namespace MinionLib.Targeting.Patches;
 
-[SuppressMessage("ReSharper", "InconsistentNaming")]
-[SuppressMessage("ReSharper", "UnusedMember.Local")]
 [HarmonyPatch]
 public static class CustomTargetTypeCardPatch
 {
