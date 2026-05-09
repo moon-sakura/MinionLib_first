@@ -1,0 +1,41 @@
+<Project>
+    <!-- 自动更新 json 中的版本号 -->
+    <Target Name="UpdateManifestVersion" BeforeTargets="BeforeBuild;PreparePckForPack">
+        <PropertyGroup>
+            <ManifestTemplateFile>$(MSBuildProjectDirectory)\MinionLib.template.json</ManifestTemplateFile>
+            <ManifestOutputFile>$(MSBuildProjectDirectory)\MinionLib.json</ManifestOutputFile>
+        </PropertyGroup>
+
+        <Message Text="Updating version in $(ManifestOutputFile) to $(Version)" Importance="high" />
+
+        <ItemGroup>
+            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile)).Replace('VERSION-CODE', '$(Version)'))" />
+        </ItemGroup>
+
+        <WriteLinesToFile File="$(ManifestOutputFile)" Lines="@(FileLines)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+    </Target>
+
+    <!-- 构建后自动将此模组的 dll, manifest 和依赖模组的文件复制到 mods 目录 -->
+    <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
+        <Message Text="Copying .dll and manifest to mods folder." Importance="high" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+        <Copy SourceFiles="MinionLib.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+        <Message Text="Copying BaseLib to mods folder." Importance="high"/>
+        <ItemGroup>
+            <BaseLibFiles Include="$(PkgAlchyr_Sts2_BaseLib)/lib/**/BaseLib.dll;$(PkgAlchyr_Sts2_BaseLib)/Content/BaseLib.pck;$(PkgAlchyr_Sts2_BaseLib)/Content/BaseLib.json;"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(BaseLibFiles)" DestinationFolder="$(ModsPath)BaseLib/"/>
+    </Target>
+
+    <!--执行 Godot 导出命令将 .pck 导出到 mods 目录 -->
+    <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
+        <Message Text="Exporting Godot .pck to mods folder" Importance="high" />
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;" EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" Condition="'$(Configuration)' != 'ExportRelease'" />
+        <!-- 当配置为 ExportRelease 时，使用 BasicExportNoExample 配置 -->
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExportNoExample&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;" EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" Condition="'$(Configuration)' == 'ExportRelease'" />
+    </Target>
+
+    <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">
+        <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high" />
+    </Target>
+</Project>
