@@ -7,16 +7,16 @@ public static class MinionLayoutManager
     private static readonly List<(IMinionLayout layout, int priority, int order)> LayoutsWithPriority = [];
     private static int _counter;
 
+    public static IEnumerable<IMinionLayout> Layouts
+        => LayoutsWithPriority.Select(x => x.layout);
+
     static MinionLayoutManager()
     {
         Register(new DefaultMinionLayout());
     }
 
-    public static IEnumerable<IMinionLayout> Layouts
-        => LayoutsWithPriority.Select(x => x.layout);
-
     /// <summary>
-    /// 注册布局器，优先级越大越早执行
+    ///     注册布局器，优先级越大越早执行
     /// </summary>
     /// <param name="layout">布局器实例</param>
     /// <param name="priority">优先级，普通布局器优先级应 >0，后处理器优先级应 &lt;0</param>
@@ -34,15 +34,11 @@ public static class MinionLayoutManager
     public static IEnumerable<MinionNodePosition> CalculateLayout(NCombatRoom room)
     {
         var context = new MinionLayoutContext(room);
-        
+
         foreach (var layout in Layouts)
-        {
             if (layout.IsActive)
-            {
                 layout.ApplyLayout(context);
-            }
-        }
-        
+
         return context.Positions.Select(entry => new MinionNodePosition(entry.Key, entry.Value)).ToList();
     }
 

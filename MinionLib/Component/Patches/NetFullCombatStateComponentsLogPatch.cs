@@ -28,7 +28,7 @@ public class NetFullCombatStateComponentsLogPatch
         if (!matcher.IsValid)
             throw new Exception("Transpiler 失败: 找不到 Enumerator.Current");
 
-        matcher.Advance(1); // 前进 1 步，来到保存卡牌的局部变量 (stloc.s card)
+        matcher.Advance(); // 前进 1 步，来到保存卡牌的局部变量 (stloc.s card)
         var cardLocalOperand = matcher.Operand; // 抓取变量操作数 (比如 V_13 等)
         var loadCardOpcode = matcher.Opcode == OpCodes.Stloc_S ? OpCodes.Ldloc_S : OpCodes.Ldloc;
 
@@ -63,10 +63,8 @@ public class NetFullCombatStateComponentsLogPatch
         );
 
         if (matcher.IsValid)
-        {
             // 将初始跳转的终点指向新 Label，让它直接跳过我们的自定义代码
             matcher.Instruction.operand = newLoopCondLabel;
-        }
 
         // --- 步骤 D：回到循环尾部并插入我们的代码 ---
         matcher.Advance(loopCondPos - matcher.Pos); // 精准跳回刚才的 loopCondPos
@@ -74,13 +72,13 @@ public class NetFullCombatStateComponentsLogPatch
         var injection = new List<CodeInstruction>
         {
             // 压入参数 1: 最外层的 stringBuilder1 (局部变量 0)
-            new (OpCodes.Ldloc_0),
+            new(OpCodes.Ldloc_0),
 
             // 压入参数 2: card 结构体
-            new (loadCardOpcode, cardLocalOperand),
+            new(loadCardOpcode, cardLocalOperand),
 
             // 调用我们的静态 C# 方法
-            new (OpCodes.Call,
+            new(OpCodes.Call,
                 AccessTools.Method(typeof(NetFullCombatStateComponentsLogPatch), nameof(AppendComponentInfo)))
         };
 

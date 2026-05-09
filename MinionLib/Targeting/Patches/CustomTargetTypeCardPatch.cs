@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Godot;
 using HarmonyLib;
@@ -262,5 +261,4 @@ public static class CustomTargetTypeCardPatch
     {
         return AccessTools.Property(typeof(NCardPlay), "Card")?.GetValue(cardPlay) as CardModel;
     }
-
 }

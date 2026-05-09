@@ -94,16 +94,10 @@ public static class NoDescriptionMarkerCleanPatch
         var hasBefore = index > 0 && __result[index - 1] == '\n';
 
         if (hasAfter)
-        {
             __result = __result.Remove(index, 2);
-        }
         else if (hasBefore)
-        {
             __result = __result.Remove(index - 1, 2);
-        }
         else
-        {
             __result = __result.Remove(index, 1);
-        }
     }
 }

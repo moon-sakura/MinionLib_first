@@ -8,9 +8,6 @@ public abstract class CustomTargetType : ICustomTargetType
 {
     public abstract bool IsSingleTarget { get; }
 
-
-    protected abstract bool IsValidTarget(Creature target);
-
     public bool IsValidTargetPreview(Creature target)
     {
         return IsValidTarget(target);
@@ -30,4 +27,7 @@ public abstract class CustomTargetType : ICustomTargetType
     {
         return IsValidTarget(target);
     }
+
+
+    protected abstract bool IsValidTarget(Creature target);
 }

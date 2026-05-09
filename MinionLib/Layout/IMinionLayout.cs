@@ -6,7 +6,7 @@ namespace MinionLib.Layout;
 public interface IMinionLayout
 {
     bool IsActive { get; }
-    
+
     void ApplyLayout(MinionLayoutContext context);
 }
 

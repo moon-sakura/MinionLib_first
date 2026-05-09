@@ -13,7 +13,7 @@ public static class SingleTargetTypesUnionManager
 
     private static readonly Dictionary<TargetType, ImmutableHashSet<TargetType>> Components = new()
     {
-        [MinionTargetTypes.Void] = ImmutableHashSet<TargetType>.Empty,
+        [MinionTargetTypes.Void] = ImmutableHashSet<TargetType>.Empty
     };
 
     private static (ImmutableHashSet<TargetType>, IEnumerable<ICustomTargetType>) FilterSingleAndSelect(
@@ -45,17 +45,11 @@ public static class SingleTargetTypesUnionManager
     {
         var set = new HashSet<TargetType>();
         foreach (var targetType in source)
-        {
             if (Components.TryGetValue(targetType, out var components))
-            {
                 foreach (var component in components)
                     set.Add(component);
-            }
             else
-            {
                 set.Add(targetType);
-            }
-        }
 
         return set;
     }

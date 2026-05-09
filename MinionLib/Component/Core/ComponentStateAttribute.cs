@@ -6,7 +6,7 @@ namespace MinionLib.Component.Core;
 public class ComponentStateAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Property)]
-public sealed class ComponentStateAttribute<T>(params object[] parameters): ComponentStateAttribute
+public sealed class ComponentStateAttribute<T>(params object[] parameters) : ComponentStateAttribute
     where T : DynamicVar
 {
     private readonly object[] _parameters = parameters;

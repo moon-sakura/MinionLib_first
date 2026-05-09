@@ -38,6 +38,8 @@ public abstract partial class ComponentsCardModel(
 
     private List<ICardComponent>? _components;
 
+    private int[] _componentStateBlob = [];
+
     [SavedProperty(SerializationCondition.SaveIfNotTypeDefault)]
     public int[] MinionLibComponentStateBlob
     {
@@ -55,7 +57,93 @@ public abstract partial class ComponentsCardModel(
         }
     }
 
-    private int[] _componentStateBlob = [];
+    protected virtual IEnumerable<ICardComponent> CanonicalComponents => [];
+
+    protected sealed override bool ShouldGlowGoldInternal =>
+        (_components?.Any(c => c.ShouldGlowGoldInternal) ?? false) || ShouldGlowGoldInternalC;
+
+    protected virtual bool ShouldGlowGoldInternalC => false;
+
+    protected sealed override bool ShouldGlowRedInternal =>
+        (_components?.Any(c => c.ShouldGlowRedInternal) ?? false) || ShouldGlowRedInternalC;
+
+    protected virtual bool ShouldGlowRedInternalC => false;
+
+    protected virtual Color? GlowColorC => null;
+
+    public sealed override CardType Type =>
+        _components?.Select(c => c.CardTypeOverride).FirstOrDefault(t => t.HasValue) ?? TypeC;
+
+    protected virtual CardType TypeC => base.Type;
+
+    public sealed override CardRarity Rarity =>
+        _components?.Select(c => c.CardRarityOverride).FirstOrDefault(r => r.HasValue) ?? RarityC;
+
+    protected virtual CardRarity RarityC => base.Rarity;
+
+    public sealed override TargetType TargetType =>
+        SingleTargetTypesUnionManager.GetWithBase(
+            _components?.Select(c => c.ExtraTargetType).OfType<TargetType>().Append(TargetTypeC) ?? [],
+            TargetTypeC);
+
+    protected virtual TargetType TargetTypeC => base.TargetType;
+
+    public sealed override IEnumerable<CardTag> Tags =>
+        TagsC.Concat(_components?.SelectMany(c => c.ExtraTags) ?? []).Distinct();
+
+    protected virtual IEnumerable<CardTag> TagsC => base.Tags;
+
+    protected sealed override bool IsPlayable =>
+        (_components?.All(c => c.IsPlayable) ?? true) && IsPlayableC;
+
+    protected virtual bool IsPlayableC => true;
+
+    public sealed override bool HasTurnEndInHandEffect =>
+        (_components?.Any(c => c.HasTurnEndInHandEffect) ?? false) || HasTurnEndInHandEffectC;
+
+    protected virtual bool HasTurnEndInHandEffectC => false;
+
+    protected sealed override IEnumerable<IHoverTip> ExtraHoverTips =>
+        _components?.SelectMany(c => c.HoverTips).Concat(ExtraHoverTipsC) ?? ExtraHoverTipsC;
+
+    protected virtual IEnumerable<IHoverTip> ExtraHoverTipsC => [];
+
+    public virtual void BetterAddExtraArgsToDescription(
+        LocString description,
+        PileType pileType,
+        DescriptionPreviewType previewType,
+        Creature? target = null)
+    {
+        EnsureComponentsInitialized();
+        var common = GenerateCommonExtraArgsForComponents(pileType, previewType, target);
+        var prefixSb = new StringBuilder();
+        var postfixSb = new StringBuilder();
+        var count = _components!.Count;
+        for (var displayIndex = 0; displayIndex < count; displayIndex++)
+        {
+            var component = _components[displayIndex];
+            var args = common.ToDictionary();
+            args["ComponentPosition"] = displayIndex;
+            args["ComponentPositionFromEnd"] = count - 1 - displayIndex;
+            args["IsFirstComponent"] = displayIndex == 0;
+            args["IsLastComponent"] = displayIndex == count - 1;
+            prefixSb.Append(component.GetFormattedPrefix(args));
+        }
+
+        for (var displayIndex = 0; displayIndex < count; displayIndex++)
+        {
+            var component = _components[count - 1 - displayIndex];
+            var args = common.ToDictionary();
+            args["ComponentPosition"] = displayIndex;
+            args["ComponentPositionFromEnd"] = count - 1 - displayIndex;
+            args["IsFirstComponent"] = displayIndex == 0;
+            args["IsLastComponent"] = displayIndex == count - 1;
+            postfixSb.Append(component.GetFormattedPostfix(args));
+        }
+
+        description.Add("CompPre", prefixSb.ToString());
+        description.Add("CompPost", postfixSb.ToString());
+    }
 
     public IReadOnlyList<ICardComponent> Components
     {
@@ -66,15 +154,13 @@ public abstract partial class ComponentsCardModel(
         }
     }
 
-    protected virtual IEnumerable<ICardComponent> CanonicalComponents => [];
-
     public ICardComponent? AddComponent<T>(T incoming, bool allowMerge = true, bool isUpgrade = false)
         where T : class, ICardComponent
     {
         return ApplyComponent(incoming, new ApplyComponentOptions(
-            AllowMerge: allowMerge,
-            UseSubtractiveMerge: false,
-            IsUpgrade: isUpgrade
+            allowMerge,
+            false,
+            isUpgrade
         ));
     }
 
@@ -82,9 +168,9 @@ public abstract partial class ComponentsCardModel(
         where T : class, ICardComponent
     {
         return ApplyComponent(incoming, new ApplyComponentOptions(
-            AllowMerge: true,
-            UseSubtractiveMerge: true,
-            IsUpgrade: isUpgrade
+            true,
+            true,
+            isUpgrade
         ));
     }
 
@@ -93,7 +179,6 @@ public abstract partial class ComponentsCardModel(
     {
         EnsureComponentsInitialized();
         if (options.AllowMerge)
-        {
             for (var i = 0; i < _components!.Count; i++)
             {
                 var existing = _components[i];
@@ -119,7 +204,6 @@ public abstract partial class ComponentsCardModel(
                 merged.Attach(this);
                 return merged;
             }
-        }
 
         if (options.UseSubtractiveMerge) return null;
         _components!.Add(incoming);
@@ -209,41 +293,30 @@ public abstract partial class ComponentsCardModel(
         _componentStateBlob = CardComponentStateSerializer.Serialize(_components);
     }
 
-    public virtual void BetterAddExtraArgsToDescription(
-        LocString description,
-        PileType pileType,
-        DescriptionPreviewType previewType,
-        Creature? target = null)
+    public Color? GlowColor =>
+        _components?.Select(c => c.GlowColor).FirstOrDefault(c => c.HasValue) ?? GlowColorC;
+
+    public bool CanHandleRightClickLocal(RightClickContext context)
     {
         EnsureComponentsInitialized();
-        var common = GenerateCommonExtraArgsForComponents(pileType, previewType, target);
-        var prefixSb = new StringBuilder();
-        var postfixSb = new StringBuilder();
-        var count = _components!.Count;
-        for (var displayIndex = 0; displayIndex < count; displayIndex++)
-        {
-            var component = _components[displayIndex];
-            var args = common.ToDictionary();
-            args["ComponentPosition"] = displayIndex;
-            args["ComponentPositionFromEnd"] = count - 1 - displayIndex;
-            args["IsFirstComponent"] = displayIndex == 0;
-            args["IsLastComponent"] = displayIndex == count - 1;
-            prefixSb.Append(component.GetFormattedPrefix(args));
-        }
+        return _components!.Any(c => c.CanHandleRightClickLocal(context)) || CanHandleRightClickLocalC(context);
+    }
 
-        for (var displayIndex = 0; displayIndex < count; displayIndex++)
-        {
-            var component = _components[count - 1 - displayIndex];
-            var args = common.ToDictionary();
-            args["ComponentPosition"] = displayIndex;
-            args["ComponentPositionFromEnd"] = count - 1 - displayIndex;
-            args["IsFirstComponent"] = displayIndex == 0;
-            args["IsLastComponent"] = displayIndex == count - 1;
-            postfixSb.Append(component.GetFormattedPostfix(args));
-        }
+    public async Task OnRightClick(PlayerChoiceContext choiceContext, RightClickContext clickContext)
+    {
+        EnsureComponentsInitialized();
 
-        description.Add("CompPre", prefixSb.ToString());
-        description.Add("CompPost", postfixSb.ToString());
+        var flag = false;
+        foreach (var component in _components!.ToArray())
+            if (component.CanHandleRightClick(clickContext))
+            {
+                flag = true;
+                await component.OnRightClick(choiceContext, clickContext);
+                break;
+            }
+
+        if (!flag)
+            await OnRightClickC(choiceContext, clickContext);
     }
 
     protected virtual Dictionary<string, object> GenerateCommonExtraArgsForComponents(
@@ -296,6 +369,71 @@ public abstract partial class ComponentsCardModel(
         EnsureComponentsInitialized();
     }
 
+    protected sealed override PileType GetResultPileType()
+    {
+        EnsureComponentsInitialized();
+        foreach (var component in _components!)
+            if (component.GetResultPileType() is { } t)
+                return t;
+        return GetResultPileTypeC();
+    }
+
+    protected virtual PileType GetResultPileTypeC()
+    {
+        return base.GetResultPileType();
+    }
+
+    private void HandlePhaseTransitionLimitExceeded(ComponentPhase lastPhase)
+    {
+        Log.Warn($"""
+                  Card '{Id.Entry}' exceeded the maximum of {MaxPhaseTransitions} phase transitions. Last phase: {lastPhase}.
+                         This likely indicates an infinite loop in the card's logic, and no further phase transitions will be processed to prevent game instability.
+                         At the time, there are {_components!.Count} component(s) attached to the card, with the following types:
+                         {string.Join(", ", _components.Select(c => c.ComponentId))}
+                         If you are sure it's a false positive, try modify ComponentsCardModel.MaxPhaseTransitions via reflection.
+                  """);
+    }
+
+    protected virtual bool CanHandleRightClickLocalC(RightClickContext context)
+    {
+        return false;
+    }
+
+    protected virtual Task OnRightClickC(PlayerChoiceContext choiceContext, RightClickContext clickContext)
+    {
+        return Task.CompletedTask;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete(
+        "This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.",
+        false)]
+    protected sealed override void OnUpgrade()
+    {
+        EnsureComponentsInitialized();
+        var context = new ComponentContext(ComponentPhase.Core);
+        foreach (var component in _components!.ToArray())
+            component.OnUpgrade(context);
+        OnUpgrade(context);
+    }
+
+    protected virtual void OnUpgrade(ComponentContext componentContext) { }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete(
+        "This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.",
+        false)]
+    protected sealed override void AfterDowngraded()
+    {
+        EnsureComponentsInitialized();
+        var context = new ComponentContext(ComponentPhase.Core);
+        foreach (var component in _components!.ToArray())
+            component.AfterDowngraded(context);
+        AfterDowngraded(context);
+    }
+
+    protected virtual void AfterDowngraded(ComponentContext componentContext) { }
+
     # region Deprecated
 
     [Obsolete(
@@ -331,145 +469,16 @@ public abstract partial class ComponentsCardModel(
     }
 
     #endregion
-
-    protected sealed override bool ShouldGlowGoldInternal =>
-        (_components?.Any(c => c.ShouldGlowGoldInternal) ?? false) || ShouldGlowGoldInternalC;
-
-    protected virtual bool ShouldGlowGoldInternalC => false;
-
-    protected sealed override bool ShouldGlowRedInternal =>
-        (_components?.Any(c => c.ShouldGlowRedInternal) ?? false) || ShouldGlowRedInternalC;
-
-    protected virtual bool ShouldGlowRedInternalC => false;
-
-    public Color? GlowColor =>
-        _components?.Select(c => c.GlowColor).FirstOrDefault(c => c.HasValue) ?? GlowColorC;
-
-    protected virtual Color? GlowColorC => null;
-
-    public sealed override CardType Type =>
-        _components?.Select(c => c.CardTypeOverride).FirstOrDefault(t => t.HasValue) ?? TypeC;
-
-    protected virtual CardType TypeC => base.Type;
-
-    public sealed override CardRarity Rarity =>
-        _components?.Select(c => c.CardRarityOverride).FirstOrDefault(r => r.HasValue) ?? RarityC;
-
-    protected virtual CardRarity RarityC => base.Rarity;
-
-    public sealed override TargetType TargetType =>
-        SingleTargetTypesUnionManager.GetWithBase(
-            _components?.Select(c => c.ExtraTargetType).OfType<TargetType>().Append(TargetTypeC) ?? [],
-            TargetTypeC);
-
-    protected virtual TargetType TargetTypeC => base.TargetType;
-
-    public sealed override IEnumerable<CardTag> Tags =>
-        TagsC.Concat(_components?.SelectMany(c => c.ExtraTags) ?? []).Distinct();
-
-    protected virtual IEnumerable<CardTag> TagsC => base.Tags;
-
-    protected sealed override bool IsPlayable =>
-        (_components?.All(c => c.IsPlayable) ?? true) && IsPlayableC;
-
-    protected virtual bool IsPlayableC => true;
-
-    protected sealed override PileType GetResultPileType()
-    {
-        EnsureComponentsInitialized();
-        foreach (var component in _components!)
-            if (component.GetResultPileType() is { } t)
-                return t;
-        return GetResultPileTypeC();
-    }
-
-    protected virtual PileType GetResultPileTypeC()
-    {
-        return base.GetResultPileType();
-    }
-
-    public sealed override bool HasTurnEndInHandEffect =>
-        (_components?.Any(c => c.HasTurnEndInHandEffect) ?? false) || HasTurnEndInHandEffectC;
-
-    protected virtual bool HasTurnEndInHandEffectC => false;
-
-    protected sealed override IEnumerable<IHoverTip> ExtraHoverTips =>
-        _components?.SelectMany(c => c.HoverTips).Concat(ExtraHoverTipsC) ?? ExtraHoverTipsC;
-
-    protected virtual IEnumerable<IHoverTip> ExtraHoverTipsC => [];
-
-    private void HandlePhaseTransitionLimitExceeded(ComponentPhase lastPhase)
-    {
-        Log.Warn($"""
-                  Card '{Id.Entry}' exceeded the maximum of {MaxPhaseTransitions} phase transitions. Last phase: {lastPhase}.
-                         This likely indicates an infinite loop in the card's logic, and no further phase transitions will be processed to prevent game instability.
-                         At the time, there are {_components!.Count} component(s) attached to the card, with the following types:
-                         {string.Join(", ", _components.Select(c => c.ComponentId))}
-                         If you are sure it's a false positive, try modify ComponentsCardModel.MaxPhaseTransitions via reflection.
-                  """);
-    }
-
-    public bool CanHandleRightClickLocal(RightClickContext context)
-    {
-        EnsureComponentsInitialized();
-        return _components!.Any(c => c.CanHandleRightClickLocal(context)) || CanHandleRightClickLocalC(context);
-    }
-
-    protected virtual bool CanHandleRightClickLocalC(RightClickContext context) => false;
-
-    public async Task OnRightClick(PlayerChoiceContext choiceContext, RightClickContext clickContext)
-    {
-        EnsureComponentsInitialized();
-
-        var flag = false;
-        foreach (var component in _components!.ToArray())
-        {
-            if (component.CanHandleRightClick(clickContext))
-            {
-                flag = true;
-                await component.OnRightClick(choiceContext, clickContext);
-                break;
-            }
-        }
-
-        if (!flag)
-            await OnRightClickC(choiceContext, clickContext);
-    }
-
-    protected virtual Task OnRightClickC(PlayerChoiceContext choiceContext, RightClickContext clickContext)
-    {
-        return Task.CompletedTask;
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    protected sealed override void OnUpgrade()
-    {
-        EnsureComponentsInitialized();
-        var context = new ComponentContext(ComponentPhase.Core);
-        foreach (var component in _components!.ToArray())
-            component.OnUpgrade(context);
-        OnUpgrade(context);
-    }
-
-    protected virtual void OnUpgrade(ComponentContext componentContext) { }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    protected sealed override void AfterDowngraded()
-    {
-        EnsureComponentsInitialized();
-        var context = new ComponentContext(ComponentPhase.Core);
-        foreach (var component in _components!.ToArray())
-            component.AfterDowngraded(context);
-        AfterDowngraded(context);
-    }
-
-    protected virtual void AfterDowngraded(ComponentContext componentContext) { }
 }
 
 public abstract class CustomComponentsCardModel : ComponentsCardModel, ICustomModel, ILocalizationProvider
 {
+    public virtual Texture2D? CustomFrame => null;
+
+    public virtual string? CustomPortraitPath => null;
+
+    public virtual Texture2D? CustomPortrait => null;
+
     protected CustomComponentsCardModel(
         int canonicalEnergyCost,
         CardType type,
@@ -481,14 +490,8 @@ public abstract class CustomComponentsCardModel : ComponentsCardModel, ICustomMo
     {
         if (!autoAdd)
             return;
-        CustomContentDictionary.AddModel(this.GetType());
+        CustomContentDictionary.AddModel(GetType());
     }
-
-    public virtual Texture2D? CustomFrame => null;
-
-    public virtual string? CustomPortraitPath => null;
-
-    public virtual Texture2D? CustomPortrait => null;
 
     public virtual List<(string, string)>? Localization => null;
 }

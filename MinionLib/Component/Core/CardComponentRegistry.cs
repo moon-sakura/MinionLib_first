@@ -28,6 +28,7 @@ public static class CardComponentRegistry
             throw new InvalidOperationException($"Unknown component id '{componentId}'");
 
         var instance = factory();
-        return instance ?? throw new InvalidOperationException($"Factory returned null for component id '{componentId}'");
+        return instance ??
+               throw new InvalidOperationException($"Factory returned null for component id '{componentId}'");
     }
 }

@@ -33,4 +33,3 @@ public record RightClickContext(Player Player, AbstractModel Model, RightClickCo
         }
     }
 }
-

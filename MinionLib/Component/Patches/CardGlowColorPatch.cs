@@ -2,7 +2,6 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MinionLib.Component.Interfaces;
-using DrawingColor = System.Drawing.Color;
 
 namespace MinionLib.Component.Patches;
 
@@ -56,5 +55,4 @@ public static class CardGlowColorPatch
     {
         canvasItem.Modulate = glowColor;
     }
-
 }

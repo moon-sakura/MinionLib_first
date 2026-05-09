@@ -10,13 +10,15 @@ public interface IComponentsCardModel
 
     IReadOnlyList<ICardComponent> Components { get; }
 
+    Color? GlowColor => null;
+
     ICardComponent? AddComponent<T>(T incoming, bool allowMerge = true, bool isUpgrade = false)
         where T : class, ICardComponent
     {
         return ApplyComponent(incoming, new ApplyComponentOptions(
-            AllowMerge: allowMerge,
-            UseSubtractiveMerge: false,
-            IsUpgrade: isUpgrade
+            allowMerge,
+            false,
+            isUpgrade
         ));
     }
 
@@ -24,9 +26,9 @@ public interface IComponentsCardModel
         where T : class, ICardComponent
     {
         return ApplyComponent(incoming, new ApplyComponentOptions(
-            AllowMerge: true,
-            UseSubtractiveMerge: true,
-            IsUpgrade: isUpgrade
+            true,
+            true,
+            isUpgrade
         ));
     }
 
@@ -44,8 +46,6 @@ public interface IComponentsCardModel
     IReadOnlyList<T> GetComponents<T>() where T : class, ICardComponent;
 
     void EnsureComponentsInitialized();
-
-    Color? GlowColor => null;
 
     # region Deprecated
 

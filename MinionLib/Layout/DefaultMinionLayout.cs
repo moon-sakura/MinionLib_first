@@ -16,11 +16,8 @@ public class DefaultMinionLayout : IMinionLayout
         if (unhandled.Count == 0) return;
 
         var calculatedPositions = CalculateMinionPositions(context.Room, unhandled);
-        
-        foreach (var pos in calculatedPositions)
-        {
-            context.Positions[pos.Node] = pos.Position;
-        }
+
+        foreach (var pos in calculatedPositions) context.Positions[pos.Node] = pos.Position;
     }
 
     public static IReadOnlyList<Vector2> GenerateGridPoints(MinionPosition position, int count)
@@ -61,7 +58,7 @@ public class DefaultMinionLayout : IMinionLayout
 
     // 增加了 unhandledMinions 参数，只对未处理的随从进行分组
     public static IReadOnlyList<OwnerWithMinionsNodes> GetMinionOwnerNodePairs(
-        NCombatRoom room, 
+        NCombatRoom room,
         IEnumerable<NCreature> unhandledMinions)
     {
         var grouped = unhandledMinions.GroupBy(c => c.Entity.PetOwner!);
@@ -109,7 +106,7 @@ public class DefaultMinionLayout : IMinionLayout
     }
 
     public static IReadOnlyList<MinionNodePosition> CalculateMinionPositions(
-        NCombatRoom room, 
+        NCombatRoom room,
         IEnumerable<NCreature> unhandledMinions)
     {
         return GetMinionOwnerNodePairs(room, unhandledMinions).SelectMany(pair =>

@@ -11,11 +11,6 @@ public class AnyMinionTargetType : ICustomTargetType
 {
     public bool IsSingleTarget => true;
 
-    private static bool IsValidTarget(Creature target)
-    {
-        return target is { IsAlive: true, Side: CombatSide.Player, IsPet: true, Monster: MinionModel };
-    }
-
     public bool IsValidTargetPreview(Creature target)
     {
         return IsValidTarget(target) && LocalContext.IsMe(target.PetOwner);
@@ -35,5 +30,10 @@ public class AnyMinionTargetType : ICustomTargetType
     {
         var actor = action.Owner;
         return IsValidTarget(target) && (target.PetOwner == actor.PetOwner || target.PetOwner == actor.Player);
+    }
+
+    private static bool IsValidTarget(Creature target)
+    {
+        return target is { IsAlive: true, Side: CombatSide.Player, IsPet: true, Monster: MinionModel };
     }
 }

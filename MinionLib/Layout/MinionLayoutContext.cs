@@ -7,11 +7,11 @@ namespace MinionLib.Layout;
 public class MinionLayoutContext
 {
     public NCombatRoom Room { get; }
-    
+
     public IReadOnlyList<NCreature> AllMinions { get; }
-    
+
     public Dictionary<NCreature, Vector2> Positions { get; }
-    
+
     public IEnumerable<NCreature> UnhandledMinions => AllMinions.Where(m => !Positions.ContainsKey(m));
 
     public MinionLayoutContext(NCombatRoom room)

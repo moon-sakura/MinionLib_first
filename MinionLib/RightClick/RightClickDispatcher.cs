@@ -6,11 +6,12 @@ public static class RightClickDispatcher
 {
     private const string Module = "CardRightClick";
 
-    private static readonly List<IRightClickHandler> Handlers = [
-        #if DEBUG
+    private static readonly List<IRightClickHandler> Handlers =
+    [
+#if DEBUG
         new LogIdRightClickHandler(),
-        #endif
-        new EasyRightClickableCardHandler(),
+#endif
+        new EasyRightClickableCardHandler()
     ];
 
     public static void Register(IRightClickHandler handler)

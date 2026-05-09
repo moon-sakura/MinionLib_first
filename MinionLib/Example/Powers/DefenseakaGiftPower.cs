@@ -23,12 +23,10 @@ public sealed class DefenseakaGiftPower : CustomPowerModel
         if (side != Owner.Side || !Owner.IsAlive || Owner.PetOwner == null) return;
 
         for (var i = 0; i < Amount; i++)
-        {
             // var owner = Owner.PetOwner;
             // var card = combatState.CreateCard<DefenseakaGuardCard>(owner);
             // card.BindMinion(Owner);
             // await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, false);
             Debug("DefenseakaGuardCard was removed");
-        }
     }
 }

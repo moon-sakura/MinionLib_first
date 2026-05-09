@@ -33,7 +33,7 @@ public static class CardRightClickPatch
 
         if (!triggeredByController) return;
 
-        TryHandleRightClick(holder, isController: true);
+        TryHandleRightClick(holder, true);
     }
 
     private static void OnHitboxGuiInput(NCardHolder holder, InputEvent inputEvent)
@@ -44,7 +44,7 @@ public static class CardRightClickPatch
 
         if (!triggeredByMouse) return;
 
-        TryHandleRightClick(holder, isController: false);
+        TryHandleRightClick(holder, false);
     }
 
     private static void TryHandleRightClick(NCardHolder holder, bool isController)
@@ -70,11 +70,8 @@ public static class CardRightClickPatch
         }
 
         var context = new RightClickContext(card.Owner, card,
-            new RightClickContext.Payload(isController: isController));
+            new RightClickContext.Payload(isController));
 
-        if (RightClickDispatcher.TryDispatch(context))
-        {
-            holder.GetViewport().SetInputAsHandled();
-        }
+        if (RightClickDispatcher.TryDispatch(context)) holder.GetViewport().SetInputAsHandled();
     }
 }

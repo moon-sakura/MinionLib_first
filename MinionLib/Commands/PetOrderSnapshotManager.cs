@@ -91,11 +91,11 @@ public static class PetOrderSnapshotManager
 
     private sealed class SnapshotEntry
     {
+        public List<uint> CombatIds { get; }
+
         public SnapshotEntry(List<uint> combatIds)
         {
             CombatIds = combatIds;
         }
-
-        public List<uint> CombatIds { get; }
     }
 }

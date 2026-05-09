@@ -10,6 +10,16 @@ namespace MinionLib.Component.Core;
 
 public static class SerializationUtils
 {
+    private const byte DecimalIsNegativeFlag = 0x01;
+    private const byte DecimalHasScaleFlag = 0x02;
+    private const byte DecimalHasMidFlag = 0x04;
+    private const byte DecimalHasHighFlag = 0x08;
+
+    private const byte EmptyStringTag = 0b0000_0001;
+    private const byte ShortRawStringTagMin = 0b0000_0011;
+    private const byte ShortRawStringTagMax = 0b0000_1111;
+    private const byte LongRawStringTag = 0b0001_0001;
+    private const byte NullStringTag = 0b1111_1111;
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.General);
 
     public static void WriteObjectBlock(ArrayBufferWriter<byte> writer,
@@ -97,13 +107,13 @@ public static class SerializationUtils
         if (count < 0)
             throw new ArgumentOutOfRangeException(nameof(count), "count must be non-negative");
 
-        WriteUInt32(writer, (uint)count, constantLength: false);
+        WriteUInt32(writer, (uint)count);
     }
 
     public static bool TryReadCount(ref ReadOnlySpan<byte> reader, out int count)
     {
         count = 0;
-        if (!TryReadUInt32(ref reader, out var value, constantLength: false))
+        if (!TryReadUInt32(ref reader, out var value))
             return false;
 
         if (value > int.MaxValue)
@@ -161,7 +171,7 @@ public static class SerializationUtils
             return;
         }
 
-        WriteInt32(writer, value, constantLength: false);
+        WriteInt32(writer, value);
     }
 
     public static bool TryReadInt16(ref ReadOnlySpan<byte> reader, out short value, bool constantLength = false)
@@ -177,7 +187,7 @@ public static class SerializationUtils
             return true;
         }
 
-        if (!TryReadInt32(ref reader, out var tmp, constantLength: false))
+        if (!TryReadInt32(ref reader, out var tmp))
             return false;
 
         if (tmp < short.MinValue || tmp > short.MaxValue)
@@ -197,7 +207,7 @@ public static class SerializationUtils
             return;
         }
 
-        WriteUInt32(writer, value, constantLength: false);
+        WriteUInt32(writer, value);
     }
 
     public static bool TryReadUInt16(ref ReadOnlySpan<byte> reader, out ushort value, bool constantLength = false)
@@ -213,7 +223,7 @@ public static class SerializationUtils
             return true;
         }
 
-        if (!TryReadUInt32(ref reader, out var tmp, constantLength: false))
+        if (!TryReadUInt32(ref reader, out var tmp))
             return false;
 
         if (tmp > ushort.MaxValue)
@@ -234,7 +244,7 @@ public static class SerializationUtils
         }
 
         // zigzag encode and write as varuint
-        uint zig = (uint)((value << 1) ^ (value >> 31));
+        var zig = (uint)((value << 1) ^ (value >> 31));
         WriteVarUInt32(writer, zig);
     }
 
@@ -299,7 +309,7 @@ public static class SerializationUtils
         }
 
         // zigzag encode
-        ulong zig = (ulong)((value << 1) ^ (value >> 63));
+        var zig = (ulong)((value << 1) ^ (value >> 63));
         WriteVarUInt64(writer, zig);
     }
 
@@ -367,16 +377,16 @@ public static class SerializationUtils
     private static bool TryReadVarUInt32(ref ReadOnlySpan<byte> reader, out uint value)
     {
         value = 0;
-        int shift = 0;
+        var shift = 0;
         while (true)
         {
             if (reader.Length == 0)
                 return false;
 
-            byte b = reader[0];
+            var b = reader[0];
             reader = reader[1..];
 
-            value |= (uint)(b & 0x7Fu) << shift;
+            value |= (b & 0x7Fu) << shift;
             if ((b & 0x80) == 0)
                 return true;
 
@@ -400,15 +410,15 @@ public static class SerializationUtils
     private static bool TryReadVarUInt64(ref ReadOnlySpan<byte> reader, out ulong value)
     {
         value = 0;
-        int shift = 0;
+        var shift = 0;
         while (true)
         {
             if (reader.Length == 0)
                 return false;
 
-            byte b = reader[0];
+            var b = reader[0];
             reader = reader[1..];
-            value |= (ulong)(b & 0x7Ful) << shift;
+            value |= (b & 0x7Ful) << shift;
             if ((b & 0x80) == 0)
                 return true;
 
@@ -420,13 +430,13 @@ public static class SerializationUtils
 
     public static void WriteSingle(ArrayBufferWriter<byte> writer, float value)
     {
-        WriteInt32(writer, BitConverter.SingleToInt32Bits(value), constantLength: true);
+        WriteInt32(writer, BitConverter.SingleToInt32Bits(value), true);
     }
 
     public static bool TryReadSingle(ref ReadOnlySpan<byte> reader, out float value)
     {
         value = 0;
-        if (!TryReadInt32(ref reader, out var raw, constantLength: true))
+        if (!TryReadInt32(ref reader, out var raw, true))
             return false;
 
         value = BitConverter.Int32BitsToSingle(raw);
@@ -435,23 +445,18 @@ public static class SerializationUtils
 
     public static void WriteDouble(ArrayBufferWriter<byte> writer, double value)
     {
-        WriteInt64(writer, BitConverter.DoubleToInt64Bits(value), constantLength: true);
+        WriteInt64(writer, BitConverter.DoubleToInt64Bits(value), true);
     }
 
     public static bool TryReadDouble(ref ReadOnlySpan<byte> reader, out double value)
     {
         value = 0;
-        if (!TryReadInt64(ref reader, out var raw, constantLength: true))
+        if (!TryReadInt64(ref reader, out var raw, true))
             return false;
 
         value = BitConverter.Int64BitsToDouble(raw);
         return true;
     }
-
-    private const byte DecimalIsNegativeFlag = 0x01;
-    private const byte DecimalHasScaleFlag = 0x02;
-    private const byte DecimalHasMidFlag = 0x04;
-    private const byte DecimalHasHighFlag = 0x08;
 
     public static void WriteDecimal(ArrayBufferWriter<byte> writer, decimal value)
     {
@@ -477,13 +482,13 @@ public static class SerializationUtils
         if (scale > 0)
             WriteByte(writer, scale);
 
-        WriteUInt32(writer, b0, constantLength: false);
+        WriteUInt32(writer, b0);
 
         if (b1 != 0)
-            WriteUInt32(writer, b1, constantLength: false);
+            WriteUInt32(writer, b1);
 
         if (b2 != 0)
-            WriteUInt32(writer, b2, constantLength: false);
+            WriteUInt32(writer, b2);
     }
 
     public static bool TryReadDecimal(ref ReadOnlySpan<byte> reader, out decimal value)
@@ -499,37 +504,25 @@ public static class SerializationUtils
 
         byte scale = 0;
         if (hasScale)
-        {
             if (!TryReadByte(ref reader, out scale))
                 return false;
-        }
 
-        if (!TryReadUInt32(ref reader, out var b0, constantLength: false))
+        if (!TryReadUInt32(ref reader, out var b0))
             return false;
 
         uint b1 = 0;
         if (hasMid)
-        {
-            if (!TryReadUInt32(ref reader, out b1, constantLength: false))
+            if (!TryReadUInt32(ref reader, out b1))
                 return false;
-        }
 
         uint b2 = 0;
         if (hasHigh)
-        {
-            if (!TryReadUInt32(ref reader, out b2, constantLength: false))
+            if (!TryReadUInt32(ref reader, out b2))
                 return false;
-        }
 
         value = new decimal((int)b0, (int)b1, (int)b2, isNegative, scale);
         return true;
     }
-
-    private const byte EmptyStringTag = 0b0000_0001;
-    private const byte ShortRawStringTagMin = 0b0000_0011;
-    private const byte ShortRawStringTagMax = 0b0000_1111;
-    private const byte LongRawStringTag = 0b0001_0001;
-    private const byte NullStringTag = 0b1111_1111;
 
     public static void WriteString(ArrayBufferWriter<byte> writer, string? value)
     {
@@ -560,7 +553,7 @@ public static class SerializationUtils
 
         if (StringIdPool.TryGetId(value, out var id))
         {
-            WriteUInt64(writer, id, constantLength: true);
+            WriteUInt64(writer, id, true);
             return;
         }
 

@@ -71,7 +71,7 @@ public static class CardComponentStateSerializer
 
         if (clone == null)
             throw new InvalidOperationException($"Failed to clone component {component.GetType().FullName}");
-        
+
         return clone;
     }
 }

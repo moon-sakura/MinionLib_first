@@ -7,8 +7,8 @@ namespace MinionLib.Utilities;
 public class PetsOrderAccessor(Player player) : IDisposable
 {
     private readonly int _count = GetRawPetsList(player)?.Count ?? 0;
-    private bool _manualRearranged;
     public readonly List<Creature>? Pets = GetRawPetsList(player);
+    private bool _manualRearranged;
 
     public void Dispose()
     {

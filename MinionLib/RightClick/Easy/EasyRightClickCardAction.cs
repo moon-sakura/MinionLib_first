@@ -9,11 +9,10 @@ namespace MinionLib.RightClick.Easy;
 
 public class EasyRightClickCardAction : GameAction
 {
+    private CardModel? _card;
     public Player Player { get; }
     public override ulong OwnerId => Player.NetId;
     public override GameActionType ActionType => GameActionType.CombatPlayPhaseOnly;
-
-    private CardModel? _card;
 
     public NetCombatCard NetCombatCard { get; }
     public ModelId CardModelId { get; }
@@ -57,7 +56,7 @@ public class EasyRightClickCardAction : GameAction
 
     public override INetAction ToNetAction()
     {
-        return new NetEasyRightClickCardAction()
+        return new NetEasyRightClickCardAction
         {
             Card = NetCombatCard,
             ModelId = CardModelId,

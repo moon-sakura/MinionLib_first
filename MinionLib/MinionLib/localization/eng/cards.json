@@ -26,10 +26,7 @@
   "MINIONLIB-GRANT_DECK_DAMAGE_BLOCK_COMPONENT_CARD.description": "Give every component-capable card in your [gold]Deck[/gold] [gold] and [gold]Hand[/gold] Deal 1 damage, Gain 1 Block[/gold].",
   "MINIONLIB-BLANK.title": "Blank",
   "MINIONLIB-BLANK.description": "(There's nothing here)",
-  
   "bound_minion_dead_suffix": " (Dead)",
-  
-  
   "MinionLib.HealOwnerComponent.prefix": "[gold]Heal {Amount}. [/gold]",
   "MinionLib.HealOwnerComponent.postfix": "",
   "MinionLib.DamageBlockComponent.prefix": "[gold]Deal {Damage}, Gain {Block} Block[/gold]",

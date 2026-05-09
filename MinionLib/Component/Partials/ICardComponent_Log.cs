@@ -36,7 +36,6 @@ public partial interface ICardComponent
                 case IEnumerable list and not string:
                     sb.AppendLine($"{currentIndent}{propName}: ");
                     foreach (var item in list)
-                    {
                         switch (item)
                         {
                             case null:
@@ -50,7 +49,6 @@ public partial interface ICardComponent
                                 sb.AppendLine($"{currentIndent}{indentChars}- {item}");
                                 break;
                         }
-                    }
 
                     break;
                 default:

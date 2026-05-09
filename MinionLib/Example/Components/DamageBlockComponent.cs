@@ -27,7 +27,8 @@ public sealed partial class DamageBlockComponent : CardComponent
         await CreatureCmd.GainBlock(Card.Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
-    public override bool TryMergeWith(ICardComponent incoming, ApplyComponentOptions options, out ICardComponent? merged)
+    public override bool TryMergeWith(ICardComponent incoming, ApplyComponentOptions options,
+        out ICardComponent? merged)
     {
         if (incoming is not DamageBlockComponent damageBlock)
         {

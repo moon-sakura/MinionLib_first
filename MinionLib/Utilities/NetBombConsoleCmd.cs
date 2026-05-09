@@ -11,6 +11,14 @@ namespace MinionLib.Utilities;
 
 public class NetBombConsoleCmd : AbstractConsoleCmd
 {
+    public override string CmdName => "netbomb";
+
+    public override string Args => "";
+
+    public override string Description => "Bomb the net combat";
+
+    public override bool IsNetworked => true;
+
     public override CmdResult Process(Player? issuingPlayer, string[] args)
     {
         if (!CombatManager.Instance.IsInProgress)
@@ -19,13 +27,5 @@ public class NetBombConsoleCmd : AbstractConsoleCmd
         var task = CreatureCmd.GainBlock(LocalContext.GetMe(state)!.Creature, 5, ValueProp.Unpowered, null);
         return new CmdResult(task, true, "**You** gain 5 block, which will bomb the net combat");
     }
-
-    public override string CmdName => "netbomb";
-
-    public override string Args => "";
-
-    public override string Description => "Bomb the net combat";
-
-    public override bool IsNetworked => true;
 }
 #endif

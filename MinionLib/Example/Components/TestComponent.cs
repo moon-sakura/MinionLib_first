@@ -13,18 +13,17 @@ public sealed partial class TestComponent : CardComponent
 #pragma warning disable MLSG104
     [ComponentState] public Creature? MyCreature { get; set; }
 #pragma warning restore MLSG104
-    [ComponentState] public SerializableCard? MyCard { get; set; } = new SerializableCard();
+    [ComponentState] public SerializableCard? MyCard { get; set; } = new();
 }
 
 public sealed partial class MyClass : IGeneratedBinarySerializable
 {
-    public void Serialize(ArrayBufferWriter<byte> writer)
-    {
-    }
+    public MyClass(int arg) { }
 
-    public bool Deserialize(ref ReadOnlySpan<byte> reader) => true;
+    public void Serialize(ArrayBufferWriter<byte> writer) { }
 
-    public MyClass(int arg)
+    public bool Deserialize(ref ReadOnlySpan<byte> reader)
     {
+        return true;
     }
 }

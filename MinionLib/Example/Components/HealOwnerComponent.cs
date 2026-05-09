@@ -17,7 +17,8 @@ public sealed partial class HealOwnerComponent : AmountCardComponent
         await CreatureCmd.Heal(Card.Owner.Creature, Amount);
     }
 
-    public override bool TryMergeWith(ICardComponent incoming, ApplyComponentOptions options, out ICardComponent? merged)
+    public override bool TryMergeWith(ICardComponent incoming, ApplyComponentOptions options,
+        out ICardComponent? merged)
     {
         if (incoming is not HealOwnerComponent heal)
         {

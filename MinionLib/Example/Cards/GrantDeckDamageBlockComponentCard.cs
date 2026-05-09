@@ -14,6 +14,7 @@ public sealed class GrantDeckDamageBlockComponentCard()
     : CustomComponentsCardModel(0, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy)
 {
     public override string CustomPortraitPath => "res://images/packed/card_portraits/beta.png";
+
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay,
         ComponentContext componentContext)
     {

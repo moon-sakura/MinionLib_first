@@ -12,7 +12,6 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using MinionLib.Component.Core;
 
-
 namespace MinionLib.Component.Utils;
 
 public abstract partial class TimingCardComponent(params Timing[] timings) : CardComponent

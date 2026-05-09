@@ -14,6 +14,13 @@ namespace MinionLib.Component;
 
 public abstract partial class CardComponent : ICardComponent
 {
+    protected virtual IEnumerable<DynamicVar> SmartVars => [];
+
+    protected virtual IEnumerable<DynamicVar> ExtraVars => [];
+
+    protected virtual LocString PrefixLocString => new("cards", ComponentId + ".prefix");
+
+    protected virtual LocString PostfixLocString => new("cards", ComponentId + ".postfix");
     public abstract string ComponentId { get; }
 
 
@@ -28,19 +35,11 @@ public abstract partial class CardComponent : ICardComponent
             OnAttach();
     }
 
-    protected virtual void OnAttach()
-    {
-    }
-
     public void Detach(bool isInternal = false)
     {
         if (!isInternal)
             OnDetach();
         ComponentsCard = null;
-    }
-
-    protected virtual void OnDetach()
-    {
     }
 
     public virtual ICardComponent DeepClone()
@@ -68,18 +67,12 @@ public abstract partial class CardComponent : ICardComponent
         return false;
     }
 
-    public virtual void Serialize(ArrayBufferWriter<byte> writer)
-    {
-    }
+    public virtual void Serialize(ArrayBufferWriter<byte> writer) { }
 
     public virtual bool Deserialize(ref ReadOnlySpan<byte> reader)
     {
         return true;
     }
-
-    protected virtual IEnumerable<DynamicVar> SmartVars => [];
-
-    protected virtual IEnumerable<DynamicVar> ExtraVars => [];
 
     public DynamicVarSet DynamicVars
     {
@@ -117,41 +110,12 @@ public abstract partial class CardComponent : ICardComponent
 
     public virtual IEnumerable<IHoverTip> HoverTips => [];
 
-    protected virtual LocString PrefixLocString => new LocString("cards", ComponentId + ".prefix");
-
-    protected virtual LocString PostfixLocString => new LocString("cards", ComponentId + ".postfix");
-
-    protected virtual void SmartAddArgs(LocString loc)
-    {
-        DynamicVars.AddTo(loc);
-
-        var energyPrefix = (string)loc.Variables["energyPrefix"];
-        foreach (var (name, variable) in loc.Variables)
-        {
-            if (variable is EnergyVar energyVar)
-                energyVar.ColorPrefix = energyPrefix;
-        }
-    }
-
-    protected virtual string FormatPrefix(LocString loc)
-    {
-        return loc.GetFormattedText();
-    }
-
-    protected virtual string FormatPostfix(LocString loc)
-    {
-        return loc.GetFormattedText();
-    }
-
     public virtual string GetFormattedPrefix(Dictionary<string, object> argsFromCard)
     {
         var loc = PrefixLocString;
         if (!loc.Exists())
             return "";
-        foreach (var (name, variable) in argsFromCard)
-        {
-            loc.AddObj(name, variable);
-        }
+        foreach (var (name, variable) in argsFromCard) loc.AddObj(name, variable);
 
         SmartAddArgs(loc);
         var formatted = FormatPrefix(loc);
@@ -163,10 +127,7 @@ public abstract partial class CardComponent : ICardComponent
         var loc = PostfixLocString;
         if (!loc.Exists())
             return "";
-        foreach (var (name, variable) in argsFromCard)
-        {
-            loc.AddObj(name, variable);
-        }
+        foreach (var (name, variable) in argsFromCard) loc.AddObj(name, variable);
 
         SmartAddArgs(loc);
         var formatted = FormatPostfix(loc);
@@ -191,4 +152,28 @@ public abstract partial class CardComponent : ICardComponent
     public virtual void OnUpgrade(ComponentContext componentContext) { }
 
     public virtual void AfterDowngraded(ComponentContext componentContext) { }
+
+    protected virtual void OnAttach() { }
+
+    protected virtual void OnDetach() { }
+
+    protected virtual void SmartAddArgs(LocString loc)
+    {
+        DynamicVars.AddTo(loc);
+
+        var energyPrefix = (string)loc.Variables["energyPrefix"];
+        foreach (var (name, variable) in loc.Variables)
+            if (variable is EnergyVar energyVar)
+                energyVar.ColorPrefix = energyPrefix;
+    }
+
+    protected virtual string FormatPrefix(LocString loc)
+    {
+        return loc.GetFormattedText();
+    }
+
+    protected virtual string FormatPostfix(LocString loc)
+    {
+        return loc.GetFormattedText();
+    }
 }

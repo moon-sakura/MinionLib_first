@@ -11,7 +11,7 @@ namespace MinionLib.Utilities.BetterExtraArgs;
 [HarmonyPatch]
 public static class BetterExtraArgsPatch
 {
-    static MethodBase TargetMethod()
+    private static MethodBase TargetMethod()
     {
         var previewEnumType = AccessTools.Inner(typeof(CardModel), "DescriptionPreviewType");
 
@@ -22,7 +22,7 @@ public static class BetterExtraArgsPatch
         ]);
     }
 
-    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         var codes = instructions.ToList();
         var targetMethod = AccessTools.Method(typeof(CardModel), "AddExtraArgsToDescription");
@@ -48,7 +48,7 @@ public static class BetterExtraArgsPatch
         }
     }
 
-    static void TryBetterAddExtraArgs(
+    private static void TryBetterAddExtraArgs(
         CardModel thisCard,
         LocString description,
         PileType pileType,

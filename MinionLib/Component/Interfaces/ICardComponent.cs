@@ -17,16 +17,6 @@ public partial interface ICardComponent : IGeneratedBinarySerializable
 
     CardModel? Card => ComponentsCard as CardModel;
 
-    void Attach(IComponentsCardModel card, bool isInternal = false);
-
-    void Detach(bool isInternal = false);
-
-    ICardComponent DeepClone();
-
-    bool TryMergeWith(ICardComponent incoming, ApplyComponentOptions options, out ICardComponent? merged);
-
-    bool TrySubtractiveMergeWith(ICardComponent incoming, ApplyComponentOptions options, out ICardComponent? merged);
-
     DynamicVarSet DynamicVars { get; }
 
     bool ShouldGlowGoldInternal => false;
@@ -45,21 +35,43 @@ public partial interface ICardComponent : IGeneratedBinarySerializable
 
     bool IsPlayable => true;
 
-    PileType? GetResultPileType() => null;
-
     bool HasTurnEndInHandEffect => false;
 
     IEnumerable<IHoverTip> HoverTips => [];
+
+    void Attach(IComponentsCardModel card, bool isInternal = false);
+
+    void Detach(bool isInternal = false);
+
+    ICardComponent DeepClone();
+
+    bool TryMergeWith(ICardComponent incoming, ApplyComponentOptions options, out ICardComponent? merged);
+
+    bool TrySubtractiveMergeWith(ICardComponent incoming, ApplyComponentOptions options, out ICardComponent? merged);
+
+    PileType? GetResultPileType()
+    {
+        return null;
+    }
 
     string GetFormattedPrefix(Dictionary<string, object> argsFromCard);
 
     string GetFormattedPostfix(Dictionary<string, object> argsFromCard);
 
-    bool CanHandleRightClickLocal(RightClickContext context) => CanHandleRightClick(context);
+    bool CanHandleRightClickLocal(RightClickContext context)
+    {
+        return CanHandleRightClick(context);
+    }
 
-    bool CanHandleRightClick(RightClickContext context) => false;
+    bool CanHandleRightClick(RightClickContext context)
+    {
+        return false;
+    }
 
-    Task OnRightClick(PlayerChoiceContext choiceContext, RightClickContext clickContext) => Task.CompletedTask;
+    Task OnRightClick(PlayerChoiceContext choiceContext, RightClickContext clickContext)
+    {
+        return Task.CompletedTask;
+    }
 
     void OnUpgrade(ComponentContext componentContext) { }
 
