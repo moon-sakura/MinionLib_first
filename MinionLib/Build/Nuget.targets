@@ -45,8 +45,11 @@
             <TfmSpecificPackageFile Include="$(PackPckPath)">
                 <PackagePath>Content/$(MSBuildProjectName).pck</PackagePath>
             </TfmSpecificPackageFile>
-            <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)\..\README.md">
+            <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)/../README.md">
                 <PackagePath>README.md</PackagePath>
+            </TfmSpecificPackageFile>
+            <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)/Build/FuYnAloft.Sts2.MinionLib.targets">
+                <PackagePath>build/FuYnAloft.Sts2.MinionLib.targets</PackagePath>
             </TfmSpecificPackageFile>
         </ItemGroup>
     </Target>
