@@ -1,7 +1,5 @@
 using System.ComponentModel;
 using System.Text;
-using BaseLib.Abstracts;
-using BaseLib.Patches.Content;
 using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -469,29 +467,4 @@ public abstract partial class ComponentsCardModel(
     }
 
     #endregion
-}
-
-public abstract class CustomComponentsCardModel : ComponentsCardModel, ICustomModel, ILocalizationProvider
-{
-    public virtual Texture2D? CustomFrame => null;
-
-    public virtual string? CustomPortraitPath => null;
-
-    public virtual Texture2D? CustomPortrait => null;
-
-    protected CustomComponentsCardModel(
-        int canonicalEnergyCost,
-        CardType type,
-        CardRarity rarity,
-        TargetType targetType,
-        bool shouldShowInCardLibrary = true,
-        bool autoAdd = true)
-        : base(canonicalEnergyCost, type, rarity, targetType, shouldShowInCardLibrary)
-    {
-        if (!autoAdd)
-            return;
-        CustomContentDictionary.AddModel(GetType());
-    }
-
-    public virtual List<(string, string)>? Localization => null;
 }

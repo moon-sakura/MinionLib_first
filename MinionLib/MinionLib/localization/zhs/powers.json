@@ -1,5 +1,5 @@
 {
-  "MINIONLIB-MINION_GUARDIAN_POWER.title": "守护者",
-  "MINIONLIB-MINION_GUARDIAN_POWER.description": "挡在你的[gold]前方[/gold]，为你阻挡伤害。获得[gold]格挡[/gold]时，获得等量的[gold]生命[/gold]。",
-  "MINIONLIB-MINION_GUARDIAN_POWER.smartDescription": "挡在你的[gold]前方[/gold]，为你阻挡伤害。获得[gold]格挡[/gold]时，获得等量的[gold]生命[/gold]。"
+  "MINION_GUARDIAN_POWER.title": "守护者",
+  "MINION_GUARDIAN_POWER.description": "挡在你的[gold]前方[/gold]，为你阻挡伤害。获得[gold]格挡[/gold]时，获得等量的[gold]生命[/gold]。",
+  "MINION_GUARDIAN_POWER.smartDescription": "挡在你的[gold]前方[/gold]，为你阻挡伤害。获得[gold]格挡[/gold]时，获得等量的[gold]生命[/gold]。"
 }

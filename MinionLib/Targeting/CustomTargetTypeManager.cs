@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using BaseLib.Patches.Content;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MinionLib.Targeting.Utilities;
 
@@ -17,7 +16,7 @@ public static class CustomTargetTypeManager
 
     public static TargetType Register(ICustomTargetType customTargetType, string @namespace, string name)
     {
-        var targetType = CustomEnums.GenerateKey<TargetType>(@namespace, name);
+        var targetType = (TargetType)Calculate32BitHash($"{@namespace}.{name}");
         RegisteredCustomTypes.Add(targetType);
         CustomTypeDefinitions.Add(targetType, customTargetType);
         return targetType;
@@ -29,7 +28,7 @@ public static class CustomTargetTypeManager
         string expr = "")
     {
         var stackTrace = new StackTrace();
-        var ns = stackTrace.GetFrame(1)?.GetMethod()?.DeclaringType?.FullName?.Split('.').First()
+        var ns = stackTrace.GetFrame(1)?.GetMethod()?.DeclaringType?.FullName?.Split('.').FirstOrDefault()
                  ?? throw new InvalidOperationException(
                      "Unable to automatically retrieve the namespace. Please specify it manually.");
         var name = new string(expr.Where(c => !char.IsWhiteSpace(c)).ToArray());
@@ -48,5 +47,20 @@ public static class CustomTargetTypeManager
             return CustomTypeDefinitions.TryGetValue(targetType, out customTargetType);
         customTargetType = null;
         return false;
+    }
+
+    private static int Calculate32BitHash(string str)
+    {
+        unchecked
+        {
+            var hash = 2166136261U;
+            foreach (var c in str)
+            {
+                hash ^= c;
+                hash *= 16777619U;
+            }
+
+            return (int)hash;
+        }
     }
 }

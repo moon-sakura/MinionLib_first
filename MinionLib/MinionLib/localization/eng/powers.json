@@ -1,5 +1,5 @@
 {
-  "MINIONLIB-MINION_GUARDIAN_POWER.title": "Guardian",
-  "MINIONLIB-MINION_GUARDIAN_POWER.description": "Stand [gold]in front of[/gold] you, blocking damage for you. When gaining [gold]Block[/gold], gain that much [gold]Health[/gold].",
-  "MINIONLIB-MINION_GUARDIAN_POWER.smartDescription": "Stand [gold]in front of[/gold] you, blocking damage for you. When gaining [gold]Block[/gold], gain that much [gold]Health[/gold]."
+  "MINION_GUARDIAN_POWER.title": "Guardian",
+  "MINION_GUARDIAN_POWER.description": "Stand [gold]in front of[/gold] you, blocking damage for you. When gaining [gold]Block[/gold], gain that much [gold]Health[/gold].",
+  "MINION_GUARDIAN_POWER.smartDescription": "Stand [gold]in front of[/gold] you, blocking damage for you. When gaining [gold]Block[/gold], gain that much [gold]Health[/gold]."
 }

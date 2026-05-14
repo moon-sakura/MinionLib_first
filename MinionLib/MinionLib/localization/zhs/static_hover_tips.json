@@ -1,5 +1,4 @@
 {
-  "action.title": "行动",
-  "action.description": "点击此实体以进行特定动作。"
+  "MinionLib-Action.title": "行动",
+  "MinionLib-Action.description": "点击此实体以进行特定动作。"
 }
-
