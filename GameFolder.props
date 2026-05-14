@@ -4,9 +4,11 @@
         <IsWindows>false</IsWindows>
         <IsLinux>false</IsLinux>
         <IsOSX>false</IsOSX>
+        <IsLocal>false</IsLocal>
         <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows'))">true</IsWindows>
         <IsLinux Condition="$([MSBuild]::IsOSPlatform('Linux'))">true</IsLinux>
         <IsOSX Condition="$([MSBuild]::IsOSPlatform('OSX'))">true</IsOSX>
+        <IsLocal Condition="'$(CI)' != 'true'">true</IsLocal>
     </PropertyGroup>
 
     <!-- 导入本地配置 -->
@@ -48,6 +50,7 @@
     <!-- CI -->
     <PropertyGroup Condition="'$(CI)' == 'true'">
         <GodotLogImportance>High</GodotLogImportance>
+
     </PropertyGroup>
 
     <!-- Check CI Environment -->
@@ -55,7 +58,6 @@
         <Message Importance="high" Text="Detected CI environment, validating paths..."/>
         <Error Condition="'$(GodotPath)' == ''" Text="GodotPath must be set for CI builds."/>
         <Error Condition="'$(ModsPath)' == ''" Text="ModsPath must be set for CI builds."/>
-        <Error Condition="'$(Sts2DataDir)' == ''" Text="Sts2DataDir must be set for CI builds."/>
     </Target>
 
 </Project>

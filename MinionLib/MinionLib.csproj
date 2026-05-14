@@ -5,20 +5,20 @@
         <Nullable>enable</Nullable> <!--Makes code analysis regarding null values stricter.-->
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <DefaultItemExcludes>packages/**</DefaultItemExcludes>
-        <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
-        <PathMap>$(AppOutputBase)=.\</PathMap>
+        <AppOutputBase>$(MSBuildProjectDirectory)/</AppOutputBase>
+        <PathMap>$(AppOutputBase)=./</PathMap>
         <LangVersion>preview</LangVersion>
 
         <Version>100.0.0.0-dev</Version> <!-- 版本号由命令行参数传入 -->
     </PropertyGroup>
 
-    <Import Project="..\GameFolder.props" Condition="Exists('..\GameFolder.props')"/>
+    <Import Project="../GameFolder.props" Condition="Exists('../GameFolder.props')"/>
 
     <PropertyGroup>
         <NoWarn>$(NoWarn);MSB3270</NoWarn>
     </PropertyGroup>
 
-    <ItemGroup Condition="Exists('$(Sts2DataDir)')">
+    <ItemGroup Condition="Exists('$(Sts2DataDir)') And '$(IsLocal)' == 'true'">
         <Reference Include="0Harmony">
             <HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
             <Private>false</Private>
@@ -27,6 +27,11 @@
             <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
             <Private>false</Private>
         </Reference>
+        <PackageReference Include="FuYnAloft.Sts2.References" Version="*-*" GeneratePathProperty="true" PrivateAssets="all" ExcludeAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(CI)' == 'true'">
+        <PackageReference Include="FuYnAloft.Sts2.References" Version="*-*" GeneratePathProperty="true" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -35,14 +40,6 @@
         <None Include="MinionLib/**"/>
         <None Include="images/**"/>
         <None Include="Tools/**"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <!-- 屏蔽源生成器项目 -->
-        <Compile Remove="MinionLib.Generators\**"/>
-        <Content Remove="MinionLib.Generators\**"/>
-        <None Remove="MinionLib.Generators\**"/>
-        <EmbeddedResource Remove="MinionLib.Generators\**"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -57,15 +54,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\MinionLib.Generators\MinionLib.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" Pack="false"/>
+        <ProjectReference Include="../MinionLib.Generators/MinionLib.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" Pack="false"/>
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths" BeforeTargets="BeforeBuild">
-        <Error Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'" Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')"/>
+        <Error Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'" Condition="'$(Sts2DataDir)' != '' And !Exists('$(Sts2DataDir)')"/>
         <Error Text=" Godot not found at path '$(GodotPath)'" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')"/>
     </Target>
 
-    <Import Project="Build/ModBuild.targets" Condition="Exists('Build/ModBuild.targets')"/>
+    <Import Project="../ModBuild.targets" Condition="Exists('../ModBuild.targets')"/>
 
     <Import Project="Build/Nuget.targets" Condition="Exists('Build/Nuget.targets')"/>
 </Project>

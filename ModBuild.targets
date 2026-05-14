@@ -2,14 +2,16 @@
     <!-- 自动更新 json 中的版本号 -->
     <Target Name="UpdateManifestVersion" BeforeTargets="BeforeBuild;PreparePckForPack">
         <PropertyGroup>
-            <ManifestTemplateFile>$(MSBuildProjectDirectory)\MinionLib.template.json</ManifestTemplateFile>
-            <ManifestOutputFile>$(MSBuildProjectDirectory)\MinionLib.json</ManifestOutputFile>
+            <GameVersion>$([System.IO.Path]::GetFileName($(PkgFuYnAloft_Sts2_References)))</GameVersion>
+            <GameVersion Condition="$(GameVersion.EndsWith('-beta'))">$(GameVersion.Replace('-beta', ''))</GameVersion>
+            <ManifestTemplateFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).template.json</ManifestTemplateFile>
+            <ManifestOutputFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).json</ManifestOutputFile>
         </PropertyGroup>
 
         <Message Text="Updating version in $(ManifestOutputFile) to $(Version)" Importance="high"/>
 
         <ItemGroup>
-            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile)).Replace('VERSION-CODE', '$(Version)'))"/>
+            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile)).Replace('VERSION-CODE', '$(Version)').Replace('GAME-VERSION', '$(GameVersion)'))"/>
         </ItemGroup>
 
         <WriteLinesToFile File="$(ManifestOutputFile)" Lines="@(FileLines)" Overwrite="true" WriteOnlyWhenDifferent="true"/>
@@ -19,7 +21,7 @@
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
         <Message Text="Copying .dll and manifest to mods folder." Importance="high"/>
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
-        <Copy SourceFiles="MinionLib.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
+        <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
     </Target>
 
     <!--执行 Godot 导出命令将 .pck 导出到 mods 目录 -->
