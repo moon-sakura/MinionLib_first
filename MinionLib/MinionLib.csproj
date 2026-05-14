@@ -38,7 +38,6 @@
         <None Include="project.godot"/>
         <None Include="MinionLib/**"/>
         <None Include="images/**"/>
-        <None Include="Example/MinionTest/**"/>
         <None Include="Tools/**"/>
     </ItemGroup>
 
@@ -60,12 +59,6 @@
         <EmbeddedResource Remove="shaders/**"/>
         <EmbeddedResource Remove="images/**"/>
     </ItemGroup>
-
-    <!-- 当配置为 ExportRelease 时，排除 example 目录下的所有 C# 文件 -->
-    <ItemGroup Condition="'$(Configuration)' == 'ExportRelease'">
-        <Compile Remove="Example/**/*.cs"/>
-    </ItemGroup>
-
 
     <ItemGroup>
         <ProjectReference Include="..\MinionLib.Generators\MinionLib.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" Pack="false"/>
