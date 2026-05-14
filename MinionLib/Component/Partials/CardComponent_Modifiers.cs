@@ -325,4 +325,10 @@ public abstract partial class CardComponent
   {
     return currentExtraText;
   }
+
+  public virtual bool TryModifyEnergyCostInCombatLate(CardModel card, Decimal currentCost, out Decimal modifiedCost)
+  {
+      modifiedCost = currentCost;
+      return false;
+  }
 }

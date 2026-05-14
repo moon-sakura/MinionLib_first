@@ -317,13 +317,13 @@ public abstract partial class ComponentsCardModel
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
-    public sealed override Decimal ModifyOrbValue(Player player, Decimal value)
+    public sealed override Decimal ModifyOrbValue(OrbModel orb, Decimal value)
     {
         EnsureComponentsInitialized();
         var result = value;
         foreach (var component in _components!)
-            result = component.ModifyOrbValue(player, result);
-        return ModifyOrbValueC(player, result);
+            result = component.ModifyOrbValue(orb, result);
+        return ModifyOrbValueC(orb, result);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -635,6 +635,30 @@ public abstract partial class ComponentsCardModel
         foreach (var component in _components!)
             result = component.ModifyExtraRestSiteHealText(player, result);
         return ModifyExtraRestSiteHealTextC(player, result);
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool TryModifyEnergyCostInCombatLate(CardModel card, Decimal originalCost, out Decimal modifiedCost)
+    {
+        EnsureComponentsInitialized();
+        var flag = false;
+        var currentCost = originalCost;
+        foreach (var component in _components!)
+        {
+            if (component.TryModifyEnergyCostInCombatLate(card, currentCost, out var modified))
+            {
+                flag = true;
+                currentCost = modified;
+            }
+        }
+        if (TryModifyEnergyCostInCombatLateC(card, currentCost, out var modifiedC))
+        {
+            flag = true;
+            currentCost = modifiedC;
+        }
+        modifiedCost = flag ? currentCost : originalCost;
+        return flag;
     }
 
 }
