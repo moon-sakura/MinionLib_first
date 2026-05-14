@@ -1,0 +1,55 @@
+<Project>
+    <!-- 1. NuGet 包元数据定义 -->
+    <PropertyGroup>
+        <PackageId>FuYnAloft.Sts2.MinionLib</PackageId>
+        <Authors>FuYnAloft</Authors>
+        <Description>A framework library for Slay the Spire 2 modding. Provides standardized systems for implementing "Minions" (summoned allies) and "Component-based Cards" (modular card logic). Includes source generators to minimize boilerplate.</Description>
+        <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/FuYnAloft/MinionLib</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <IncludeContentInPack>false</IncludeContentInPack>
+        <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddFilesToNuGetPackage</TargetsForTfmSpecificContentInPackage>
+    </PropertyGroup>
+
+    <!-- 2. NuGet 打包相关 Target 任务 -->
+    <Target Name="EnforceVersionOnPack" BeforeTargets="AddFilesToNuGetPackage">
+        <Error Condition="'$(Version)' == '100.0.0.0-dev'" Text="[打包失败] 发布 NuGet 包时需要指定版本号！示例: -p:Version=0.1.0"/>
+    </Target>
+
+    <!-- 打包前准备 PCK 文件 -->
+    <Target Name="PreparePckForPack" BeforeTargets="AddFilesToNuGetPackage" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)')">
+        <MakeDir Directories="$(BaseIntermediateOutputPath)pack"/>
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(PackPckPath)&quot;"
+              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" Condition="'$(Configuration)' != 'ExportRelease'"/>
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExportNoExample&quot; &quot;$(PackPckPath)&quot;"
+              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" Condition="'$(Configuration)' == 'ExportRelease'"/>
+    </Target>
+
+    <!-- 定义 PCK 文件和生成器 DLL 的路径属性 -->
+    <PropertyGroup>
+        <PackPckPath>$(BaseIntermediateOutputPath)pack/$(MSBuildProjectName).pck</PackPckPath>
+        <GeneratorDllPath>$(MSBuildProjectDirectory)\MinionLib.Generators\bin\$(Configuration)\netstandard2.0\MinionLib.Generators.dll</GeneratorDllPath>
+    </PropertyGroup>
+
+    <!-- 将特定文件塞入 NuGet 包中 -->
+    <Target Name="AddFilesToNuGetPackage" DependsOnTargets="ResolveProjectReferences;Build">
+        <ItemGroup>
+            <TfmSpecificPackageFile Include="$(ManifestOutputFile)">
+                <PackagePath>Content/MinionLib.json</PackagePath>
+            </TfmSpecificPackageFile>
+            <TfmSpecificPackageFile Include="$(GeneratorDllPath)">
+                <PackagePath>analyzers/dotnet/cs/MinionLib.Generators.dll</PackagePath>
+            </TfmSpecificPackageFile>
+            <TfmSpecificPackageFile Include="$(PackPckPath)">
+                <PackagePath>Content/$(MSBuildProjectName).pck</PackagePath>
+            </TfmSpecificPackageFile>
+            <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)\README.md">
+                <PackagePath>README.md</PackagePath>
+            </TfmSpecificPackageFile>
+        </ItemGroup>
+    </Target>
+</Project>

@@ -1,0 +1,15 @@
+<Project>
+    <PropertyGroup>
+        <!-- 
+            在这里配置你本机的 Godot 路径和 Steam 库路径。
+            复制本文件并重命名为 LocalSettings.props，然后取消注释下面的路径配置。
+        -->
+
+        <!-- Windows 用户示例 -->
+        <!--
+        <GodotPath>D:/Tools/MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
+        <SteamLibraryPath>E:/SteamLibrary/steamapps</SteamLibraryPath>
+        -->
+
+    </PropertyGroup>
+</Project>
