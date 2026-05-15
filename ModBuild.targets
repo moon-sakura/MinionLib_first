@@ -5,6 +5,7 @@
             <GameVersion>$([System.IO.Path]::GetFileName($(PkgFuYnAloft_Sts2_References)))</GameVersion>
             <GameVersion Condition="$(GameVersion.EndsWith('-beta'))">$(GameVersion.Replace('-beta', ''))</GameVersion>
             <RitsuVersion>$([System.IO.Path]::GetFileName($(PkgSTS2_RitsuLib)))</RitsuVersion>
+            <BaseLibVersion>$([System.IO.Path]::GetFileName($(PkgAlchyr_Sts2_BaseLib)))</BaseLibVersion>
 
             <ManifestTemplateFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).template.json</ManifestTemplateFile>
             <ManifestOutputFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).json</ManifestOutputFile>
@@ -13,7 +14,12 @@
         <Message Text="Updating version in $(ManifestOutputFile) to $(Version)" Importance="high"/>
 
         <ItemGroup>
-            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile)).Replace('__THIS_NAME__', '$(MSBuildProjectName)').Replace('__THIS_VERSION__', '$(Version)').Replace('__GAME_VERSION__', '$(GameVersion)').Replace('__RITSU_VERSION__', '$(RitsuVersion)'))"/>
+            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile))
+                .Replace('__THIS_NAME__', '$(MSBuildProjectName)')
+                .Replace('__THIS_VERSION__', '$(Version)')
+                .Replace('__GAME_VERSION__', '$(GameVersion)')
+                .Replace('__RITSU_VERSION__', '$(RitsuVersion)')
+                .Replace('__BASELIB_VERSION__', '$(BaseLibVersion)'))"/>
         </ItemGroup>
 
         <WriteLinesToFile File="$(ManifestOutputFile)" Lines="@(FileLines)" Overwrite="true" WriteOnlyWhenDifferent="true"/>

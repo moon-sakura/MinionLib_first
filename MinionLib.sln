@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinionLib.Generators", "Min
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinionLib.RitsuAdapters", "MinionLib.RitsuAdapters\MinionLib.RitsuAdapters.csproj", "{6343E9C7-16FC-416F-B3D9-C6985777DD2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinionLib.BaseLibAdapters", "MinionLib.BaseLibAdapters\MinionLib.BaseLibAdapters.csproj", "{148F09B9-DD2A-4489-910A-53B04CCE678B}"
+EndProject
 
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,12 @@ Global
 		{6343E9C7-16FC-416F-B3D9-C6985777DD2B}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
 		{6343E9C7-16FC-416F-B3D9-C6985777DD2B}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
 		{6343E9C7-16FC-416F-B3D9-C6985777DD2B}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{148F09B9-DD2A-4489-910A-53B04CCE678B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{148F09B9-DD2A-4489-910A-53B04CCE678B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{148F09B9-DD2A-4489-910A-53B04CCE678B}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{148F09B9-DD2A-4489-910A-53B04CCE678B}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{148F09B9-DD2A-4489-910A-53B04CCE678B}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{148F09B9-DD2A-4489-910A-53B04CCE678B}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal
 
