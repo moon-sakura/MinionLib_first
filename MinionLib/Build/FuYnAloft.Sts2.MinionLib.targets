@@ -1,21 +1,64 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
     <PropertyGroup>
-        <MinionLib_PkgRoot>$(MSBuildThisFileDirectory)..\</MinionLib_PkgRoot>
+        <MinionLib_PkgRoot>$(MSBuildThisFileDirectory)../</MinionLib_PkgRoot>
     </PropertyGroup>
 
-    <Target Name="MinionLib_AutoCopy" AfterTargets="PostBuildEvent" Condition="'$(ModsPath)' != ''">
+    <!-- 1. 检测是否引用了 STS2.RitsuLib -->
+    <Target Name="MinionLib_DetectRitsu" BeforeTargets="ResolveAssemblyReferences">
         <PropertyGroup>
-            <TargetModDir>$(ModsPath)MinionLib\</TargetModDir>
+            <!-- 检查 PackageReference 或 Reference 中是否有名为 STS2.RitsuLib 的项 -->
+            <MinionLib_HasRitsu Condition="'%(PackageReference.Identity)' == 'STS2.RitsuLib' or '%(Reference.Identity)' == 'STS2.RitsuLib'">true</MinionLib_HasRitsu>
         </PropertyGroup>
 
+        <Message Condition="'$(MinionLib_HasRitsu)' == 'true'"
+                 Text="[MinionLib] Detected STS2.RitsuLib. Enabling Ritsu Adapters." Importance="high"/>
+    </Target>
+
+    <!-- 2. 如果检测到 Ritsu，则自动添加适配器 Dll 的编译引用 -->
+    <Target Name="MinionLib_AddAdapterReference"
+            BeforeTargets="BeforeCompile"
+            DependsOnTargets="MinionLib_DetectRitsu"
+            Condition="'$(MinionLib_HasRitsu)' == 'true'">
         <ItemGroup>
-            <CoreFiles Include="$(MinionLib_PkgRoot)lib\**\MinionLib.dll" />
-            <CoreFiles Include="$(MinionLib_PkgRoot)Content\MinionLib.pck" />
-            <CoreFiles Include="$(MinionLib_PkgRoot)Content\MinionLib.json" />
+            <Reference Include="MinionLib.RitsuAdapters">
+                <HintPath>$(MinionLib_PkgRoot)adapters/MinionLib.RitsuAdapters.dll</HintPath>
+                <Private>true</Private>
+            </Reference>
+        </ItemGroup>
+    </Target>
+
+    <!-- 3. 分别拷贝核心文件和适配器文件到不同的文件夹 -->
+    <Target Name="MinionLib_AutoCopy"
+            AfterTargets="PostBuildEvent"
+            Condition="'$(ModsPath)' != ''"
+            DependsOnTargets="MinionLib_DetectRitsu">
+
+        <!-- 定义核心文件列表 -->
+        <ItemGroup>
+            <MinionCoreFiles Include="$(MinionLib_PkgRoot)lib/**/MinionLib.dll"/>
+            <MinionCoreFiles Include="$(MinionLib_PkgRoot)Content/MinionLib.pck"/>
+            <MinionCoreFiles Include="$(MinionLib_PkgRoot)Content/MinionLib.json"/>
         </ItemGroup>
 
-        <Message Text="[MinionLib] Copying core files..." Importance="high" />
-        <Copy SourceFiles="@(CoreFiles)" DestinationFolder="$(TargetModDir)" SkipUnchangedFiles="true" />
+        <!-- 定义适配器文件列表 -->
+        <ItemGroup Condition="'$(MinionLib_HasRitsu)' == 'true'">
+            <RitsuAdapterFiles Include="$(MinionLib_PkgRoot)adapters/MinionLib.RitsuAdapters.dll"/>
+            <RitsuAdapterFiles Include="$(MinionLib_PkgRoot)adapters/MinionLib.RitsuAdapters.json"/>
+        </ItemGroup>
+
+        <!-- 执行拷贝：核心库 -->
+        <Message Text="[MinionLib] Copying core files to $(ModsPath)MinionLib/" Importance="high"/>
+        <Copy SourceFiles="@(MinionCoreFiles)"
+              DestinationFolder="$(ModsPath)MinionLib/"
+              SkipUnchangedFiles="true"/>
+
+        <!-- 执行拷贝：适配器 (仅在检测到 Ritsu 时) -->
+        <Message Condition="'$(MinionLib_HasRitsu)' == 'true'"
+                 Text="[MinionLib] Copying Ritsu adapters to $(ModsPath)MinionLib.RitsuAdapters/" Importance="high"/>
+        <Copy Condition="'$(MinionLib_HasRitsu)' == 'true'"
+              SourceFiles="@(RitsuAdapterFiles)"
+              DestinationFolder="$(ModsPath)MinionLib.RitsuAdapters/"
+              SkipUnchangedFiles="true"/>
     </Target>
+
 </Project>

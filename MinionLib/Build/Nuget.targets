@@ -30,7 +30,9 @@
     <!-- 定义 PCK 文件和生成器 DLL 的路径属性 -->
     <PropertyGroup>
         <PackPckPath>$(BaseIntermediateOutputPath)pack/$(MSBuildProjectName).pck</PackPckPath>
-        <GeneratorDllPath>$(MSBuildProjectDirectory)\..\MinionLib.Generators\bin\$(Configuration)\netstandard2.0\MinionLib.Generators.dll</GeneratorDllPath>
+        <GeneratorDllPath>$(MSBuildProjectDirectory)/../MinionLib.Generators/bin/$(Configuration)/netstandard2.0/MinionLib.Generators.dll</GeneratorDllPath>
+        <RitsuAdaptersDllPath>$(MSBuildProjectDirectory)/../MinionLib.RitsuAdapters/bin/$(Configuration)/net9.0/MinionLib.RitsuAdapters.dll</RitsuAdaptersDllPath>
+        <RitsuAdaptersManifestPath>$(MSBuildProjectDirectory)/../MinionLib.RitsuAdapters/MinionLib.RitsuAdapters.json</RitsuAdaptersManifestPath>
     </PropertyGroup>
 
     <!-- 将特定文件塞入 NuGet 包中 -->
@@ -50,6 +52,14 @@
             </TfmSpecificPackageFile>
             <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)/Build/FuYnAloft.Sts2.MinionLib.targets">
                 <PackagePath>build/FuYnAloft.Sts2.MinionLib.targets</PackagePath>
+            </TfmSpecificPackageFile>
+
+            <!-- RitsuAdapters 相关文件 -->
+            <TfmSpecificPackageFile Include="$(RitsuAdaptersDllPath)">
+                <PackagePath>adapters/MinionLib.RitsuAdapters.dll</PackagePath>
+            </TfmSpecificPackageFile>
+            <TfmSpecificPackageFile Include="$(RitsuAdaptersManifestPath)">
+                <PackagePath>adapters/MinionLib.RitsuAdapters.json</PackagePath>
             </TfmSpecificPackageFile>
         </ItemGroup>
     </Target>
