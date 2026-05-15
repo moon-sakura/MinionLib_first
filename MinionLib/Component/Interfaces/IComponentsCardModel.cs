@@ -45,8 +45,6 @@ public interface IComponentsCardModel
 
     IReadOnlyList<T> GetComponents<T>() where T : class, ICardComponent;
 
-    void EnsureComponentsInitialized();
-
     # region Deprecated
 
     [Obsolete(
