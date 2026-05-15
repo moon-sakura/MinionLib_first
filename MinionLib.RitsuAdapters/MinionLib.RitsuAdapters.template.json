@@ -1,10 +1,10 @@
 {
-  "id": "MinionLib",
-  "name": "MinionLib",
+  "id": "MinionLib.RitsuLibAdapters",
+  "name": "MinionLib.RitsuLibAdapters",
   "author": "FuYnAloft",
-  "description": "A library mod that provides basic functionalities for minion mechanics and component-based cards.\n一个为随从机制和基于组件的卡牌提供基础功能的库模组。",
+  "description": "Adapters for RitsuLib to better work with MinionLib.\n适用于 RitsuLib 的适配器，使其更好地与 MinionLib 配合使用。",
   "version": "VERSION-CODE",
-  "has_pck": true,
+  "has_pck": false,
   "has_dll": true,
   "dependencies": [
     {
