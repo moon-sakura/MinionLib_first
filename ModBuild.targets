@@ -8,6 +8,8 @@
             <BaseLibVersion>$([System.IO.Path]::GetFileName($(PkgAlchyr_Sts2_BaseLib)))</BaseLibVersion>
 
             <ManifestTemplateFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).template.json</ManifestTemplateFile>
+            <ManifestTemplateFile Condition="'$(IsAdapterProject)' == 'true'">$(MSBuildProjectDirectory)/../Adapters.template.json</ManifestTemplateFile>
+
             <ManifestOutputFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).json</ManifestOutputFile>
         </PropertyGroup>
 
@@ -18,8 +20,9 @@
                 .Replace('__THIS_NAME__', '$(MSBuildProjectName)')
                 .Replace('__THIS_VERSION__', '$(Version)')
                 .Replace('__GAME_VERSION__', '$(GameVersion)')
-                .Replace('__RITSU_VERSION__', '$(RitsuVersion)')
-                .Replace('__BASELIB_VERSION__', '$(BaseLibVersion)'))"/>
+                .Replace('__ADAPTEE_ID__', '$(AdapteeId)')
+                .Replace('__STS2-RitsuLib_VERSION__', '$(RitsuVersion)')
+                .Replace('__BaseLib_VERSION__', '$(BaseLibVersion)'))"/>
         </ItemGroup>
 
         <WriteLinesToFile File="$(ManifestOutputFile)" Lines="@(FileLines)" Overwrite="true" WriteOnlyWhenDifferent="true"/>

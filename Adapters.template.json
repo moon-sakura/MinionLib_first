@@ -2,7 +2,7 @@
   "id": "__THIS_NAME__",
   "name": "__THIS_NAME__",
   "author": "FuYnAloft",
-  "description": "Adapters for RitsuLib to better work with MinionLib.\n适用于 RitsuLib 的适配器，使其更好地与 MinionLib 配合使用。",
+  "description": "Adapters for __ADAPTEE_ID__ to better work with MinionLib.\n适用于 __ADAPTEE_ID__ 的适配器，使其更好地与 MinionLib 配合使用。",
   "version": "__THIS_VERSION__",
   "has_pck": false,
   "has_dll": true,
@@ -12,8 +12,8 @@
       "min_version": "__THIS_VERSION__"
     },
     {
-      "id": "STS2-RitsuLib",
-      "min_version": "__RITSU_VERSION__"
+      "id": "__ADAPTEE_ID__",
+      "min_version": "____ADAPTEE_ID___VERSION__"
     }
   ],
   "affects_gameplay": true,
