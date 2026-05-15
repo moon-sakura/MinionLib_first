@@ -1,0 +1,19 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <_--PROJECT-NAME--_PkgRoot>$(MSBuildThisFileDirectory)../</_--PROJECT-NAME--_PkgRoot>
+        <ShouldAutoCopyMinionLib Condition="'$(ShouldAutoCopyMinionLib)' == ''">true</ShouldAutoCopyMinionLib>
+    </PropertyGroup>
+
+    <Target Name="_--PROJECT-NAME--_AutoCopy"
+            AfterTargets="PostBuildEvent"
+            Condition="'$(ModsPath)' != '' AND '$(ShouldAutoCopyMinionLib)' == 'true'">
+        <ItemGroup>
+            <_--PROJECT-NAME--_Files Include="$(_--PROJECT-NAME--_PkgRoot)lib/**/--PROJECT-NAME--.dll"/>
+            <_--PROJECT-NAME--_Files Include="$(_--PROJECT-NAME--_PkgRoot)Content/--PROJECT-NAME--.json"/>
+        </ItemGroup>
+        <Message Text="[--PROJECT-NAME--] Copying core files to $(ModsPath)--PROJECT-NAME--/" Importance="high"/>
+        <Copy SourceFiles="@(_--PROJECT-NAME--_Files)"
+              DestinationFolder="$([System.IO.Path]::Combine('$(ModsPath)', '--PROJECT-NAME--'))"
+              SkipUnchangedFiles="true"/>
+    </Target>
+</Project>

@@ -43,7 +43,10 @@
 
     <ItemGroup>
         <None Include=".gitignore"/>
+        <None Include="README.md"/>
     </ItemGroup>
     
     <Import Project="../ModBuild.targets" Condition="Exists('../ModBuild.targets')"/>
+
+    <Import Project="../AdaptersNuget.targets" Condition="Exists('../AdaptersNuget.targets')"/>
 </Project>
