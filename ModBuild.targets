@@ -4,6 +4,8 @@
         <PropertyGroup>
             <GameVersion>$([System.IO.Path]::GetFileName($(PkgFuYnAloft_Sts2_References)))</GameVersion>
             <GameVersion Condition="$(GameVersion.EndsWith('-beta'))">$(GameVersion.Replace('-beta', ''))</GameVersion>
+            <RitsuVersion>$([System.IO.Path]::GetFileName($(PkgSTS2_RitsuLib)))</RitsuVersion>
+
             <ManifestTemplateFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).template.json</ManifestTemplateFile>
             <ManifestOutputFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).json</ManifestOutputFile>
         </PropertyGroup>
@@ -11,7 +13,7 @@
         <Message Text="Updating version in $(ManifestOutputFile) to $(Version)" Importance="high"/>
 
         <ItemGroup>
-            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile)).Replace('VERSION-CODE', '$(Version)').Replace('GAME-VERSION', '$(GameVersion)'))"/>
+            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile)).Replace('VERSION-CODE', '$(Version)').Replace('GAME-VERSION', '$(GameVersion)').Replace('RITSU-VERSION', '$(RitsuVersion)'))"/>
         </ItemGroup>
 
         <WriteLinesToFile File="$(ManifestOutputFile)" Lines="@(FileLines)" Overwrite="true" WriteOnlyWhenDifferent="true"/>
