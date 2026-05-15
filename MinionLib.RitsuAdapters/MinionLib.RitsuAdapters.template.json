@@ -1,17 +1,17 @@
 {
-  "id": "MinionLib.RitsuLibAdapters",
-  "name": "MinionLib.RitsuLibAdapters",
+  "id": "__THIS_NAME__",
+  "name": "__THIS_NAME__",
   "author": "FuYnAloft",
   "description": "Adapters for RitsuLib to better work with MinionLib.\n适用于 RitsuLib 的适配器，使其更好地与 MinionLib 配合使用。",
-  "version": "VERSION-CODE",
+  "version": "__THIS_VERSION__",
   "has_pck": false,
   "has_dll": true,
   "dependencies": [
     {
       "id": "STS2-RitsuLib",
-      "min_version": "RITSU-VERSION"
+      "min_version": "__RITSU_VERSION__"
     }
   ],
   "affects_gameplay": true,
-  "min_game_version": "GAME-VERSION"
+  "min_game_version": "__GAME_VERSION__"
 }

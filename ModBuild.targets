@@ -13,7 +13,7 @@
         <Message Text="Updating version in $(ManifestOutputFile) to $(Version)" Importance="high"/>
 
         <ItemGroup>
-            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile)).Replace('VERSION-CODE', '$(Version)').Replace('GAME-VERSION', '$(GameVersion)').Replace('RITSU-VERSION', '$(RitsuVersion)'))"/>
+            <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile)).Replace('__THIS_NAME__', '$(MSBuildProjectName)').Replace('__THIS_VERSION__', '$(Version)').Replace('__GAME_VERSION__', '$(GameVersion)').Replace('__RITSU_VERSION__', '$(RitsuVersion)'))"/>
         </ItemGroup>
 
         <WriteLinesToFile File="$(ManifestOutputFile)" Lines="@(FileLines)" Overwrite="true" WriteOnlyWhenDifferent="true"/>
