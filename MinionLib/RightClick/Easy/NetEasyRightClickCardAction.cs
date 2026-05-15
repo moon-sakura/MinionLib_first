@@ -9,26 +9,70 @@ namespace MinionLib.RightClick.Easy;
 
 public struct NetEasyRightClickCardAction : INetAction
 {
-    public NetCombatCard Card;
+    public EasyRightClickableModelType Type;
     public ModelId ModelId;
+
+    // Card
+    public NetCombatCard NetCombatCard;
+
+    // Power
+    public uint CreatureCombatId;
+
+    // Potion
+    public uint PotionIndex;
+
     public RightClickContext.Payload Extra;
+    public bool WasEnqueuedInCombat;
 
     public void Serialize(PacketWriter writer)
     {
-        writer.Write(Card);
-        writer.WriteModelEntry(ModelId);
+        writer.WriteEnum(Type);
+        writer.WriteFullModelId(ModelId);
+        switch (Type)
+        {
+            case EasyRightClickableModelType.Card:
+                writer.Write(NetCombatCard);
+                break;
+            case EasyRightClickableModelType.Power:
+                writer.WriteUInt(CreatureCombatId);
+                break;
+            case EasyRightClickableModelType.Potion:
+                writer.WriteUInt(PotionIndex);
+                break;
+        }
+
         writer.Write(Extra);
+        writer.WriteBool(WasEnqueuedInCombat);
     }
 
     public void Deserialize(PacketReader reader)
     {
-        Card = reader.Read<NetCombatCard>();
-        ModelId = reader.ReadModelIdAssumingType<CardModel>();
+        Type = reader.ReadEnum<EasyRightClickableModelType>();
+        ModelId = reader.ReadFullModelId();
+        switch (Type)
+        {
+            case EasyRightClickableModelType.Card:
+                NetCombatCard = reader.Read<NetCombatCard>();
+                break;
+            case EasyRightClickableModelType.Power:
+                CreatureCombatId = reader.ReadUInt();
+                break;
+            case EasyRightClickableModelType.Potion:
+                PotionIndex = reader.ReadUInt();
+                break;
+        }
         Extra = reader.Read<RightClickContext.Payload>();
+        WasEnqueuedInCombat = reader.ReadBool();
     }
 
     public GameAction ToGameAction(Player player)
     {
-        return new EasyRightClickCardAction(player, Card, ModelId, Extra);
+        return new EasyRightClickCardAction(player, ModelId, Extra, WasEnqueuedInCombat)
+        {
+            Type = Type,
+            NetCombatCard = NetCombatCard,
+            CreatureCombatId = CreatureCombatId,
+            PotionIndex = PotionIndex
+        };
     }
 }

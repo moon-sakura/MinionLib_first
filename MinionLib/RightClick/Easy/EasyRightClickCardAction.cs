@@ -9,58 +9,120 @@ namespace MinionLib.RightClick.Easy;
 
 public class EasyRightClickCardAction : GameAction
 {
-    private CardModel? _card;
     public Player Player { get; }
-    public override ulong OwnerId => Player.NetId;
-    public override GameActionType ActionType => GameActionType.CombatPlayPhaseOnly;
-
-    public NetCombatCard NetCombatCard { get; }
-    public ModelId CardModelId { get; }
     public RightClickContext.Payload Extra { get; }
+    public bool WasEnqueuedInCombat { get; }
+    public override ulong OwnerId => Player.NetId;
 
-    public EasyRightClickCardAction(RightClickContext context)
+    public override GameActionType ActionType =>
+        WasEnqueuedInCombat ? GameActionType.CombatPlayPhaseOnly : GameActionType.NonCombat;
+
+    public EasyRightClickableModelType Type { get; init; }
+
+    public ModelId ModelId { get; }
+
+    // Card
+    public NetCombatCard NetCombatCard { get; init; }
+
+    // Power
+    public uint CreatureCombatId { get; init; }
+
+    // Potion
+    public uint PotionIndex { get; init; }
+
+
+    public EasyRightClickCardAction(RightClickContext context, bool isCombatInProgress)
     {
-        if (context.Model is not CardModel cardModel)
-            throw new ArgumentException("Context model must be a CardModel.", nameof(context));
+        WasEnqueuedInCombat = isCombatInProgress;
         Player = context.Player;
-        _card = cardModel;
-        NetCombatCard = NetCombatCard.FromModel(cardModel);
-        CardModelId = cardModel.Id;
         Extra = context.Extra;
+
+        var model = context.Model;
+        ModelId = model.Id;
+        switch (model)
+        {
+            case CardModel card:
+                Type = EasyRightClickableModelType.Card;
+                NetCombatCard = NetCombatCard.FromModel(card);
+                break;
+            case RelicModel:
+                Type = EasyRightClickableModelType.Relic;
+                break;
+            case PowerModel power:
+                Type = EasyRightClickableModelType.Power;
+                var combatId = power.Owner.CombatId;
+                if (combatId == null) return;
+                CreatureCombatId = combatId.Value;
+                break;
+            case PotionModel potion:
+                Type = EasyRightClickableModelType.Potion;
+                var index = potion.Owner.GetPotionSlotIndex(potion);
+                if (index < 0)
+                    throw new InvalidOperationException(
+                        $"Potion {potion} has owner {Player}, but the owner's potion list does not contain it!");
+                PotionIndex = (uint)index;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(context), model, null);
+        }
     }
 
-    public EasyRightClickCardAction(
-        Player player,
-        NetCombatCard netCombatCard,
-        ModelId cardModelId,
-        RightClickContext.Payload extra)
+    public EasyRightClickCardAction(Player player, ModelId modelId, RightClickContext.Payload extra,
+        bool isCombatInProgress)
     {
         Player = player;
-        NetCombatCard = netCombatCard;
-        CardModelId = cardModelId;
+        ModelId = modelId;
         Extra = extra;
+        WasEnqueuedInCombat = isCombatInProgress;
     }
 
 
     protected override async Task ExecuteAction()
     {
-        _card = NetCombatCard.ToCardModel();
-        if (_card is not IEasyRightClickableCard rightClickableCard) return;
-        if (_card.Pile?.Type != PileType.Hand) return;
+        var combatState = Player.Creature.CombatState;
+        if (WasEnqueuedInCombat && combatState is null) return;
+
+        AbstractModel? model;
+        switch (Type)
+        {
+            case EasyRightClickableModelType.Card:
+                var card = NetCombatCard.ToCardModel();
+                if (card.Pile?.Type != PileType.Hand) return;
+                model = card;
+                break;
+            case EasyRightClickableModelType.Relic:
+                model = Player.Relics.FirstOrDefault(r => r.Id == ModelId);
+                break;
+            case EasyRightClickableModelType.Power:
+                model = combatState!.GetCreature(CreatureCombatId)?.Powers.FirstOrDefault(p => p.Id == ModelId);
+                break;
+            case EasyRightClickableModelType.Potion:
+                model = Player.GetPotionAtSlotIndex((int)PotionIndex);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        if (model == null || model.Id != ModelId) return;
+        if (model is not IEasyRightClickableModel rightClickable) return;
 
         var choiceContext = new GameActionPlayerChoiceContext(this);
-        var clickContent = new RightClickContext(Player, _card, Extra);
-        await rightClickableCard.OnRightClick(choiceContext, clickContent);
-        _card.InvokeExecutionFinished();
+        var clickContent = new RightClickContext(Player, model, Extra);
+        await rightClickable.OnRightClick(choiceContext, clickContent);
+        model.InvokeExecutionFinished();
     }
 
     public override INetAction ToNetAction()
     {
         return new NetEasyRightClickCardAction
         {
-            Card = NetCombatCard,
-            ModelId = CardModelId,
-            Extra = Extra
+            Type = Type,
+            ModelId = ModelId,
+            NetCombatCard = NetCombatCard,
+            CreatureCombatId = CreatureCombatId,
+            PotionIndex = PotionIndex,
+            Extra = Extra,
+            WasEnqueuedInCombat = WasEnqueuedInCombat
         };
     }
 }

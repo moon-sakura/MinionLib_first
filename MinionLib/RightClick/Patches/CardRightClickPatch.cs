@@ -1,5 +1,6 @@
 using Godot;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.ControllerInput;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Combat;
@@ -69,8 +70,10 @@ public static class CardRightClickPatch
             return;
         }
 
-        var context = new RightClickContext(card.Owner, card,
-            new RightClickContext.Payload(isController));
+        var me = LocalContext.GetMe(card.CombatState);
+        if (me == null) return;
+
+        var context = new RightClickContext(me, card, new RightClickContext.Payload(isController));
 
         if (RightClickDispatcher.TryDispatch(context)) holder.GetViewport().SetInputAsHandled();
     }

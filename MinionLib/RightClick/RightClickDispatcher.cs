@@ -11,7 +11,7 @@ public static class RightClickDispatcher
 #if DEBUG
         new LogIdRightClickHandler(),
 #endif
-        new EasyRightClickableCardHandler()
+        new EasyRightClickableModelHandler()
     ];
 
     public static void Register(IRightClickHandler handler)
