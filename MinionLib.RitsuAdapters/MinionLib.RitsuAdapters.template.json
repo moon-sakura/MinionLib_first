@@ -8,6 +8,10 @@
   "has_dll": true,
   "dependencies": [
     {
+      "id": "MinionLib",
+      "min_version": "__THIS_VERSION__"
+    },
+    {
       "id": "STS2-RitsuLib",
       "min_version": "__RITSU_VERSION__"
     }

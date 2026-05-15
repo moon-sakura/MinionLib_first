@@ -8,6 +8,10 @@
   "has_dll": true,
   "dependencies": [
     {
+      "id": "MinionLib",
+      "min_version": "__THIS_VERSION__"
+    },
+    {
       "id": "BaseLib",
       "min_version": "__BASELIB_VERSION__"
     }
