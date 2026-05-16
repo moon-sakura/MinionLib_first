@@ -2,8 +2,6 @@
     <!-- 自动更新 json 中的版本号 -->
     <Target Name="UpdateManifestVersion" BeforeTargets="BeforeBuild;PreparePckForPack">
         <PropertyGroup>
-            <GameVersion>$([System.IO.Path]::GetFileName($(PkgFuYnAloft_Sts2_References)))</GameVersion>
-            <GameVersion Condition="$(GameVersion.EndsWith('-beta'))">$(GameVersion.Replace('-beta', ''))</GameVersion>
             <RitsuVersion>$([System.IO.Path]::GetFileName($(PkgSTS2_RitsuLib)))</RitsuVersion>
             <BaseLibVersion>$([System.IO.Path]::GetFileName($(PkgAlchyr_Sts2_BaseLib)))</BaseLibVersion>
 
@@ -19,7 +17,7 @@
             <FileLines Include="$([System.IO.File]::ReadAllText($(ManifestTemplateFile))
                 .Replace('__THIS_NAME__', '$(MSBuildProjectName)')
                 .Replace('__THIS_VERSION__', '$(Version)')
-                .Replace('__GAME_VERSION__', '$(GameVersion)')
+                .Replace('__GAME_VERSION__', '$(Sts2Version)')
                 .Replace('__ADAPTEE_ID__', '$(AdapteeId)')
                 .Replace('__STS2-RitsuLib_VERSION__', '$(RitsuVersion)')
                 .Replace('__BaseLib_VERSION__', '$(BaseLibVersion)'))"/>
