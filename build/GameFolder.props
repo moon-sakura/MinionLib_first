@@ -11,9 +11,6 @@
         <IsLocal Condition="'$(CI)' != 'true'">true</IsLocal>
     </PropertyGroup>
 
-    <!-- 导入本地配置 -->
-    <Import Project="$(MSBuildThisFileDirectory)LocalSettings.props" Condition="Exists('$(MSBuildThisFileDirectory)LocalSettings.props')"/>
-
     <!-- Windows -->
     <PropertyGroup Condition="'$(IsWindows)' == 'true'">
         <AutoSteamPath>$(registry:HKEY_CURRENT_USER\Software\Valve\Steam@SteamPath)\steamapps</AutoSteamPath>

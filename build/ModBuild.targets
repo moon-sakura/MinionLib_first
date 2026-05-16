@@ -7,10 +7,10 @@
             <RitsuVersion>$([System.IO.Path]::GetFileName($(PkgSTS2_RitsuLib)))</RitsuVersion>
             <BaseLibVersion>$([System.IO.Path]::GetFileName($(PkgAlchyr_Sts2_BaseLib)))</BaseLibVersion>
 
-            <ManifestTemplateFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).template.json</ManifestTemplateFile>
-            <ManifestTemplateFile Condition="'$(IsAdapterProject)' == 'true'">$(MSBuildProjectDirectory)/../Adapters.template.json</ManifestTemplateFile>
+            <ManifestTemplateFile>$(MSBuildProjectDirectory)/$(MSBuildProjectName).template.json</ManifestTemplateFile>
+            <ManifestTemplateFile Condition="'$(AdapteeId)' != ''">$(MSBuildThisFileDirectory)Adapters.template.json</ManifestTemplateFile>
 
-            <ManifestOutputFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).json</ManifestOutputFile>
+            <ManifestOutputFile>$(IntermediateOutputPath)$(MSBuildProjectName).json</ManifestOutputFile>
         </PropertyGroup>
 
         <Message Text="Updating version in $(ManifestOutputFile) to $(Version)" Importance="high"/>
@@ -32,7 +32,7 @@
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
         <Message Text="Copying .dll and manifest to mods folder." Importance="high"/>
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
-        <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
+        <Copy SourceFiles="$(ManifestOutputFile)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
     </Target>
 
     <!--执行 Godot 导出命令将 .pck 导出到 mods 目录 -->

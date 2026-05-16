@@ -23,7 +23,7 @@
     <!-- 定义 AutoCopy Targets 的路径属性 -->
     <PropertyGroup>
         <AutoCopyTargetsTemplatePath>$(MSBuildThisFileDirectory)AdaptersAutoCopy.template.targets</AutoCopyTargetsTemplatePath>
-        <AutoCopyTargetsPath>$(MSBuildProjectDirectory)/Autocopy.targets</AutoCopyTargetsPath>
+        <AutoCopyTargetsPath>$(IntermediateOutputPath)$(PackageId).targets</AutoCopyTargetsPath>
     </PropertyGroup>
 
     <!-- 打包前准备 AutoCopy Targets 文件 -->

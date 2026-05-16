@@ -1,39 +1,4 @@
 <Project Sdk="Godot.NET.Sdk/4.5.1">
-    <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>true</ImplicitUsings>
-        <Nullable>enable</Nullable> <!--Makes code analysis regarding null values stricter.-->
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <DefaultItemExcludes>packages/**</DefaultItemExcludes>
-        <AppOutputBase>$(MSBuildProjectDirectory)/</AppOutputBase>
-        <PathMap>$(AppOutputBase)=./</PathMap>
-        <LangVersion>preview</LangVersion>
-
-        <Version>100.0.0.0-dev</Version> <!-- 版本号由命令行参数传入 -->
-    </PropertyGroup>
-
-    <Import Project="../GameFolder.props" Condition="Exists('../GameFolder.props')"/>
-
-    <PropertyGroup>
-        <NoWarn>$(NoWarn);MSB3270</NoWarn>
-    </PropertyGroup>
-
-    <ItemGroup Condition="Exists('$(Sts2DataDir)') And '$(IsLocal)' == 'true'">
-        <Reference Include="0Harmony">
-            <HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <Reference Include="sts2">
-            <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
-        <PackageReference Include="FuYnAloft.Sts2.References" Version="*-*" GeneratePathProperty="true" PrivateAssets="all" ExcludeAssets="all"/>
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(CI)' == 'true'">
-        <PackageReference Include="FuYnAloft.Sts2.References" Version="*-*" GeneratePathProperty="true" PrivateAssets="all"/>
-    </ItemGroup>
-
     <ItemGroup>
         <None Include="MinionLib.template.json"/>
         <None Include="project.godot"/>
@@ -61,8 +26,6 @@
         <Error Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'" Condition="'$(Sts2DataDir)' != '' And !Exists('$(Sts2DataDir)')"/>
         <Error Text=" Godot not found at path '$(GodotPath)'" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')"/>
     </Target>
-
-    <Import Project="../ModBuild.targets" Condition="Exists('../ModBuild.targets')"/>
 
     <Import Project="Build/Nuget.targets" Condition="Exists('Build/Nuget.targets')"/>
 </Project>
