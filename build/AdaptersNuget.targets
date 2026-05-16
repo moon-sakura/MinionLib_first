@@ -24,13 +24,16 @@
     <PropertyGroup>
         <AutoCopyTargetsTemplatePath>$(MSBuildThisFileDirectory)AdaptersAutoCopy.template.targets</AutoCopyTargetsTemplatePath>
         <AutoCopyTargetsPath>$(IntermediateOutputPath)$(PackageId).targets</AutoCopyTargetsPath>
+
+        <SafeMSBuildProjectName>$(MSBuildProjectName.Replace('.', '_'))</SafeMSBuildProjectName>
     </PropertyGroup>
 
     <!-- 打包前准备 AutoCopy Targets 文件 -->
     <Target Name="PrepareTargetsForPack" BeforeTargets="AddFilesToNuGetPackage">
         <ItemGroup>
             <TargetsFileLines Include="$([System.IO.File]::ReadAllText($(AutoCopyTargetsTemplatePath))
-                .Replace('--PROJECT-NAME--', '$(MSBuildProjectName)'))"/>
+                .Replace('--PROJECT-NAME--', '$(MSBuildProjectName)')
+                .Replace('--SAFE-PROJECT-NAME--', '$(SafeMSBuildProjectName)'))"/>
         </ItemGroup>
         <WriteLinesToFile File="$(AutoCopyTargetsPath)" Lines="@(TargetsFileLines)" Overwrite="true" WriteOnlyWhenDifferent="true"/>
     </Target>
@@ -45,7 +48,7 @@
                 <PackagePath>README.md</PackagePath>
             </TfmSpecificPackageFile>
             <TfmSpecificPackageFile Include="$(AutoCopyTargetsPath)">
-                <PackagePath>build/$(PackageId).targets</PackagePath>
+                <PackagePath>buildTransitive/$(PackageId).targets</PackagePath>
             </TfmSpecificPackageFile>
         </ItemGroup>
     </Target>

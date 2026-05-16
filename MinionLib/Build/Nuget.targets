@@ -48,8 +48,8 @@
             <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)/../README.md">
                 <PackagePath>README.md</PackagePath>
             </TfmSpecificPackageFile>
-            <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)/Build/FuYnAloft.Sts2.MinionLib.targets">
-                <PackagePath>build/FuYnAloft.Sts2.MinionLib.targets</PackagePath>
+            <TfmSpecificPackageFile Include="$(MSBuildThisFileDirectory)FuYnAloft.Sts2.MinionLib.targets">
+                <PackagePath>buildTransitive/FuYnAloft.Sts2.MinionLib.targets</PackagePath>
             </TfmSpecificPackageFile>
         </ItemGroup>
     </Target>
