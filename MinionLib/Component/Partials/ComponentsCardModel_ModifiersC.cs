@@ -5,7 +5,6 @@
 #nullable enable
 
 using System.Buffers;
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -190,7 +189,7 @@ public abstract partial class ComponentsCardModel
     return cost;
   }
 
-  protected virtual Decimal ModifyOrbValueC(Player player, Decimal value) => value;
+  protected virtual Decimal ModifyOrbValueC(OrbModel orb, Decimal value) => value;
 
   protected virtual Decimal ModifyPowerAmountGivenC(
     PowerModel power,
@@ -335,4 +334,9 @@ public abstract partial class ComponentsCardModel
     return currentExtraText;
   }
 
+  protected virtual bool TryModifyEnergyCostInCombatLateC(CardModel card, Decimal currentCost, out Decimal modifiedCost)
+  {
+      modifiedCost = currentCost;
+      return false;
+  }
 }

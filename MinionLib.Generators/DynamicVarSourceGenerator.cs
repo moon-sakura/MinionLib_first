@@ -21,13 +21,22 @@ public sealed class DynamicVarSourceGenerator : IIncrementalGenerator
     private const string NotLocArgAttributeMetadataName = "MinionLib.Component.Core.NotLocArgAttribute";
     private const string NestedLocStringAttributeMetadataName = "MinionLib.Component.Core.NestedLocStringAttribute";
     private const string CardComponentMetadataName = "MinionLib.Component.CardComponent";
+    private const string LocHelperAddManyMetadataName = "MinionLib.Component.Extensions.LocHelper.AddMany";
     private const string DynamicVarMetadataName = "MegaCrit.Sts2.Core.Localization.DynamicVars.DynamicVar";
     private const string LocStringMetadataName = "MegaCrit.Sts2.Core.Localization.LocString";
     private const string IListMetadataName = "System.Collections.Generic.IList`1";
+    private const string IEnumerableMetadataName = "System.Collections.Generic.IEnumerable`1";
+    private const string IReadOnlyDictionaryMetadataName = "System.Collections.Generic.IReadOnlyDictionary`2";
+    private const string DynamicVarSetMetadataName = "MegaCrit.Sts2.Core.Localization.DynamicVars.DynamicVarSet";
     private const string FullyQualifiedCardComponentMetadataName = "global::" + CardComponentMetadataName;
+    private const string FullyQualifiedLocHelperAddManyMetadataName = "global::" + LocHelperAddManyMetadataName;
     private const string FullyQualifiedDynamicVarMetadataName = "global::" + DynamicVarMetadataName;
     private const string FullyQualifiedLocStringMetadataName = "global::" + LocStringMetadataName;
     private const string FullyQualifiedIListMetadataName = "global::" + IListMetadataName;
+    private const string FullyQualifiedIEnumerableMetadataName = "global::" + IEnumerableMetadataName;
+    private const string FullyQualifiedIReadOnlyDictionaryMetadataName = "global::" + IReadOnlyDictionaryMetadataName;
+    private const string FullyQualifiedDynamicVarSetMetadataName = "global::" + DynamicVarSetMetadataName;
+
 
     private static readonly DiagnosticDescriptor CardComponentTypeMustBePartial = new(
         id: "MLSG200",
@@ -454,6 +463,13 @@ public sealed class DynamicVarSourceGenerator : IIncrementalGenerator
     {
         var p = new string(' ', indent * 4);
 
+        if (typeInfo.UseHelper)
+        {
+            sb.Append(p).Append(FullyQualifiedLocHelperAddManyMetadataName).Append("(loc, ").Append(valueExpr)
+                .AppendLine(");");
+            return;
+        }
+
         if (typeInfo.IsDynamicVar)
         {
             sb.Append(p).Append("loc.Add(").Append(valueExpr).AppendLine(");");
@@ -672,7 +688,8 @@ public sealed class DynamicVarSourceGenerator : IIncrementalGenerator
         bool IsLocString,
         bool IsIListString,
         bool IsNumericLike,
-        bool SupportsDirectLocAdd)
+        bool SupportsDirectLocAdd,
+        bool UseHelper)
     {
         public static PropertyTypeInfo FromType(ITypeSymbol type)
         {
@@ -682,6 +699,7 @@ public sealed class DynamicVarSourceGenerator : IIncrementalGenerator
             var isNullable = type.IsReferenceType || type.NullableAnnotation == NullableAnnotation.Annotated;
             var isNumericLike = ComputeNumericLike(type);
             var supportsDirectLocAdd = ComputeSupportsDirectLocAdd(type, isDynamicVar, isLocString, isIListString, isNumericLike);
+            var useHelper = ComputeUseHelper(type);
 
             return new PropertyTypeInfo(
                 type.SpecialType,
@@ -691,7 +709,42 @@ public sealed class DynamicVarSourceGenerator : IIncrementalGenerator
                 isLocString,
                 isIListString,
                 isNumericLike,
-                supportsDirectLocAdd);
+                supportsDirectLocAdd,
+                useHelper);
+        }
+
+        private static bool ComputeUseHelper(ITypeSymbol type)
+        {
+            if (type is not INamedTypeSymbol named)
+                return false;
+
+            if (InheritsFromMetadataName(named, FullyQualifiedDynamicVarSetMetadataName))
+                return true;
+
+            var interfaces = named.TypeKind == TypeKind.Interface
+                ? named.AllInterfaces.Append(named)
+                : named.AllInterfaces;
+
+            foreach (var iface in interfaces)
+            {
+                if (!iface.IsGenericType)
+                    continue;
+
+                var fqName = iface.OriginalDefinition.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+
+                switch (fqName)
+                {
+                    case FullyQualifiedIEnumerableMetadataName
+                        when iface.TypeArguments is { Length: 1 } array && array[0] is INamedTypeSymbol typeArg &&
+                             InheritsFromMetadataName(typeArg, FullyQualifiedDynamicVarMetadataName):
+                    case FullyQualifiedIReadOnlyDictionaryMetadataName
+                        when iface.TypeArguments is { Length: 2 } symbols && symbols[0] is
+                            { SpecialType: SpecialType.System_String }:
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         private static bool ComputeSupportsDirectLocAdd(

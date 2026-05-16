@@ -24,15 +24,13 @@
     <Target Name="PreparePckForPack" BeforeTargets="AddFilesToNuGetPackage" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)')">
         <MakeDir Directories="$(BaseIntermediateOutputPath)pack"/>
         <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(PackPckPath)&quot;"
-              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" Condition="'$(Configuration)' != 'ExportRelease'"/>
-        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExportNoExample&quot; &quot;$(PackPckPath)&quot;"
-              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" Condition="'$(Configuration)' == 'ExportRelease'"/>
+              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue"/>
     </Target>
 
     <!-- 定义 PCK 文件和生成器 DLL 的路径属性 -->
     <PropertyGroup>
         <PackPckPath>$(BaseIntermediateOutputPath)pack/$(MSBuildProjectName).pck</PackPckPath>
-        <GeneratorDllPath>$(MSBuildProjectDirectory)\MinionLib.Generators\bin\$(Configuration)\netstandard2.0\MinionLib.Generators.dll</GeneratorDllPath>
+        <GeneratorDllPath>$(MSBuildProjectDirectory)/../MinionLib.Generators/bin/$(Configuration)/netstandard2.0/MinionLib.Generators.dll</GeneratorDllPath>
     </PropertyGroup>
 
     <!-- 将特定文件塞入 NuGet 包中 -->
@@ -47,8 +45,11 @@
             <TfmSpecificPackageFile Include="$(PackPckPath)">
                 <PackagePath>Content/$(MSBuildProjectName).pck</PackagePath>
             </TfmSpecificPackageFile>
-            <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)\README.md">
+            <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)/../README.md">
                 <PackagePath>README.md</PackagePath>
+            </TfmSpecificPackageFile>
+            <TfmSpecificPackageFile Include="$(MSBuildProjectDirectory)/Build/FuYnAloft.Sts2.MinionLib.targets">
+                <PackagePath>build/FuYnAloft.Sts2.MinionLib.targets</PackagePath>
             </TfmSpecificPackageFile>
         </ItemGroup>
     </Target>

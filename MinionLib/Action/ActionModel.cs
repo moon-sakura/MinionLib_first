@@ -1,4 +1,3 @@
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -14,8 +13,8 @@ namespace MinionLib.Action;
 public abstract class ActionModel : PowerModel
 {
     private static readonly IHoverTip ActionHoverTip = new HoverTip(
-        new LocString("static_hover_tips", "action.title"),
-        new LocString("static_hover_tips", "action.description"));
+        new LocString("static_hover_tips", "MinionLib-Action.title"),
+        new LocString("static_hover_tips", "MinionLib-Action.description"));
 
     public abstract TargetType TargetType { get; }
 
@@ -33,13 +32,13 @@ public abstract class ActionModel : PowerModel
         base.Flash();
     }
 
-    public virtual bool CanAct(CombatState combatState)
+    public virtual bool CanAct(ICombatState combatState)
     {
         var actor = Owner;
         return Amount > 0m && actor.IsAlive && actor.CombatState == combatState;
     }
 
-    public bool IsValidTarget(CombatState combatState, Creature? target)
+    public bool IsValidTarget(ICombatState combatState, Creature? target)
     {
         if (target is not { IsAlive: true }) return false;
 
@@ -49,7 +48,7 @@ public abstract class ActionModel : PowerModel
         return false;
     }
 
-    public IReadOnlyList<Creature> GetValidTargets(CombatState combatState)
+    public IReadOnlyList<Creature> GetValidTargets(ICombatState combatState)
     {
         return combatState.Creatures
             .Where(target => IsValidTarget(combatState, target))
@@ -99,13 +98,4 @@ public abstract class ActionModel : PowerModel
     }
 
     protected abstract Task OnAct(PlayerChoiceContext choiceContext, Creature? target);
-}
-
-public abstract class CustomActionModel : ActionModel, ICustomPower
-{
-    public virtual string? CustomPackedIconPath => null;
-
-    public virtual string? CustomBigIconPath => null;
-
-    public virtual string? CustomBigBetaIconPath => null;
 }

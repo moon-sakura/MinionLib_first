@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqtsl1w8wwkn7"
-path="res://.godot/imported/minion_guardian_power_packed.png-ab263a2f30549323e9b476154a0e3d26.ctex"
+uid="uid://cepmx0xvekhlb"
+path="res://.godot/imported/mod_image.png-debba8a1bbfdfb98bb89a04404653a7c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/powers/minion_guardian_power_packed.png"
-dest_files=["res://.godot/imported/minion_guardian_power_packed.png-ab263a2f30549323e9b476154a0e3d26.ctex"]
+source_file="res://MinionLib/mod_image.png"
+dest_files=["res://.godot/imported/mod_image.png-debba8a1bbfdfb98bb89a04404653a7c.ctex"]
 
 [params]
 

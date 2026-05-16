@@ -62,12 +62,12 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task AfterCardPlayedPrefix(PlayerChoiceContext context, CardPlay cardPlay, ComponentContext componentContext)
+    Task AfterCardPlayedPrefix(PlayerChoiceContext choiceContext, CardPlay cardPlay, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterCardPlayedPostfix(PlayerChoiceContext context, CardPlay cardPlay, ComponentContext componentContext)
+    Task AfterCardPlayedPostfix(PlayerChoiceContext choiceContext, CardPlay cardPlay, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -82,12 +82,92 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
+    Task AfterPlayerTurnStartEarlyPrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterPlayerTurnStartEarlyPostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
     Task AfterPlayerTurnStartPrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
     Task AfterPlayerTurnStartPostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterPlayerTurnStartLatePrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterPlayerTurnStartLatePostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterAutoPostPlayPhaseEnteredPrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterAutoPostPlayPhaseEnteredPostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterAutoPrePlayPhaseEnteredEarlyPrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterAutoPrePlayPhaseEnteredEarlyPostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterAutoPrePlayPhaseEnteredPrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterAutoPrePlayPhaseEnteredPostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterAutoPrePlayPhaseEnteredLatePrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterAutoPrePlayPhaseEnteredLatePostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task BeforeTurnEndVeryEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task BeforeTurnEndVeryEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task BeforeTurnEndEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task BeforeTurnEndEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -108,6 +188,16 @@ public partial interface ICardComponent
     }
     
     Task AfterTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterTurnEndLatePrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterTurnEndLatePostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -142,12 +232,12 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task AfterAttackPrefix(AttackCommand command, ComponentContext componentContext)
+    Task AfterAttackPrefix(PlayerChoiceContext choiceContext, AttackCommand command, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterAttackPostfix(AttackCommand command, ComponentContext componentContext)
+    Task AfterAttackPostfix(PlayerChoiceContext choiceContext, AttackCommand command, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -252,12 +342,12 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task AfterCardGeneratedForCombatPrefix(CardModel card, bool addedByPlayer, ComponentContext componentContext)
+    Task AfterCardGeneratedForCombatPrefix(CardModel card, Player? creator, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterCardGeneratedForCombatPostfix(CardModel card, bool addedByPlayer, ComponentContext componentContext)
+    Task AfterCardGeneratedForCombatPostfix(CardModel card, Player? creator, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -278,16 +368,6 @@ public partial interface ICardComponent
     }
     
     Task BeforeCardAutoPlayedPostfix(CardModel card, Creature? target, AutoPlayType type, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task AfterCardRetainedPrefix(CardModel card, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task AfterCardRetainedPostfix(CardModel card, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -492,6 +572,16 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
+    Task AfterFlushPrefix(PlayerChoiceContext choiceContext, Player player, IReadOnlyCollection<CardModel> flushedCards, IReadOnlyCollection<CardModel> retainedCards, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
+    Task AfterFlushPostfix(PlayerChoiceContext choiceContext, Player player, IReadOnlyCollection<CardModel> flushedCards, IReadOnlyCollection<CardModel> retainedCards, ComponentContext componentContext)
+    {
+        return Task.CompletedTask;
+    }
+    
     Task AfterGoldGainedPrefix(Player player, ComponentContext componentContext)
     {
         return Task.CompletedTask;
@@ -502,22 +592,22 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task BeforeHandDrawPrefix(Player player, PlayerChoiceContext choiceContext, CombatState combatState, ComponentContext componentContext)
+    Task BeforeHandDrawPrefix(Player player, PlayerChoiceContext choiceContext, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeHandDrawPostfix(Player player, PlayerChoiceContext choiceContext, CombatState combatState, ComponentContext componentContext)
+    Task BeforeHandDrawPostfix(Player player, PlayerChoiceContext choiceContext, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeHandDrawLatePrefix(Player player, PlayerChoiceContext choiceContext, CombatState combatState, ComponentContext componentContext)
+    Task BeforeHandDrawLatePrefix(Player player, PlayerChoiceContext choiceContext, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeHandDrawLatePostfix(Player player, PlayerChoiceContext choiceContext, CombatState combatState, ComponentContext componentContext)
+    Task BeforeHandDrawLatePostfix(Player player, PlayerChoiceContext choiceContext, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -692,16 +782,6 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task BeforeRewardsOfferedPrefix(Player player, IReadOnlyList<Reward> rewards, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task BeforeRewardsOfferedPostfix(Player player, IReadOnlyList<Reward> rewards, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
     Task AfterOrbChanneledPrefix(PlayerChoiceContext choiceContext, Player player, OrbModel orb, ComponentContext componentContext)
     {
         return Task.CompletedTask;
@@ -782,12 +862,12 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task AfterPowerAmountChangedPrefix(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource, ComponentContext componentContext)
+    Task AfterPowerAmountChangedPrefix(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterPowerAmountChangedPostfix(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource, ComponentContext componentContext)
+    Task AfterPowerAmountChangedPostfix(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -932,82 +1012,32 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task BeforeSideTurnStartPrefix(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState, ComponentContext componentContext)
+    Task BeforeSideTurnStartPrefix(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeSideTurnStartPostfix(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState, ComponentContext componentContext)
+    Task BeforeSideTurnStartPostfix(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterSideTurnStartPrefix(CombatSide side, CombatState combatState, ComponentContext componentContext)
+    Task AfterSideTurnStartPrefix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterSideTurnStartPostfix(CombatSide side, CombatState combatState, ComponentContext componentContext)
+    Task AfterSideTurnStartPostfix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterPlayerTurnStartEarlyPrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
+    Task AfterSideTurnStartLatePrefix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterPlayerTurnStartEarlyPostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task AfterPlayerTurnStartLatePrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task AfterPlayerTurnStartLatePostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task BeforePlayPhaseStartPrefix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task BeforePlayPhaseStartPostfix(PlayerChoiceContext choiceContext, Player player, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task BeforeTurnEndVeryEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task BeforeTurnEndVeryEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task BeforeTurnEndEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task BeforeTurnEndEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task AfterTurnEndLatePrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
-    {
-        return Task.CompletedTask;
-    }
-    
-    Task AfterTurnEndLatePostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task AfterSideTurnStartLatePostfix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }

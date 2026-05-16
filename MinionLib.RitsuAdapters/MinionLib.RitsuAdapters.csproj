@@ -1,0 +1,16 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+    <PropertyGroup>
+        <AdapteeId>STS2-RitsuLib</AdapteeId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MinionLib\MinionLib.csproj">
+            <Private>false</Private>
+        </ProjectReference>
+        <PackageReference Include="STS2.RitsuLib" Version="0.2.31" GeneratePathProperty="true" PrivateAssets="compile"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="README.md"/>
+    </ItemGroup>
+</Project>

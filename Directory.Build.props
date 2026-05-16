@@ -1,0 +1,43 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>true</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DefaultItemExcludes>packages/**</DefaultItemExcludes>
+        <AppOutputBase>$(MSBuildProjectDirectory)/</AppOutputBase>
+        <PathMap>$(AppOutputBase)=./</PathMap>
+        <LangVersion>preview</LangVersion>
+        <NoWarn>$(NoWarn);MSB3270</NoWarn>
+        <Version>100.0.0.0-dev</Version> <!-- 版本号由命令行参数传入 -->
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Sts2Version>0.105.1</Sts2Version>
+        <IsSts2Beta>true</IsSts2Beta>
+
+        <ReferencePackageVersion>$(Sts2Version)</ReferencePackageVersion>
+        <ReferencePackageVersion Condition="'$(IsSts2Beta)' == 'true'">$(ReferencePackageVersion)-beta</ReferencePackageVersion>
+    </PropertyGroup>
+
+    <Import Project="$(MSBuildThisFileDirectory)LocalSettings.props"
+            Condition="Exists('$(MSBuildThisFileDirectory)LocalSettings.props')"/>
+
+    <Import Project="$(MSBuildThisFileDirectory)build/GameFolder.props"/>
+
+    <ItemGroup Condition="Exists('$(Sts2DataDir)') And '$(IsLocal)' == 'true'">
+        <Reference Include="0Harmony">
+            <HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="sts2">
+            <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <PackageReference Include="FuYnAloft.Sts2.References" Version="$(ReferencePackageVersion)" GeneratePathProperty="true" PrivateAssets="all" ExcludeAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(CI)' == 'true'">
+        <PackageReference Include="FuYnAloft.Sts2.References" Version="$(ReferencePackageVersion)" GeneratePathProperty="true" PrivateAssets="all"/>
+    </ItemGroup>
+</Project>

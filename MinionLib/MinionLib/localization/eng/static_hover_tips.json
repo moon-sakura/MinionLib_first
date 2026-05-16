@@ -1,5 +1,4 @@
 {
-  "action.title": "Action",
-  "action.description": "Click this creature to perform a specific action."
+  "MinionLib-Action.title": "Action",
+  "MinionLib-Action.description": "Click this creature to perform a specific action."
 }
-
