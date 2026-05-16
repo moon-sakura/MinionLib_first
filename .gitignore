@@ -12,3 +12,4 @@ docs/images/
 *.cs.uid
 MinionLib.json
 LocalSettings.props
+.local/
