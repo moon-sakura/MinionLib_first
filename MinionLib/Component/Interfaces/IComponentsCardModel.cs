@@ -10,8 +10,6 @@ public interface IComponentsCardModel
 
     IReadOnlyList<ICardComponent> Components { get; }
 
-    Color? GlowColor => null;
-
     ICardComponent? AddComponent<T>(T incoming, bool allowMerge = true, bool isUpgrade = false)
         where T : class, ICardComponent
     {

@@ -18,6 +18,7 @@ using MinionLib.RightClick;
 using MinionLib.RightClick.Easy;
 using MinionLib.Targeting.Utilities;
 using MinionLib.Utilities.BetterExtraArgs;
+using MinionLib.Utilities.CustomGlowColor;
 
 namespace MinionLib.Component;
 
@@ -29,7 +30,10 @@ public abstract partial class ComponentsCardModel(
     TargetType targetType,
     bool shouldShowInCardLibrary = true)
     : CardModel(canonicalEnergyCost, type, rarity, targetType, shouldShowInCardLibrary),
-        IComponentsCardModel, IEasyRightClickableCard, IBetterAddExtraArgsCard
+        IComponentsCardModel,
+        IEasyRightClickableCard,
+        IBetterAddExtraArgsCard,
+        ICustomGlowColorCard
 {
     // ReSharper disable once ConvertToConstant.Local
     private static readonly int MaxPhaseTransitions = 64;

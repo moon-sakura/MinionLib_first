@@ -1,12 +1,11 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
-using MinionLib.Component.Interfaces;
 
-namespace MinionLib.Component.Patches;
+namespace MinionLib.Utilities.CustomGlowColor;
 
 [HarmonyPatch(typeof(NHandCardHolder))]
-public static class CardGlowColorPatch
+public static class CustomGlowColorPatch
 {
     [HarmonyPatch(nameof(NHandCardHolder.UpdateCard))]
     [HarmonyPostfix]
@@ -40,10 +39,10 @@ public static class CardGlowColorPatch
     {
         glowColor = default;
 
-        if (holder.CardNode?.Model is not IComponentsCardModel componentsCard)
+        if (holder.CardNode?.Model is not ICustomGlowColorCard glowColorCard)
             return false;
 
-        var customGlow = componentsCard.GlowColor;
+        var customGlow = glowColorCard.GlowColor;
         if (!customGlow.HasValue)
             return false;
 
@@ -53,6 +52,6 @@ public static class CardGlowColorPatch
 
     private static void ApplyGlowColor(CanvasItem canvasItem, Color glowColor)
     {
-        canvasItem.Modulate = glowColor;
+        canvasItem.Modulate = new Color(glowColor.R, glowColor.G, glowColor.B, canvasItem.Modulate.A);
     }
 }
