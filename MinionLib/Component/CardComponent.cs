@@ -120,7 +120,8 @@ public abstract partial class CardComponent : ICardComponent
         var loc = PrefixLocString;
         if (!loc.Exists())
             return "";
-        foreach (var (name, variable) in argsFromCard) loc.AddObj(name, variable);
+        foreach (var (name, variable) in argsFromCard)
+            loc.AddObj(name, variable);
 
         SmartAddArgs(loc);
         var formatted = FormatPrefix(loc);
@@ -132,11 +133,12 @@ public abstract partial class CardComponent : ICardComponent
         var loc = PostfixLocString;
         if (!loc.Exists())
             return "";
-        foreach (var (name, variable) in argsFromCard) loc.AddObj(name, variable);
+        foreach (var (name, variable) in argsFromCard)
+            loc.AddObj(name, variable);
 
         SmartAddArgs(loc);
         var formatted = FormatPostfix(loc);
-        return formatted.EndsWith('\n') ? "\n" + formatted[..^1] : formatted;
+        return formatted;
     }
 
     public virtual bool CanHandleRightClickLocal(RightClickContext context)

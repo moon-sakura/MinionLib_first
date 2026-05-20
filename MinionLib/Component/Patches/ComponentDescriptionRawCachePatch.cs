@@ -1,7 +1,4 @@
-using System.Reflection;
 using HarmonyLib;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MinionLib.Component.Core;
@@ -15,8 +12,6 @@ public static class ComponentDescriptionRawCachePatch
     public const string CardsTable = "cards";
     public const string PrefixToken = "{CompPre}";
     public const string PostfixToken = "{CompPost}";
-    public const char NoDescriptionMarker = '\uef01';
-    public const string NoDescriptionMarkerString = "\uef01";
 
     [HarmonyPatch(typeof(CardModel), nameof(CardModel.Description), MethodType.Getter)]
     [HarmonyPostfix]
@@ -29,7 +24,7 @@ public static class ComponentDescriptionRawCachePatch
         if (string.IsNullOrWhiteSpace(locEntryKey) || ComponentDescriptionRawCache.Contains(locEntryKey))
             return;
 
-        var rawText = __result.Exists() ? __result.GetRawText() : NoDescriptionMarkerString;
+        var rawText = __result.Exists() ? __result.GetRawText() : "";
         ComponentDescriptionRawCache.Set(locEntryKey, InjectCompTokens(rawText));
     }
 
@@ -56,7 +51,7 @@ public static class ComponentDescriptionRawCachePatch
 
     private static string InjectCompTokens(string rawText)
     {
-        var text = rawText ?? string.Empty;
+        var text = rawText ?? "";
 
         if (!text.Contains(PrefixToken, StringComparison.Ordinal))
             text = string.IsNullOrWhiteSpace(text) ? PrefixToken : PrefixToken + text;
@@ -65,39 +60,5 @@ public static class ComponentDescriptionRawCachePatch
             text = string.IsNullOrWhiteSpace(text) ? PostfixToken : text + PostfixToken;
 
         return text;
-    }
-}
-
-[HarmonyPatch]
-public static class NoDescriptionMarkerCleanPatch
-{
-    [HarmonyTargetMethod]
-    private static MethodBase TargetMethod()
-    {
-        var previewEnumType = AccessTools.Inner(typeof(CardModel), "DescriptionPreviewType");
-
-        return AccessTools.Method(typeof(CardModel), "GetDescriptionForPile", [
-            typeof(PileType),
-            previewEnumType,
-            typeof(Creature)
-        ]);
-    }
-
-    [HarmonyPostfix]
-    private static void Postfix(ref string __result)
-    {
-        if (string.IsNullOrEmpty(__result)) return;
-        var index = __result.IndexOf(ComponentDescriptionRawCachePatch.NoDescriptionMarker);
-        if (index < 0) return;
-
-        var hasAfter = index < __result.Length - 1 && __result[index + 1] == '\n';
-        var hasBefore = index > 0 && __result[index - 1] == '\n';
-
-        if (hasAfter)
-            __result = __result.Remove(index, 2);
-        else if (hasBefore)
-            __result = __result.Remove(index - 1, 2);
-        else
-            __result = __result.Remove(index, 1);
     }
 }

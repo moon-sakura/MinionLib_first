@@ -19,6 +19,7 @@ using MinionLib.RightClick.Easy;
 using MinionLib.Targeting.Utilities;
 using MinionLib.Utilities.BetterExtraArgs;
 using MinionLib.Utilities.CustomGlowColor;
+using MinionLib.Utilities.DescriptionPostProcess;
 
 namespace MinionLib.Component;
 
@@ -33,7 +34,8 @@ public abstract partial class ComponentsCardModel(
         IComponentsCardModel,
         IEasyRightClickableCard,
         IBetterAddExtraArgsCard,
-        ICustomGlowColorCard
+        ICustomGlowColorCard,
+        IDescriptionPostProcessCard
 {
     // ReSharper disable once ConvertToConstant.Local
     private static readonly int MaxPhaseTransitions = 64;
@@ -125,26 +127,29 @@ public abstract partial class ComponentsCardModel(
         {
             var component = _components[displayIndex];
             var args = common.ToDictionary();
-            args["ComponentPosition"] = displayIndex;
-            args["ComponentPositionFromEnd"] = count - 1 - displayIndex;
-            args["IsFirstComponent"] = displayIndex == 0;
-            args["IsLastComponent"] = displayIndex == count - 1;
-            prefixSb.Append(component.GetFormattedPrefix(args));
+            var formatted = component.GetFormattedPrefix(args);
+            prefixSb.Append(formatted).Append('\n');
         }
 
         for (var displayIndex = 0; displayIndex < count; displayIndex++)
         {
             var component = _components[count - 1 - displayIndex];
             var args = common.ToDictionary();
-            args["ComponentPosition"] = displayIndex;
-            args["ComponentPositionFromEnd"] = count - 1 - displayIndex;
-            args["IsFirstComponent"] = displayIndex == 0;
-            args["IsLastComponent"] = displayIndex == count - 1;
-            postfixSb.Append(component.GetFormattedPostfix(args));
+            var formatted = component.GetFormattedPostfix(args);
+            postfixSb.Append('\n').Append(formatted);
         }
 
         description.Add("CompPre", prefixSb.ToString());
         description.Add("CompPost", postfixSb.ToString());
+    }
+
+    public virtual string PostProcessDescription(string description, PileType pileType,
+        DescriptionPreviewType previewType,
+        Creature? target = null)
+    {
+        return string.IsNullOrEmpty(description)
+            ? description
+            : string.Join('\n', description.Split('\n', StringSplitOptions.RemoveEmptyEntries));
     }
 
     public IReadOnlyList<ICardComponent> Components
