@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -104,7 +105,7 @@ jobs:
           "RITSULIB_VERSION=$($ritsuPkg.resolvedVersion ?? $ritsuPkg.requestedVersion)" >> $env:GITHUB_ENV
           "BASELIB_VERSION=$($baseLibPkg.resolvedVersion ?? $baseLibPkg.requestedVersion)" >> $env:GITHUB_ENV
 
-      - name: Pack and publish NuGet packages
+      - name: Pack NuGet packages
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE/.packages" | Out-Null
@@ -125,29 +126,37 @@ jobs:
             }
           }
           
-          Write-Host "`nPack completed successfully!" -ForegroundColor Green
+      - name: NuGet Login (OIDC)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USERNAME }}
+
+      - name: Publish NuGet packages
+        shell: pwsh
+        run: |
+          $tempApiKey = "${{ steps.login.outputs.NUGET_API_KEY }}"
           
-          # Check if we have API key for pushing to NuGet
-          $apiKey = "${{ secrets.NUGET_API_KEY }}"
-          if ($apiKey -eq '' -or $apiKey.StartsWith('${{')) {
-            Write-Host "Skipping NuGet push - NUGET_API_KEY not configured" -ForegroundColor Yellow
-          } else {
-            # Push to NuGet
-            Write-Host "`nPushing packages to NuGet..." -ForegroundColor Cyan
-            $nupkgFiles = Get-ChildItem "$env:GITHUB_WORKSPACE/.packages" -Filter "*.nupkg"
+          if (-not $tempApiKey) {
+            throw "Failed to retrieve temporary NuGet API Key."
+          }
+          
+          # Push to NuGet
+          Write-Host "`nPushing packages to NuGet using Trusted Publishing..." -ForegroundColor Cyan
+          $nupkgFiles = Get-ChildItem "$env:GITHUB_WORKSPACE/.packages" -Filter "*.nupkg"
+          
+          foreach ($file in $nupkgFiles) {
+            Write-Host "Publishing $($file.Name)..."
+            dotnet nuget push $file.FullName `
+              --api-key $tempApiKey `
+              --source https://api.nuget.org/v3/index.json `
+              --skip-duplicate
             
-            foreach ($file in $nupkgFiles) {
-              Write-Host "Publishing $($file.Name)..."
-              dotnet nuget push $file.FullName `
-                --api-key $apiKey `
-                --source https://api.nuget.org/v3/index.json `
-                --skip-duplicate
-              
-              if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to push $($file.Name)"
-              }
+            if ($LASTEXITCODE -ne 0) {
+              throw "Failed to push $($file.Name)"
             }
           }
+          
 
       - name: Publish MinionLib mod
         shell: pwsh
