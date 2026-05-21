@@ -1,0 +1,258 @@
+name: Publish Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Godot 4.5.1 Mono
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.5.1
+          use-dotnet: true
+          include-templates: false
+
+      - name: Resolve version/configuration and metadata
+        shell: pwsh
+        run: |
+          $sourceSha = "${{ github.sha }}"
+          $shortSha = $sourceSha.Substring(0, 7)
+          
+          # Extract version from tag (v1.0.0 -> 1.0.0)
+          $version = "${{ github.ref_name }}".Substring(1)
+          
+          # Godot environment variable is set by setup-godot-action on Linux.
+          $godotPath = $env:GODOT4
+          if (-not $godotPath) {
+            throw "Godot executable not found in GODOT4 environment variable"
+          }
+          if (!(Test-Path $godotPath)) {
+            throw "Godot path does not exist: $godotPath"
+          }
+          
+          $modsPath = Join-Path $env:GITHUB_WORKSPACE "mods/"
+          
+          "VERSION=$version" >> $env:GITHUB_ENV
+          "SHORT_SHA=$shortSha" >> $env:GITHUB_ENV
+          "GODOT_PATH=$godotPath" >> $env:GITHUB_ENV
+          "MODS_OUTPUT=$modsPath" >> $env:GITHUB_ENV
+
+      - name: Restore dependencies
+        shell: pwsh
+        run: |
+          dotnet restore "MinionLib.sln"
+
+      - name: Resolve game and dependency versions
+        shell: pwsh
+        run: |
+          $propsPath = Join-Path $env:GITHUB_WORKSPACE "Directory.Build.props"
+          if (!(Test-Path $propsPath)) {
+            throw "Directory.Build.props not found: $propsPath"
+          }
+
+          $propsContent = Get-Content $propsPath -Raw
+          
+          $sts2Match = [regex]::Match($propsContent, "<Sts2Version>([^<]+)</Sts2Version>")
+          if (-not $sts2Match.Success) {
+            throw "Failed to read Sts2Version from Directory.Build.props"
+          }
+          $sts2Version = $sts2Match.Groups[1].Value.Trim()
+          "GAME_VERSION=$sts2Version" >> $env:GITHUB_ENV
+          
+          $betaMatch = [regex]::Match($propsContent, "<IsSts2Beta>([^<]+)</IsSts2Beta>")
+          $isBeta = if ($betaMatch.Success) { $betaMatch.Groups[1].Value.Trim().ToLower() } else { "false" }
+          "IS_BETA=$isBeta" >> $env:GITHUB_ENV
+          
+
+          $ritsuJson = dotnet list "MinionLib.RitsuAdapters/MinionLib.RitsuAdapters.csproj" package --format json | ConvertFrom-Json
+          $ritsuPackages = foreach ($project in @($ritsuJson.projects)) {
+            foreach ($framework in @($project.frameworks)) {
+              foreach ($pkg in @($framework.topLevelPackages)) { $pkg }
+            }
+          }
+          $ritsuPkg = $ritsuPackages | Where-Object { $_.id -eq "STS2.RitsuLib" } | Select-Object -First 1
+          if (-not $ritsuPkg) {
+            throw "Unable to find package STS2.RitsuLib from dotnet list package output"
+          }
+
+          $baseLibJson = dotnet list "MinionLib.BaseLibAdapters/MinionLib.BaseLibAdapters.csproj" package --format json | ConvertFrom-Json
+          $baseLibPackages = foreach ($project in @($baseLibJson.projects)) {
+            foreach ($framework in @($project.frameworks)) {
+              foreach ($pkg in @($framework.topLevelPackages)) { $pkg }
+            }
+          }
+          $baseLibPkg = $baseLibPackages | Where-Object { $_.id -eq "Alchyr.Sts2.BaseLib" } | Select-Object -First 1
+          if (-not $baseLibPkg) {
+            throw "Unable to find package Alchyr.Sts2.BaseLib from dotnet list package output"
+          }
+
+          "RITSULIB_VERSION=$($ritsuPkg.resolvedVersion ?? $ritsuPkg.requestedVersion)" >> $env:GITHUB_ENV
+          "BASELIB_VERSION=$($baseLibPkg.resolvedVersion ?? $baseLibPkg.requestedVersion)" >> $env:GITHUB_ENV
+
+      - name: Pack and publish NuGet packages
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE/.packages" | Out-Null
+          
+          $projects = @("MinionLib", "MinionLib.RitsuAdapters", "MinionLib.BaseLibAdapters")
+          
+          foreach ($proj in $projects) {
+            Write-Host "Packing $proj..." -ForegroundColor Cyan
+            dotnet pack "$proj/$proj.csproj" `
+              -c ExportRelease `
+              -p:Version=$env:VERSION `
+              -p:ModsPath="$env:MODS_OUTPUT" `
+              -p:GodotPath="$env:GODOT_PATH" `
+              -o "$env:GITHUB_WORKSPACE/.packages"
+            
+            if ($LASTEXITCODE -ne 0) {
+              throw "Pack failed for $proj"
+            }
+          }
+          
+          Write-Host "`nPack completed successfully!" -ForegroundColor Green
+          
+          # Check if we have API key for pushing to NuGet
+          $apiKey = "${{ secrets.NUGET_API_KEY }}"
+          if ($apiKey -eq '' -or $apiKey.StartsWith('${{')) {
+            Write-Host "Skipping NuGet push - NUGET_API_KEY not configured" -ForegroundColor Yellow
+          } else {
+            # Push to NuGet
+            Write-Host "`nPushing packages to NuGet..." -ForegroundColor Cyan
+            $nupkgFiles = Get-ChildItem "$env:GITHUB_WORKSPACE/.packages" -Filter "*.nupkg"
+            
+            foreach ($file in $nupkgFiles) {
+              Write-Host "Publishing $($file.Name)..."
+              dotnet nuget push $file.FullName `
+                --api-key $apiKey `
+                --source https://api.nuget.org/v3/index.json `
+                --skip-duplicate
+              
+              if ($LASTEXITCODE -ne 0) {
+                Write-Error "Failed to push $($file.Name)"
+              }
+            }
+          }
+
+      - name: Publish MinionLib mod
+        shell: pwsh
+        run: |
+          Write-Host "Publishing MinionLib..." -ForegroundColor Cyan
+          New-Item -ItemType Directory -Force -Path $env:MODS_OUTPUT | Out-Null
+          
+          dotnet publish "MinionLib/MinionLib.csproj" `
+            -c ExportRelease `
+            -p:Version=$env:VERSION `
+            -p:ModsPath="$env:MODS_OUTPUT" `
+            -p:GodotPath="$env:GODOT_PATH"
+          
+          if ($LASTEXITCODE -ne 0) {
+            throw "Publish failed for MinionLib"
+          }
+
+      - name: Build Adapter mods
+        shell: pwsh
+        run: |
+          $adapters = @("MinionLib.RitsuAdapters", "MinionLib.BaseLibAdapters")
+          
+          foreach ($adapter in $adapters) {
+            Write-Host "Building $adapter..." -ForegroundColor Cyan
+            dotnet build "$adapter/$adapter.csproj" `
+              -c ExportRelease `
+              -p:Version=$env:VERSION `
+              -p:ModsPath="$env:MODS_OUTPUT" `
+              -p:GodotPath="$env:GODOT_PATH"
+            
+            if ($LASTEXITCODE -ne 0) {
+              throw "Build failed for $adapter"
+            }
+          }
+
+      - name: Create mod package zips
+        shell: pwsh
+        run: |
+          $modsDir = "$env:GITHUB_WORKSPACE/mods"
+          $releasesDir = "$env:GITHUB_WORKSPACE/releases"
+          New-Item -ItemType Directory -Force -Path $releasesDir | Out-Null
+          
+          $modProjects = @("MinionLib", "MinionLib.RitsuAdapters", "MinionLib.BaseLibAdapters")
+          
+          foreach ($mod in $modProjects) {
+            $modPath = Join-Path $modsDir $mod
+            
+            if (!(Test-Path $modPath)) {
+              Write-Error "Mod directory not found: $modPath"
+              continue
+            }
+            
+            $zipPath = Join-Path $releasesDir "$mod-$env:VERSION.zip"
+            
+            Write-Host "Creating zip for $mod..." -ForegroundColor Cyan
+            if (Test-Path $zipPath) {
+              Remove-Item -Force $zipPath
+            }
+            
+            # Get all files in the mod directory
+            $files = Get-ChildItem -Path $modPath -File -Recurse
+            
+            if ($files.Count -eq 0) {
+              Write-Warning "No files found in $modPath"
+              continue
+            }
+            
+            Compress-Archive -Path "$modPath/*" -DestinationPath $zipPath -CompressionLevel Optimal
+            Write-Host "Created: $($zipPath | Split-Path -Leaf)" -ForegroundColor Green
+          }
+
+      - name: Compose release notes
+        shell: pwsh
+        run: |
+          $gameDisplayVersion = $env:GAME_VERSION
+          if ($env:IS_BETA -eq "true") {
+            $gameDisplayVersion += " (public-beta)"
+          }
+          
+          @"
+          ## Build Info
+          - Mod version: $env:VERSION
+          - Commit: $env:SHORT_SHA
+
+          ## Game Version
+          - Slay the Spire 2: $gameDisplayVersion
+
+          ## Package Contents & Dependencies
+          
+          > **Note:**  
+          > The core library (**MinionLib**) operates standalone and requires no additional dependencies. 
+          > The adapter packages are strictly optional; they **do not introduce any new features**. Their sole purpose is to provide adapter classes to bridge with their respective adaptee libraries.
+          
+          | Included Mod Package | Required Dependency (Adaptee) | Required Version |
+          | :--- | :--- | :--- |
+          | **MinionLib** (Core Library) | *None* | - |
+          | **MinionLib.RitsuAdapters** | STS2.RitsuLib | $env:RITSULIB_VERSION |
+          | **MinionLib.BaseLibAdapters** | Alchyr.Sts2.BaseLib | $env:BASELIB_VERSION |
+          
+          "@ > "release-notes.md"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes.md
+          append_body: true
+          generate_release_notes: true
+          files: releases/*.zip
