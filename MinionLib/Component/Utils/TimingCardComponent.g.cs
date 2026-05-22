@@ -405,14 +405,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task BeforeTurnEndVeryEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task BeforeSideTurnEndVeryEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.BeforeTurnEndVeryEarly))
+        if (Timings.Contains(Timing.BeforeSideTurnEndVeryEarly))
         {
             var ctx = new OnTimingContext(
-                Timing.BeforeTurnEndVeryEarly,
+                Timing.BeforeSideTurnEndVeryEarly,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPrefix(ctx);
@@ -420,14 +421,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task BeforeTurnEndVeryEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task BeforeSideTurnEndVeryEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.BeforeTurnEndVeryEarly))
+        if (Timings.Contains(Timing.BeforeSideTurnEndVeryEarly))
         {
             var ctx = new OnTimingContext(
-                Timing.BeforeTurnEndVeryEarly,
+                Timing.BeforeSideTurnEndVeryEarly,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPostfix(ctx);
@@ -435,14 +437,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task BeforeTurnEndEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task BeforeSideTurnEndEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.BeforeTurnEndEarly))
+        if (Timings.Contains(Timing.BeforeSideTurnEndEarly))
         {
             var ctx = new OnTimingContext(
-                Timing.BeforeTurnEndEarly,
+                Timing.BeforeSideTurnEndEarly,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPrefix(ctx);
@@ -450,14 +453,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task BeforeTurnEndEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task BeforeSideTurnEndEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.BeforeTurnEndEarly))
+        if (Timings.Contains(Timing.BeforeSideTurnEndEarly))
         {
             var ctx = new OnTimingContext(
-                Timing.BeforeTurnEndEarly,
+                Timing.BeforeSideTurnEndEarly,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPostfix(ctx);
@@ -465,14 +469,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task BeforeTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task BeforeSideTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.BeforeTurnEnd))
+        if (Timings.Contains(Timing.BeforeSideTurnEnd))
         {
             var ctx = new OnTimingContext(
-                Timing.BeforeTurnEnd,
+                Timing.BeforeSideTurnEnd,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPrefix(ctx);
@@ -480,14 +485,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task BeforeTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task BeforeSideTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.BeforeTurnEnd))
+        if (Timings.Contains(Timing.BeforeSideTurnEnd))
         {
             var ctx = new OnTimingContext(
-                Timing.BeforeTurnEnd,
+                Timing.BeforeSideTurnEnd,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPostfix(ctx);
@@ -495,14 +501,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task AfterTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task AfterSideTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.AfterTurnEnd))
+        if (Timings.Contains(Timing.AfterSideTurnEnd))
         {
             var ctx = new OnTimingContext(
-                Timing.AfterTurnEnd,
+                Timing.AfterSideTurnEnd,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPrefix(ctx);
@@ -510,14 +517,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task AfterTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task AfterSideTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.AfterTurnEnd))
+        if (Timings.Contains(Timing.AfterSideTurnEnd))
         {
             var ctx = new OnTimingContext(
-                Timing.AfterTurnEnd,
+                Timing.AfterSideTurnEnd,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPostfix(ctx);
@@ -525,14 +533,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task AfterTurnEndLatePrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task AfterSideTurnEndLatePrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.AfterTurnEndLate))
+        if (Timings.Contains(Timing.AfterSideTurnEndLate))
         {
             var ctx = new OnTimingContext(
-                Timing.AfterTurnEndLate,
+                Timing.AfterSideTurnEndLate,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPrefix(ctx);
@@ -540,14 +549,15 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task AfterTurnEndLatePostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public override Task AfterSideTurnEndLatePostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
-        if (Timings.Contains(Timing.AfterTurnEndLate))
+        if (Timings.Contains(Timing.AfterSideTurnEndLate))
         {
             var ctx = new OnTimingContext(
-                Timing.AfterTurnEndLate,
+                Timing.AfterSideTurnEndLate,
                 ChoiceContext: choiceContext,
-                Side: side
+                Side: side,
+                Participants: participants
             );
 
             return OnTimingPostfix(ctx);
@@ -2979,7 +2989,7 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task BeforeSideTurnStartPrefix(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public override Task BeforeSideTurnStartPrefix(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (Timings.Contains(Timing.BeforeSideTurnStart))
         {
@@ -2987,6 +2997,7 @@ public abstract partial class TimingCardComponent
                 Timing.BeforeSideTurnStart,
                 ChoiceContext: choiceContext,
                 Side: side,
+                Participants: participants,
                 CombatState: combatState
             );
 
@@ -2995,7 +3006,7 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task BeforeSideTurnStartPostfix(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public override Task BeforeSideTurnStartPostfix(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (Timings.Contains(Timing.BeforeSideTurnStart))
         {
@@ -3003,6 +3014,7 @@ public abstract partial class TimingCardComponent
                 Timing.BeforeSideTurnStart,
                 ChoiceContext: choiceContext,
                 Side: side,
+                Participants: participants,
                 CombatState: combatState
             );
 
@@ -3011,13 +3023,14 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task AfterSideTurnStartPrefix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public override Task AfterSideTurnStartPrefix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (Timings.Contains(Timing.AfterSideTurnStart))
         {
             var ctx = new OnTimingContext(
                 Timing.AfterSideTurnStart,
                 Side: side,
+                Participants: participants,
                 CombatState: combatState
             );
 
@@ -3026,13 +3039,14 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task AfterSideTurnStartPostfix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public override Task AfterSideTurnStartPostfix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (Timings.Contains(Timing.AfterSideTurnStart))
         {
             var ctx = new OnTimingContext(
                 Timing.AfterSideTurnStart,
                 Side: side,
+                Participants: participants,
                 CombatState: combatState
             );
 
@@ -3041,13 +3055,14 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task AfterSideTurnStartLatePrefix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public override Task AfterSideTurnStartLatePrefix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (Timings.Contains(Timing.AfterSideTurnStartLate))
         {
             var ctx = new OnTimingContext(
                 Timing.AfterSideTurnStartLate,
                 Side: side,
+                Participants: participants,
                 CombatState: combatState
             );
 
@@ -3056,13 +3071,14 @@ public abstract partial class TimingCardComponent
         return Task.CompletedTask;
 
     }
-    public override Task AfterSideTurnStartLatePostfix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public override Task AfterSideTurnStartLatePostfix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (Timings.Contains(Timing.AfterSideTurnStartLate))
         {
             var ctx = new OnTimingContext(
                 Timing.AfterSideTurnStartLate,
                 Side: side,
+                Participants: participants,
                 CombatState: combatState
             );
 

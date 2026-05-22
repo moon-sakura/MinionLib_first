@@ -154,52 +154,52 @@ public abstract partial class CardComponent
         return Task.CompletedTask;
     }
     
-    public virtual Task BeforeTurnEndVeryEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task BeforeSideTurnEndVeryEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task BeforeTurnEndVeryEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task BeforeSideTurnEndVeryEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task BeforeTurnEndEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task BeforeSideTurnEndEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task BeforeTurnEndEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task BeforeSideTurnEndEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task BeforeTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task BeforeSideTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task BeforeTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task BeforeSideTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task AfterSideTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task AfterSideTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterTurnEndLatePrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task AfterSideTurnEndLatePrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterTurnEndLatePostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    public virtual Task AfterSideTurnEndLatePostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -1014,32 +1014,32 @@ public abstract partial class CardComponent
         return Task.CompletedTask;
     }
     
-    public virtual Task BeforeSideTurnStartPrefix(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public virtual Task BeforeSideTurnStartPrefix(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task BeforeSideTurnStartPostfix(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public virtual Task BeforeSideTurnStartPostfix(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterSideTurnStartPrefix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public virtual Task AfterSideTurnStartPrefix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterSideTurnStartPostfix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public virtual Task AfterSideTurnStartPostfix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterSideTurnStartLatePrefix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public virtual Task AfterSideTurnStartLatePrefix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    public virtual Task AfterSideTurnStartLatePostfix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    public virtual Task AfterSideTurnStartLatePostfix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }

@@ -152,52 +152,52 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task BeforeTurnEndVeryEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task BeforeSideTurnEndVeryEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeTurnEndVeryEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task BeforeSideTurnEndVeryEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeTurnEndEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task BeforeSideTurnEndEarlyPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeTurnEndEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task BeforeSideTurnEndEarlyPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task BeforeSideTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task BeforeSideTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task AfterSideTurnEndPrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task AfterSideTurnEndPostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterTurnEndLatePrefix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task AfterSideTurnEndLatePrefix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterTurnEndLatePostfix(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    Task AfterSideTurnEndLatePostfix(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -1012,32 +1012,32 @@ public partial interface ICardComponent
         return Task.CompletedTask;
     }
     
-    Task BeforeSideTurnStartPrefix(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    Task BeforeSideTurnStartPrefix(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task BeforeSideTurnStartPostfix(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    Task BeforeSideTurnStartPostfix(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterSideTurnStartPrefix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    Task AfterSideTurnStartPrefix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterSideTurnStartPostfix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    Task AfterSideTurnStartPostfix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterSideTurnStartLatePrefix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    Task AfterSideTurnStartLatePrefix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
-    Task AfterSideTurnStartLatePostfix(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    Task AfterSideTurnStartLatePostfix(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }

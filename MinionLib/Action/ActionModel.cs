@@ -90,7 +90,8 @@ public abstract class ActionModel : PowerModel
             await CombatManager.Instance.CheckWinCondition();
     }
 
-    public override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
+        IEnumerable<Creature> participants)
     {
         if (!AutoRemoveAtTurnEnd || Owner.Side != side || Amount <= 0) return;
 

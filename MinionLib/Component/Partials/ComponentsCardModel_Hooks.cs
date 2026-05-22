@@ -1042,7 +1042,7 @@ public abstract partial class ComponentsCardModel
     
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    public sealed override async Task BeforeTurnEndVeryEarly(PlayerChoiceContext choiceContext, CombatSide side)
+    public sealed override async Task BeforeSideTurnEndVeryEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         EnsureComponentsInitialized();
 
@@ -1070,7 +1070,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if (component.ComponentsCard != this) continue;
-                            await component.BeforeTurnEndVeryEarlyPrefix(choiceContext, side, componentContext);
+                            await component.BeforeSideTurnEndVeryEarlyPrefix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Prefix) break;
                         }
 
@@ -1080,7 +1080,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if(component.ComponentsCard != this) continue;
-                            await component.BeforeTurnEndVeryEarlyPostfix(choiceContext, side, componentContext);
+                            await component.BeforeSideTurnEndVeryEarlyPostfix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Postfix) break;
                         }
 
@@ -1088,7 +1088,7 @@ public abstract partial class ComponentsCardModel
                     case ComponentPhase.Prime:
                     case ComponentPhase.Core:
                     case ComponentPhase.Final:
-                        await BeforeTurnEndVeryEarlyPhased(choiceContext, side, componentContext);
+                        await BeforeSideTurnEndVeryEarlyPhased(choiceContext, side, participants, componentContext);
                         break;
                     case ComponentPhase.Init:
                     default:
@@ -1105,22 +1105,22 @@ public abstract partial class ComponentsCardModel
         }
     }
 
-    protected virtual Task BeforeTurnEndVeryEarlyPhased(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task BeforeSideTurnEndVeryEarlyPhased(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         if (componentContext.Phase == ComponentPhase.Core)
-            return BeforeTurnEndVeryEarly(choiceContext, side, componentContext);
+            return BeforeSideTurnEndVeryEarly(choiceContext, side, participants, componentContext);
 
         return Task.CompletedTask;
     }
 
-    protected virtual Task BeforeTurnEndVeryEarly(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task BeforeSideTurnEndVeryEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    public sealed override async Task BeforeTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side)
+    public sealed override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         EnsureComponentsInitialized();
 
@@ -1148,7 +1148,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if (component.ComponentsCard != this) continue;
-                            await component.BeforeTurnEndEarlyPrefix(choiceContext, side, componentContext);
+                            await component.BeforeSideTurnEndEarlyPrefix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Prefix) break;
                         }
 
@@ -1158,7 +1158,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if(component.ComponentsCard != this) continue;
-                            await component.BeforeTurnEndEarlyPostfix(choiceContext, side, componentContext);
+                            await component.BeforeSideTurnEndEarlyPostfix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Postfix) break;
                         }
 
@@ -1166,7 +1166,7 @@ public abstract partial class ComponentsCardModel
                     case ComponentPhase.Prime:
                     case ComponentPhase.Core:
                     case ComponentPhase.Final:
-                        await BeforeTurnEndEarlyPhased(choiceContext, side, componentContext);
+                        await BeforeSideTurnEndEarlyPhased(choiceContext, side, participants, componentContext);
                         break;
                     case ComponentPhase.Init:
                     default:
@@ -1183,22 +1183,22 @@ public abstract partial class ComponentsCardModel
         }
     }
 
-    protected virtual Task BeforeTurnEndEarlyPhased(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task BeforeSideTurnEndEarlyPhased(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         if (componentContext.Phase == ComponentPhase.Core)
-            return BeforeTurnEndEarly(choiceContext, side, componentContext);
+            return BeforeSideTurnEndEarly(choiceContext, side, participants, componentContext);
 
         return Task.CompletedTask;
     }
 
-    protected virtual Task BeforeTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    public sealed override async Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public sealed override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         EnsureComponentsInitialized();
 
@@ -1226,7 +1226,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if (component.ComponentsCard != this) continue;
-                            await component.BeforeTurnEndPrefix(choiceContext, side, componentContext);
+                            await component.BeforeSideTurnEndPrefix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Prefix) break;
                         }
 
@@ -1236,7 +1236,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if(component.ComponentsCard != this) continue;
-                            await component.BeforeTurnEndPostfix(choiceContext, side, componentContext);
+                            await component.BeforeSideTurnEndPostfix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Postfix) break;
                         }
 
@@ -1244,7 +1244,7 @@ public abstract partial class ComponentsCardModel
                     case ComponentPhase.Prime:
                     case ComponentPhase.Core:
                     case ComponentPhase.Final:
-                        await BeforeTurnEndPhased(choiceContext, side, componentContext);
+                        await BeforeSideTurnEndPhased(choiceContext, side, participants, componentContext);
                         break;
                     case ComponentPhase.Init:
                     default:
@@ -1261,22 +1261,22 @@ public abstract partial class ComponentsCardModel
         }
     }
 
-    protected virtual Task BeforeTurnEndPhased(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task BeforeSideTurnEndPhased(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         if (componentContext.Phase == ComponentPhase.Core)
-            return BeforeTurnEnd(choiceContext, side, componentContext);
+            return BeforeSideTurnEnd(choiceContext, side, participants, componentContext);
 
         return Task.CompletedTask;
     }
 
-    protected virtual Task BeforeTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    public sealed override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public sealed override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         EnsureComponentsInitialized();
 
@@ -1304,7 +1304,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if (component.ComponentsCard != this) continue;
-                            await component.AfterTurnEndPrefix(choiceContext, side, componentContext);
+                            await component.AfterSideTurnEndPrefix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Prefix) break;
                         }
 
@@ -1314,7 +1314,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if(component.ComponentsCard != this) continue;
-                            await component.AfterTurnEndPostfix(choiceContext, side, componentContext);
+                            await component.AfterSideTurnEndPostfix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Postfix) break;
                         }
 
@@ -1322,7 +1322,7 @@ public abstract partial class ComponentsCardModel
                     case ComponentPhase.Prime:
                     case ComponentPhase.Core:
                     case ComponentPhase.Final:
-                        await AfterTurnEndPhased(choiceContext, side, componentContext);
+                        await AfterSideTurnEndPhased(choiceContext, side, participants, componentContext);
                         break;
                     case ComponentPhase.Init:
                     default:
@@ -1339,22 +1339,22 @@ public abstract partial class ComponentsCardModel
         }
     }
 
-    protected virtual Task AfterTurnEndPhased(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task AfterSideTurnEndPhased(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         if (componentContext.Phase == ComponentPhase.Core)
-            return AfterTurnEnd(choiceContext, side, componentContext);
+            return AfterSideTurnEnd(choiceContext, side, participants, componentContext);
 
         return Task.CompletedTask;
     }
 
-    protected virtual Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    public sealed override async Task AfterTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side)
+    public sealed override async Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         EnsureComponentsInitialized();
 
@@ -1382,7 +1382,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if (component.ComponentsCard != this) continue;
-                            await component.AfterTurnEndLatePrefix(choiceContext, side, componentContext);
+                            await component.AfterSideTurnEndLatePrefix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Prefix) break;
                         }
 
@@ -1392,7 +1392,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if(component.ComponentsCard != this) continue;
-                            await component.AfterTurnEndLatePostfix(choiceContext, side, componentContext);
+                            await component.AfterSideTurnEndLatePostfix(choiceContext, side, participants, componentContext);
                             if (componentContext.Phase != ComponentPhase.Postfix) break;
                         }
 
@@ -1400,7 +1400,7 @@ public abstract partial class ComponentsCardModel
                     case ComponentPhase.Prime:
                     case ComponentPhase.Core:
                     case ComponentPhase.Final:
-                        await AfterTurnEndLatePhased(choiceContext, side, componentContext);
+                        await AfterSideTurnEndLatePhased(choiceContext, side, participants, componentContext);
                         break;
                     case ComponentPhase.Init:
                     default:
@@ -1417,15 +1417,15 @@ public abstract partial class ComponentsCardModel
         }
     }
 
-    protected virtual Task AfterTurnEndLatePhased(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task AfterSideTurnEndLatePhased(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         if (componentContext.Phase == ComponentPhase.Core)
-            return AfterTurnEndLate(choiceContext, side, componentContext);
+            return AfterSideTurnEndLate(choiceContext, side, participants, componentContext);
 
         return Task.CompletedTask;
     }
 
-    protected virtual Task AfterTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, ComponentContext componentContext)
+    protected virtual Task AfterSideTurnEndLate(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
@@ -7750,7 +7750,7 @@ public abstract partial class ComponentsCardModel
     
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    public sealed override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState)
+    public sealed override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         EnsureComponentsInitialized();
 
@@ -7778,7 +7778,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if (component.ComponentsCard != this) continue;
-                            await component.BeforeSideTurnStartPrefix(choiceContext, side, combatState, componentContext);
+                            await component.BeforeSideTurnStartPrefix(choiceContext, side, participants, combatState, componentContext);
                             if (componentContext.Phase != ComponentPhase.Prefix) break;
                         }
 
@@ -7788,7 +7788,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if(component.ComponentsCard != this) continue;
-                            await component.BeforeSideTurnStartPostfix(choiceContext, side, combatState, componentContext);
+                            await component.BeforeSideTurnStartPostfix(choiceContext, side, participants, combatState, componentContext);
                             if (componentContext.Phase != ComponentPhase.Postfix) break;
                         }
 
@@ -7796,7 +7796,7 @@ public abstract partial class ComponentsCardModel
                     case ComponentPhase.Prime:
                     case ComponentPhase.Core:
                     case ComponentPhase.Final:
-                        await BeforeSideTurnStartPhased(choiceContext, side, combatState, componentContext);
+                        await BeforeSideTurnStartPhased(choiceContext, side, participants, combatState, componentContext);
                         break;
                     case ComponentPhase.Init:
                     default:
@@ -7813,22 +7813,22 @@ public abstract partial class ComponentsCardModel
         }
     }
 
-    protected virtual Task BeforeSideTurnStartPhased(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    protected virtual Task BeforeSideTurnStartPhased(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (componentContext.Phase == ComponentPhase.Core)
-            return BeforeSideTurnStart(choiceContext, side, combatState, componentContext);
+            return BeforeSideTurnStart(choiceContext, side, participants, combatState, componentContext);
 
         return Task.CompletedTask;
     }
 
-    protected virtual Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    protected virtual Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    public sealed override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
+    public sealed override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         EnsureComponentsInitialized();
 
@@ -7856,7 +7856,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if (component.ComponentsCard != this) continue;
-                            await component.AfterSideTurnStartPrefix(side, combatState, componentContext);
+                            await component.AfterSideTurnStartPrefix(side, participants, combatState, componentContext);
                             if (componentContext.Phase != ComponentPhase.Prefix) break;
                         }
 
@@ -7866,7 +7866,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if(component.ComponentsCard != this) continue;
-                            await component.AfterSideTurnStartPostfix(side, combatState, componentContext);
+                            await component.AfterSideTurnStartPostfix(side, participants, combatState, componentContext);
                             if (componentContext.Phase != ComponentPhase.Postfix) break;
                         }
 
@@ -7874,7 +7874,7 @@ public abstract partial class ComponentsCardModel
                     case ComponentPhase.Prime:
                     case ComponentPhase.Core:
                     case ComponentPhase.Final:
-                        await AfterSideTurnStartPhased(side, combatState, componentContext);
+                        await AfterSideTurnStartPhased(side, participants, combatState, componentContext);
                         break;
                     case ComponentPhase.Init:
                     default:
@@ -7891,22 +7891,22 @@ public abstract partial class ComponentsCardModel
         }
     }
 
-    protected virtual Task AfterSideTurnStartPhased(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    protected virtual Task AfterSideTurnStartPhased(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (componentContext.Phase == ComponentPhase.Core)
-            return AfterSideTurnStart(side, combatState, componentContext);
+            return AfterSideTurnStart(side, participants, combatState, componentContext);
 
         return Task.CompletedTask;
     }
 
-    protected virtual Task AfterSideTurnStart(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    protected virtual Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }
     
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This member is sealed. Try adding `ComponentContext componentContext` as the last parameter, or disable this warning if intended.", false)]
-    public sealed override async Task AfterSideTurnStartLate(CombatSide side, ICombatState combatState)
+    public sealed override async Task AfterSideTurnStartLate(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         EnsureComponentsInitialized();
 
@@ -7934,7 +7934,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if (component.ComponentsCard != this) continue;
-                            await component.AfterSideTurnStartLatePrefix(side, combatState, componentContext);
+                            await component.AfterSideTurnStartLatePrefix(side, participants, combatState, componentContext);
                             if (componentContext.Phase != ComponentPhase.Prefix) break;
                         }
 
@@ -7944,7 +7944,7 @@ public abstract partial class ComponentsCardModel
                         {
                             var component = snapshot[i];
                             if(component.ComponentsCard != this) continue;
-                            await component.AfterSideTurnStartLatePostfix(side, combatState, componentContext);
+                            await component.AfterSideTurnStartLatePostfix(side, participants, combatState, componentContext);
                             if (componentContext.Phase != ComponentPhase.Postfix) break;
                         }
 
@@ -7952,7 +7952,7 @@ public abstract partial class ComponentsCardModel
                     case ComponentPhase.Prime:
                     case ComponentPhase.Core:
                     case ComponentPhase.Final:
-                        await AfterSideTurnStartLatePhased(side, combatState, componentContext);
+                        await AfterSideTurnStartLatePhased(side, participants, combatState, componentContext);
                         break;
                     case ComponentPhase.Init:
                     default:
@@ -7969,15 +7969,15 @@ public abstract partial class ComponentsCardModel
         }
     }
 
-    protected virtual Task AfterSideTurnStartLatePhased(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    protected virtual Task AfterSideTurnStartLatePhased(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         if (componentContext.Phase == ComponentPhase.Core)
-            return AfterSideTurnStartLate(side, combatState, componentContext);
+            return AfterSideTurnStartLate(side, participants, combatState, componentContext);
 
         return Task.CompletedTask;
     }
 
-    protected virtual Task AfterSideTurnStartLate(CombatSide side, ICombatState combatState, ComponentContext componentContext)
+    protected virtual Task AfterSideTurnStartLate(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ComponentContext componentContext)
     {
         return Task.CompletedTask;
     }

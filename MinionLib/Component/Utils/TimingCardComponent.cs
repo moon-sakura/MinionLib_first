@@ -83,5 +83,6 @@ public record OnTimingContext(
     int GoldSpent = default,
     IReadOnlyList<Creature> Creatures = default,
     IReadOnlyCollection<CardModel> FlushedCards = default,
-    IReadOnlyCollection<CardModel> RetainedCards = default
+    IReadOnlyCollection<CardModel> RetainedCards = default,
+    IEnumerable<Creature> Participants = default
 );
