@@ -335,4 +335,62 @@ public partial interface ICardComponent
       modifiedCost = currentCost;
       return false;
   }
+
+  bool ShouldAddToDeck(CardModel card) => true;
+
+  bool ShouldAfflict(CardModel card, AfflictionModel affliction) => true;
+
+  bool ShouldAllowAncient(Player player, AncientEventModel ancient) => true;
+
+  bool ShouldAllowHitting(Creature creature) => true;
+
+  bool ShouldAllowTargeting(Creature target) => true;
+
+  bool ShouldAllowSelectingMoreCardRewards(Player player, CardReward cardReward) => false;
+
+  bool ShouldClearBlock(Creature creature) => true;
+
+  bool ShouldDie(Creature creature) => true;
+
+  bool ShouldDieLate(Creature creature) => true;
+
+  bool ShouldDisableRemainingRestSiteOptions(Player player) => true;
+
+  bool ShouldDraw(Player player, bool fromHandDraw) => true;
+
+  bool ShouldEtherealTrigger(CardModel card) => true;
+
+  bool ShouldFlush(Player player) => true;
+
+  bool ShouldGainGold(Decimal amount, Player player) => true;
+
+  bool ShouldGainStars(Decimal amount, Player player) => true;
+
+  bool ShouldGenerateTreasure(Player player) => true;
+
+  bool ShouldPayExcessEnergyCostWithStars(Player player) => false;
+
+  bool ShouldPlay(CardModel card, AutoPlayType autoPlayType) => true;
+
+  bool ShouldPlayerResetEnergy(Player player) => true;
+
+  bool ShouldProceedToNextMapPoint() => true;
+
+  bool ShouldProcurePotion(PotionModel potion, Player player) => true;
+
+  bool ShouldPowerBeRemovedOnDeath(PowerModel power) => true;
+
+  bool ShouldRefillMerchantEntry(MerchantEntry entry, Player player) => false;
+
+  bool ShouldAllowMerchantCardRemoval(Player player) => true;
+
+  bool ShouldCreatureBeRemovedFromCombatAfterDeath(Creature creature) => true;
+
+  bool ShouldStopCombatFromEnding() => false;
+
+  bool ShouldTakeExtraTurn(Player player) => false;
+
+  bool ShouldForcePotionReward(Player player, RoomType roomType) => false;
+
+  bool ShouldAllowFreeTravel() => false;
 }

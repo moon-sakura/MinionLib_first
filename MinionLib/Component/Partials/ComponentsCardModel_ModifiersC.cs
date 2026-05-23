@@ -339,4 +339,62 @@ public abstract partial class ComponentsCardModel
       modifiedCost = currentCost;
       return false;
   }
+
+  protected virtual bool ShouldAddToDeckC => true;
+
+  protected virtual bool ShouldAfflictC => true;
+
+  protected virtual bool ShouldAllowAncientC => true;
+
+  protected virtual bool ShouldAllowHittingC => true;
+
+  protected virtual bool ShouldAllowTargetingC => true;
+
+  protected virtual bool ShouldAllowSelectingMoreCardRewardsC => false;
+
+  protected virtual bool ShouldClearBlockC => true;
+
+  protected virtual bool ShouldDieC => true;
+
+  protected virtual bool ShouldDieLateC => true;
+
+  protected virtual bool ShouldDisableRemainingRestSiteOptionsC => true;
+
+  protected virtual bool ShouldDrawC => true;
+
+  protected virtual bool ShouldEtherealTriggerC => true;
+
+  protected virtual bool ShouldFlushC => true;
+
+  protected virtual bool ShouldGainGoldC => true;
+
+  protected virtual bool ShouldGainStarsC => true;
+
+  protected virtual bool ShouldGenerateTreasureC => true;
+
+  protected virtual bool ShouldPayExcessEnergyCostWithStarsC => false;
+
+  protected virtual bool ShouldPlayC => true;
+
+  protected virtual bool ShouldPlayerResetEnergyC => true;
+
+  protected virtual bool ShouldProceedToNextMapPointC => true;
+
+  protected virtual bool ShouldProcurePotionC => true;
+
+  protected virtual bool ShouldPowerBeRemovedOnDeathC => true;
+
+  protected virtual bool ShouldRefillMerchantEntryC => false;
+
+  protected virtual bool ShouldAllowMerchantCardRemovalC => true;
+
+  protected virtual bool ShouldCreatureBeRemovedFromCombatAfterDeathC => true;
+
+  protected virtual bool ShouldStopCombatFromEndingC => false;
+
+  protected virtual bool ShouldTakeExtraTurnC => false;
+
+  protected virtual bool ShouldForcePotionRewardC => false;
+
+  protected virtual bool ShouldAllowFreeTravelC => false;
 }

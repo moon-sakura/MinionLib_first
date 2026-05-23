@@ -661,4 +661,236 @@ public abstract partial class ComponentsCardModel
         return flag;
     }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldAddToDeck(CardModel card)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldAddToDeck(card)) && ShouldAddToDeckC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldAfflict(CardModel card, AfflictionModel affliction)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldAfflict(card, affliction)) && ShouldAfflictC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldAllowAncient(Player player, AncientEventModel ancient)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldAllowAncient(player, ancient)) && ShouldAllowAncientC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldAllowHitting(Creature creature)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldAllowHitting(creature)) && ShouldAllowHittingC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldAllowTargeting(Creature target)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldAllowTargeting(target)) && ShouldAllowTargetingC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldAllowSelectingMoreCardRewards(Player player, CardReward cardReward)
+    {
+        EnsureComponentsInitialized();
+        return _components!.Any(c => c.ShouldAllowSelectingMoreCardRewards(player, cardReward)) || ShouldAllowSelectingMoreCardRewardsC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldClearBlock(Creature creature)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldClearBlock(creature)) && ShouldClearBlockC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldDie(Creature creature)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldDie(creature)) && ShouldDieC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldDieLate(Creature creature)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldDieLate(creature)) && ShouldDieLateC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldDisableRemainingRestSiteOptions(Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldDisableRemainingRestSiteOptions(player)) && ShouldDisableRemainingRestSiteOptionsC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldDraw(Player player, bool fromHandDraw)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldDraw(player, fromHandDraw)) && ShouldDrawC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldEtherealTrigger(CardModel card)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldEtherealTrigger(card)) && ShouldEtherealTriggerC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldFlush(Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldFlush(player)) && ShouldFlushC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldGainGold(Decimal amount, Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldGainGold(amount, player)) && ShouldGainGoldC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldGainStars(Decimal amount, Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldGainStars(amount, player)) && ShouldGainStarsC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldGenerateTreasure(Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldGenerateTreasure(player)) && ShouldGenerateTreasureC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldPayExcessEnergyCostWithStars(Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.Any(c => c.ShouldPayExcessEnergyCostWithStars(player)) || ShouldPayExcessEnergyCostWithStarsC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldPlay(CardModel card, AutoPlayType autoPlayType)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldPlay(card, autoPlayType)) && ShouldPlayC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldPlayerResetEnergy(Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldPlayerResetEnergy(player)) && ShouldPlayerResetEnergyC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldProceedToNextMapPoint()
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldProceedToNextMapPoint()) && ShouldProceedToNextMapPointC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldProcurePotion(PotionModel potion, Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldProcurePotion(potion, player)) && ShouldProcurePotionC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldPowerBeRemovedOnDeath(PowerModel power)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldPowerBeRemovedOnDeath(power)) && ShouldPowerBeRemovedOnDeathC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldRefillMerchantEntry(MerchantEntry entry, Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.Any(c => c.ShouldRefillMerchantEntry(entry, player)) || ShouldRefillMerchantEntryC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldAllowMerchantCardRemoval(Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldAllowMerchantCardRemoval(player)) && ShouldAllowMerchantCardRemovalC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldCreatureBeRemovedFromCombatAfterDeath(Creature creature)
+    {
+        EnsureComponentsInitialized();
+        return _components!.All(c => c.ShouldCreatureBeRemovedFromCombatAfterDeath(creature)) && ShouldCreatureBeRemovedFromCombatAfterDeathC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldStopCombatFromEnding()
+    {
+        EnsureComponentsInitialized();
+        return _components!.Any(c => c.ShouldStopCombatFromEnding()) || ShouldStopCombatFromEndingC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldTakeExtraTurn(Player player)
+    {
+        EnsureComponentsInitialized();
+        return _components!.Any(c => c.ShouldTakeExtraTurn(player)) || ShouldTakeExtraTurnC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldForcePotionReward(Player player, RoomType roomType)
+    {
+        EnsureComponentsInitialized();
+        return _components!.Any(c => c.ShouldForcePotionReward(player, roomType)) || ShouldForcePotionRewardC;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This member is sealed. Try using the C-ending one instead, or disable this warning if intended.", false)]
+    public sealed override bool ShouldAllowFreeTravel()
+    {
+        EnsureComponentsInitialized();
+        return _components!.Any(c => c.ShouldAllowFreeTravel()) || ShouldAllowFreeTravelC;
+    }
+
 }

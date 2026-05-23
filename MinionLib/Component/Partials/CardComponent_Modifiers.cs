@@ -331,4 +331,62 @@ public abstract partial class CardComponent
       modifiedCost = currentCost;
       return false;
   }
+
+  public virtual bool ShouldAddToDeck(CardModel card) => true;
+
+  public virtual bool ShouldAfflict(CardModel card, AfflictionModel affliction) => true;
+
+  public virtual bool ShouldAllowAncient(Player player, AncientEventModel ancient) => true;
+
+  public virtual bool ShouldAllowHitting(Creature creature) => true;
+
+  public virtual bool ShouldAllowTargeting(Creature target) => true;
+
+  public virtual bool ShouldAllowSelectingMoreCardRewards(Player player, CardReward cardReward) => false;
+
+  public virtual bool ShouldClearBlock(Creature creature) => true;
+
+  public virtual bool ShouldDie(Creature creature) => true;
+
+  public virtual bool ShouldDieLate(Creature creature) => true;
+
+  public virtual bool ShouldDisableRemainingRestSiteOptions(Player player) => true;
+
+  public virtual bool ShouldDraw(Player player, bool fromHandDraw) => true;
+
+  public virtual bool ShouldEtherealTrigger(CardModel card) => true;
+
+  public virtual bool ShouldFlush(Player player) => true;
+
+  public virtual bool ShouldGainGold(Decimal amount, Player player) => true;
+
+  public virtual bool ShouldGainStars(Decimal amount, Player player) => true;
+
+  public virtual bool ShouldGenerateTreasure(Player player) => true;
+
+  public virtual bool ShouldPayExcessEnergyCostWithStars(Player player) => false;
+
+  public virtual bool ShouldPlay(CardModel card, AutoPlayType autoPlayType) => true;
+
+  public virtual bool ShouldPlayerResetEnergy(Player player) => true;
+
+  public virtual bool ShouldProceedToNextMapPoint() => true;
+
+  public virtual bool ShouldProcurePotion(PotionModel potion, Player player) => true;
+
+  public virtual bool ShouldPowerBeRemovedOnDeath(PowerModel power) => true;
+
+  public virtual bool ShouldRefillMerchantEntry(MerchantEntry entry, Player player) => false;
+
+  public virtual bool ShouldAllowMerchantCardRemoval(Player player) => true;
+
+  public virtual bool ShouldCreatureBeRemovedFromCombatAfterDeath(Creature creature) => true;
+
+  public virtual bool ShouldStopCombatFromEnding() => false;
+
+  public virtual bool ShouldTakeExtraTurn(Player player) => false;
+
+  public virtual bool ShouldForcePotionReward(Player player, RoomType roomType) => false;
+
+  public virtual bool ShouldAllowFreeTravel() => false;
 }
