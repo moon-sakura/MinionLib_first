@@ -390,20 +390,6 @@ public abstract partial class ComponentsCardModel(
         return base.GetResultPileTypeForCardPlay();
     }
 
-    protected sealed override PileType GetResultPileTypeForOnTurnEndInHandEffect()
-    {
-        EnsureComponentsInitialized();
-        foreach (var component in _components!)
-            if (component.GetResultPileTypeForOnTurnEndInHandEffect() is { } t)
-                return t;
-        return GetResultPileTypeForOnTurnEndInHandEffectC();
-    }
-
-    protected virtual PileType GetResultPileTypeForOnTurnEndInHandEffectC()
-    {
-        return base.GetResultPileTypeForOnTurnEndInHandEffect();
-    }
-
     private void HandlePhaseTransitionLimitExceeded(ComponentPhase lastPhase)
     {
         Log.Warn($"""

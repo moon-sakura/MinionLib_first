@@ -101,11 +101,6 @@ public abstract partial class CardComponent : ICardComponent
 
     public virtual bool IsPlayable => true;
 
-    public virtual PileType? GetResultPileTypeForOnTurnEndInHandEffect()
-    {
-        return null;
-    }
-
     public virtual PileType? GetResultPileTypeForCardPlay()
     {
         return null;

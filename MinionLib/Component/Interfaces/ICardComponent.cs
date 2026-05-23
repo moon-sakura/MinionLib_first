@@ -49,11 +49,6 @@ public partial interface ICardComponent : IGeneratedBinarySerializable
 
     bool TrySubtractiveMergeWith(ICardComponent incoming, ApplyComponentOptions options, out ICardComponent? merged);
 
-    PileType? GetResultPileTypeForOnTurnEndInHandEffect()
-    {
-        return null;
-    }
-
     PileType? GetResultPileTypeForCardPlay()
     {
         return null;
