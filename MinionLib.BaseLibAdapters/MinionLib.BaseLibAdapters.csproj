@@ -7,7 +7,7 @@
         <ProjectReference Include="..\MinionLib\MinionLib.csproj">
             <Private>false</Private>
         </ProjectReference>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.3" GeneratePathProperty="true" PrivateAssets="compile"/>
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.7" GeneratePathProperty="true" PrivateAssets="compile"/>
     </ItemGroup>
 
     <ItemGroup>

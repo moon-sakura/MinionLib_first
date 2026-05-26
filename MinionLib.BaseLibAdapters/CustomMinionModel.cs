@@ -10,24 +10,24 @@ namespace MinionLib.BaseLibAdapters;
 public abstract class CustomMinionModel : MinionModel, ICustomModel, ISceneConversions
 {
     /// <summary>
-    ///     Override this or place your scene at res://scenes/creature_visuals/modname-class_name.tscn
+    /// Override this or place your scene at res://scenes/creature_visuals/modname-class_name.tscn
     /// </summary>
     public virtual string? CustomVisualPath => null;
 
-    public virtual string? CustomAttackSfx => null;
-
-    public virtual string? CustomCastSfx => null;
-
-    public virtual string? CustomDeathSfx => null;
-
-    public void RegisterSceneConversions()
-    {
-        CustomVisualPath?.RegisterSceneForConversion<NCreatureVisuals>();
-    }
-
     /// <summary>
-    ///     Use if you want to generate creature visuals entirely yourself.
-    ///     Otherwise, just override CustomVisualPath.
+    /// Use if you want to generate creature visuals entirely yourself.
+    /// If you do, you'll also need to override AssetPaths to not include VisualPath.
+    /// <code>public override IEnumerable&lt;string&gt; AssetPaths
+    /// {
+    ///     get
+    ///     {
+    ///         List&lt;string&gt; assetPaths = [];
+    ///         foreach (AbstractIntent intent in GetIntents())
+    ///             assetPaths.AddRange(intent.AssetPaths);
+    ///        return assetPaths;
+    ///     }
+    /// }</code>
+    /// Otherwise, just override CustomVisualPath.
     /// </summary>
     /// <returns></returns>
     public virtual NCreatureVisuals? CreateCustomVisuals()
@@ -35,12 +35,16 @@ public abstract class CustomMinionModel : MinionModel, ICustomModel, ISceneConve
         return null;
     }
 
+
+    public virtual string? CustomAttackSfx => null;
+    public virtual string? CustomCastSfx => null;
+    public virtual string? CustomDeathSfx => null;
+
+
+
     /// <summary>
-    ///     Override and return a CreatureAnimator if you need to set up states that differ from the default for the monster.
-    ///     Using
-    ///     <seealso
-    ///         cref="M:BaseLib.Abstracts.CustomMonsterModel.SetupAnimationState(MegaCrit.Sts2.Core.Bindings.MegaSpine.MegaSprite,System.String,System.String,System.Boolean,System.String,System.Boolean,System.String,System.Boolean,System.String,System.Boolean)" />
-    ///     is suggested.
+    /// Override and return a CreatureAnimator if you need to set up states that differ from the default for the monster.
+    /// Using <seealso cref="SetupAnimationState"/> is suggested.
     /// </summary>
     /// <returns></returns>
     public virtual CreatureAnimator? SetupCustomAnimationStates(MegaSprite controller)
@@ -49,9 +53,9 @@ public abstract class CustomMinionModel : MinionModel, ICustomModel, ISceneConve
     }
 
     /// <summary>
-    ///     If you have a spine animation without all the required animations,
-    ///     use this method to set up a controller that will use animations of your choice for each animation.
-    ///     Any omitted animation parameters will default to the idle animation.
+    /// If you have a spine animation without all the required animations,
+    /// use this method to set up a controller that will use animations of your choice for each animation.
+    /// Any omitted animation parameters will default to the idle animation.
     /// </summary>
     /// <param name="controller"></param>
     /// <param name="idleName"></param>
@@ -64,53 +68,46 @@ public abstract class CustomMinionModel : MinionModel, ICustomModel, ISceneConve
     /// <param name="castName"></param>
     /// <param name="castLoop"></param>
     /// <returns></returns>
-    public static CreatureAnimator SetupAnimationState(
-        MegaSprite controller,
-        string idleName,
-        string? deadName = null,
-        bool deadLoop = false,
-        string? hitName = null,
-        bool hitLoop = false,
-        string? attackName = null,
-        bool attackLoop = false,
-        string? castName = null,
-        bool castLoop = false)
+    public static CreatureAnimator SetupAnimationState(MegaSprite controller, string idleName,
+        string? deadName = null, bool deadLoop = false,
+        string? hitName = null, bool hitLoop = false,
+        string? attackName = null, bool attackLoop = false,
+        string? castName = null, bool castLoop = false)
     {
-        var animState1 = new AnimState(idleName, true);
-        var state1 = deadName == null ? animState1 : new AnimState(deadName, deadLoop);
-        AnimState animState2;
-        if (hitName != null)
-            animState2 = new AnimState(hitName, hitLoop)
+        var idleAnim = new AnimState(idleName, true);
+        var deadAnim = deadName == null ? idleAnim : new AnimState(deadName, deadLoop);
+        var hitAnim = hitName == null
+            ? idleAnim
+            : new AnimState(hitName, hitLoop)
             {
-                NextState = animState1
+                NextState = idleAnim
             };
-        else
-            animState2 = animState1;
-        var state2 = animState2;
-        AnimState animState3;
-        if (attackName != null)
-            animState3 = new AnimState(attackName, attackLoop)
+        var attackAnim = attackName == null
+            ? idleAnim
+            : new AnimState(attackName, attackLoop)
             {
-                NextState = animState1
+                NextState = idleAnim
             };
-        else
-            animState3 = animState1;
-        var state3 = animState3;
-        AnimState animState4;
-        if (castName != null)
-            animState4 = new AnimState(castName, castLoop)
+        var castAnim = castName == null
+            ? idleAnim
+            : new AnimState(castName, castLoop)
             {
-                NextState = animState1
+                NextState = idleAnim
             };
-        else
-            animState4 = animState1;
-        var state4 = animState4;
-        var creatureAnimator = new CreatureAnimator(animState1, controller);
-        creatureAnimator.AddAnyState("Idle", animState1);
-        creatureAnimator.AddAnyState("Dead", state1);
-        creatureAnimator.AddAnyState("Hit", state2);
-        creatureAnimator.AddAnyState("Attack", state3);
-        creatureAnimator.AddAnyState("Cast", state4);
-        return creatureAnimator;
+
+        var animator = new CreatureAnimator(idleAnim, controller);
+
+        animator.AddAnyState("Idle", idleAnim);
+        animator.AddAnyState("Dead", deadAnim);
+        animator.AddAnyState("Hit", hitAnim);
+        animator.AddAnyState("Attack", attackAnim);
+        animator.AddAnyState("Cast", castAnim);
+
+        return animator;
+    }
+
+    public void RegisterSceneConversions()
+    {
+        CustomVisualPath?.RegisterSceneForConversion<NCreatureVisuals>();
     }
 }
